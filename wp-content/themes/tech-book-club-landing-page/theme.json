@@ -1,0 +1,110 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"color": {
+			"custom": false,
+			"palette": [
+				{ "slug": "neutral-900", "name": "Neutral 900", "color": "#062630" },
+				{ "slug": "neutral-700", "name": "Neutral 700", "color": "#385159" },
+				{ "slug": "neutral-200", "name": "Neutral 200", "color": "#e6e1df" },
+				{ "slug": "neutral-100", "name": "Neutral 100", "color": "#faf5f3" },
+				{ "slug": "neutral-0", "name": "Neutral 0", "color": "#ffffff" },
+				{ "slug": "salmon-500", "name": "Salmon 500", "color": "#fea36f" },
+				{ "slug": "salmon-100", "name": "Salmon 100", "color": "#ffe2d1" },
+				{ "slug": "salmon-50", "name": "Salmon 50", "color": "#fff5ef" }
+			]
+		},
+		"layout": {
+			"contentSize": "70rem",
+			"wideSize": "73.75rem"
+		},
+		"spacing": {
+			"spacingScale": {
+				"operator": "*",
+				"increment": 1.5,
+				"steps": 8,
+				"mediumStep": 1.5,
+				"unit": "rem"
+			},
+			"units": [ "px", "rem", "%", "vw" ]
+		},
+		"typography": {
+			"customFontSize": false,
+			"fontFamilies": [
+				{
+					"fontFamily": "\"Inter\", sans-serif",
+					"name": "Inter",
+					"slug": "inter",
+					"fontFace": [
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "100 900",
+							"src": [ "file:./assets/fonts/inter/Inter-VariableFont_opsz,wght.ttf" ]
+						},
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "italic",
+							"fontWeight": "100 900",
+							"src": [ "file:./assets/fonts/inter/Inter-Italic-VariableFont_opsz,wght.ttf" ]
+						}
+					]
+				},
+				{
+					"fontFamily": "\"Martian Mono\", monospace",
+					"name": "Martian Mono",
+					"slug": "martian-mono",
+					"fontFace": [
+						{
+							"fontFamily": "Martian Mono",
+							"fontStyle": "normal",
+							"fontWeight": "100 800",
+							"src": [ "file:./assets/fonts/martian-mono/MartianMono-VariableFont_wdth,wght.ttf" ]
+						}
+					]
+				}
+			],
+			"fontSizes": [
+				{ "slug": "body", "name": "Body", "size": "1.25rem" },
+				{ "slug": "label", "name": "Label", "size": "1.125rem" },
+				{ "slug": "heading", "name": "Heading", "size": "clamp(2.125rem, 4vw, 3.125rem)" },
+				{ "slug": "display", "name": "Display", "size": "clamp(2.375rem, 5.4vw, 3.875rem)" }
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var:preset|color|neutral-100",
+			"text": "var:preset|color|neutral-900"
+		},
+		"elements": {
+			"button": {
+				"border": {
+					"color": "var:preset|color|neutral-900",
+					"radius": "0.5rem",
+					"style": "solid",
+					"width": "2px"
+				},
+				"color": {
+					"background": "var:preset|color|salmon-50",
+					"text": "var:preset|color|neutral-900"
+				},
+				"typography": {
+					"fontFamily": "var:preset|font-family|martian-mono",
+					"fontWeight": "700"
+				}
+			}
+		},
+		"typography": {
+			"fontFamily": "var:preset|font-family|inter",
+			"fontSize": "var:preset|font-size|body",
+			"lineHeight": "1.4"
+		}
+	},
+	"templateParts": [
+		{ "area": "header", "name": "header", "title": "Header" },
+		{ "area": "footer", "name": "footer", "title": "Footer" }
+	]
+}

@@ -1,0 +1,589 @@
+/*
+Theme Name: Tech Book Club Landing Page
+Theme URI: https://github.com/ferfalcon/tech-book-club-landing-page
+Author: Fernando Falcon
+Author URI: https://ferfalcon.com/
+Description: A custom block theme for the Frontend Mentor Tech Book Club landing page challenge.
+Version: 1.0.0
+Requires at least: 6.9
+Requires PHP: 8.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tech-book-club-landing-page
+*/
+
+@font-face {
+	font-display: swap;
+	font-family: "Inter";
+	font-style: normal;
+	font-weight: 100 900;
+	src: url("assets/fonts/inter/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Inter";
+	font-style: italic;
+	font-weight: 100 900;
+	src: url("assets/fonts/inter/Inter-Italic-VariableFont_opsz,wght.ttf") format("truetype");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Martian Mono";
+	font-style: normal;
+	font-weight: 100 800;
+	src: url("assets/fonts/martian-mono/MartianMono-VariableFont_wdth,wght.ttf") format("truetype");
+}
+
+:root {
+	--tbc-neutral-900: #062630;
+	--tbc-neutral-700: #385159;
+	--tbc-neutral-200: #e6e1df;
+	--tbc-neutral-100: #faf5f3;
+	--tbc-neutral-0: #ffffff;
+	--tbc-salmon-500: #fea36f;
+	--tbc-salmon-100: #ffe2d1;
+	--tbc-salmon-50: #fff5ef;
+	--tbc-gradient: linear-gradient(107deg, #fea36f -11%, #062630 62%);
+	--tbc-shell: min(100% - 2rem, 73.75rem);
+	--tbc-radius-sm: 0.5rem;
+	--tbc-radius-md: 0.75rem;
+	--tbc-radius-lg: 1.5rem;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--tbc-neutral-100);
+	color: var(--tbc-neutral-900);
+	font-family: "Inter", sans-serif;
+	font-size: 1.25rem;
+	line-height: 1.4;
+	margin: 0;
+}
+
+.wp-site-blocks > * {
+	margin-block-start: 0;
+}
+
+img,
+picture {
+	display: block;
+	max-width: 100%;
+}
+
+img {
+	height: auto;
+}
+
+a {
+	color: inherit;
+}
+
+.tbc-shell {
+	margin-inline: auto;
+	width: var(--tbc-shell);
+}
+
+.tbc-header {
+	background: var(--tbc-neutral-100);
+}
+
+.tbc-header__inner {
+	padding-block: 1.5rem 1rem;
+}
+
+.tbc-logo {
+	background: url("assets/images/logo.svg") 0 50% / contain no-repeat;
+	display: block;
+	height: 2.25rem;
+	width: 12rem;
+}
+
+.tbc-main {
+	overflow: hidden;
+}
+
+.tbc-section--pattern {
+	background-color: var(--tbc-neutral-100);
+	background-image:
+		url("assets/images/pattern-light-bg.svg"),
+		url("assets/images/pattern-glow.svg");
+	background-position: 50% 0, 100% 100%;
+	background-repeat: repeat, no-repeat;
+	background-size: auto, 42rem;
+}
+
+.tbc-hero {
+	border-bottom-left-radius: var(--tbc-radius-lg);
+	border-bottom-right-radius: var(--tbc-radius-lg);
+	padding-block: 1.5rem 5rem;
+}
+
+.tbc-hero__grid,
+.tbc-feature {
+	display: grid;
+	gap: 4rem;
+}
+
+.tbc-hero__content {
+	align-self: center;
+}
+
+h1,
+h2,
+h3 {
+	font-family: "Martian Mono", monospace;
+	line-height: 1.2;
+	margin: 0;
+	text-wrap: balance;
+}
+
+h1 {
+	background: var(--tbc-gradient);
+	background-clip: text;
+	font-size: clamp(2.375rem, 8vw, 3.875rem);
+	letter-spacing: -0.125rem;
+	-webkit-text-fill-color: transparent;
+}
+
+h2 {
+	font-size: clamp(2.125rem, 5.5vw, 3.125rem);
+	letter-spacing: -0.125rem;
+}
+
+h3 {
+	font-size: 1.5rem;
+	letter-spacing: -0.0625rem;
+}
+
+.tbc-hero p,
+.tbc-feature p {
+	color: var(--tbc-neutral-700);
+	margin: 1.5rem 0 2rem;
+	max-width: 36rem;
+}
+
+.tbc-button {
+	align-items: center;
+	background: var(--tbc-salmon-50);
+	border: 2px solid var(--tbc-neutral-900);
+	border-radius: var(--tbc-radius-sm);
+	color: var(--tbc-neutral-900);
+	display: inline-flex;
+	font-family: "Martian Mono", monospace;
+	font-size: 1rem;
+	font-weight: 700;
+	gap: 1rem;
+	justify-content: center;
+	letter-spacing: -0.0625rem;
+	line-height: 1.3;
+	min-height: 4rem;
+	padding: 1.25rem 1.5rem;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.tbc-button span {
+	background: url("assets/images/icon-arrow-down.svg") center / contain no-repeat;
+	display: inline-block;
+	flex: 0 0 auto;
+	height: 1.5rem;
+	width: 1.5rem;
+}
+
+.tbc-button:hover {
+	background: var(--tbc-salmon-100);
+	box-shadow: 0 0 0 0.25rem rgba(254, 163, 111, 0.22);
+	transform: translateY(-1px);
+}
+
+.tbc-button:focus-visible,
+.tbc-social:focus-visible,
+.tbc-logo:focus-visible {
+	outline: 2px solid var(--tbc-neutral-900);
+	outline-offset: 0.25rem;
+}
+
+.tbc-proof {
+	align-items: center;
+	display: flex;
+	gap: 0.75rem;
+	margin-top: 1.25rem;
+}
+
+.tbc-proof p {
+	color: var(--tbc-neutral-700);
+	font-family: "Martian Mono", monospace;
+	font-size: 0.875rem;
+	letter-spacing: -0.0625rem;
+	margin: 0;
+}
+
+.tbc-stars {
+	display: flex;
+	gap: 0.25rem;
+}
+
+.tbc-stars img {
+	height: 1.25rem;
+	width: 1.25rem;
+}
+
+.tbc-image img,
+.tbc-image {
+	border-radius: var(--tbc-radius-lg);
+	width: 100%;
+}
+
+.tbc-feature {
+	align-items: center;
+	padding-block: 4rem 0;
+}
+
+.tbc-feature__copy {
+	max-width: 33.5rem;
+}
+
+.tbc-check-list {
+	display: grid;
+	gap: 1rem;
+	list-style: none;
+	margin: 1.5rem 0 0;
+	padding: 0;
+}
+
+.tbc-check-list li {
+	color: var(--tbc-neutral-700);
+	padding-left: 2.5rem;
+	position: relative;
+}
+
+.tbc-check-list li::before {
+	background: url("assets/images/icon-check.svg") center / contain no-repeat;
+	content: "";
+	height: 1.75rem;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 1.75rem;
+}
+
+.tbc-feature__copy--average h2 {
+	position: relative;
+}
+
+.tbc-feature__copy--average h2::after {
+	background: url("assets/images/pattern-circle.png") center / contain no-repeat;
+	content: "";
+	height: 4.25rem;
+	left: 7.75rem;
+	position: absolute;
+	top: 2.6rem;
+	width: 10rem;
+	z-index: -1;
+}
+
+.tbc-feature__copy--average {
+	position: relative;
+	z-index: 0;
+}
+
+.tbc-journey {
+	border-radius: var(--tbc-radius-lg);
+	margin-top: 5rem;
+	padding: 4rem;
+}
+
+.tbc-journey h2,
+.tbc-membership h2,
+.tbc-testimonial {
+	text-align: center;
+}
+
+.tbc-journey ol {
+	counter-reset: journey;
+	display: grid;
+	gap: 2rem;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	list-style: none;
+	margin: 4rem 0 0;
+	padding: 0;
+}
+
+.tbc-journey li {
+	font-family: "Martian Mono", monospace;
+	font-size: 1.125rem;
+	font-weight: 600;
+	letter-spacing: -0.0625rem;
+	line-height: 1.3;
+	padding-top: 4rem;
+	position: relative;
+}
+
+.tbc-journey li::before {
+	align-items: center;
+	border: 2px solid var(--tbc-neutral-900);
+	border-radius: 0.25rem;
+	content: counter(journey);
+	counter-increment: journey;
+	display: flex;
+	height: 2.5rem;
+	justify-content: center;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 2.5rem;
+}
+
+.tbc-journey li:not(:last-child)::after {
+	background: url("assets/images/pattern-arrow.svg") center / contain no-repeat;
+	content: "";
+	height: 1rem;
+	left: min(8rem, 60%);
+	position: absolute;
+	top: 0.75rem;
+	width: 4.75rem;
+}
+
+.tbc-membership {
+	padding-block: 5rem 0;
+}
+
+.tbc-pricing {
+	align-items: center;
+	display: grid;
+	gap: 1.5rem;
+	margin-top: 4rem;
+}
+
+.tbc-card {
+	background: var(--tbc-neutral-0);
+	border: 1px solid var(--tbc-neutral-200);
+	border-radius: var(--tbc-radius-sm);
+	display: grid;
+	gap: 1.5rem;
+	padding: 1.5rem;
+}
+
+.tbc-card--featured {
+	background:
+		url("assets/images/pattern-glow.svg") 100% 100% / 22rem no-repeat,
+		var(--tbc-salmon-50);
+	padding-block: 2.5rem;
+}
+
+.tbc-card p {
+	border-bottom: 1px solid var(--tbc-neutral-200);
+	margin: 0;
+	padding-bottom: 1.5rem;
+}
+
+.tbc-card strong {
+	font-family: "Martian Mono", monospace;
+	font-size: 2.125rem;
+	letter-spacing: -0.0625rem;
+}
+
+.tbc-card span {
+	color: var(--tbc-neutral-700);
+	margin-left: 0.5rem;
+}
+
+.tbc-card .tbc-button {
+	width: 100%;
+}
+
+.tbc-testimonial {
+	display: grid;
+	justify-items: center;
+	padding-block: 5rem;
+}
+
+.tbc-testimonial blockquote {
+	margin: 2rem 0 0;
+	max-width: 60rem;
+}
+
+.tbc-testimonial p {
+	font-family: "Martian Mono", monospace;
+	font-size: clamp(1.5rem, 3vw, 2.125rem);
+	font-weight: 600;
+	letter-spacing: -0.0625rem;
+	line-height: 1.3;
+	margin: 0 0 2rem;
+}
+
+.tbc-testimonial cite {
+	color: var(--tbc-neutral-700);
+	font-style: normal;
+}
+
+.tbc-cta,
+.tbc-footer {
+	background-color: var(--tbc-neutral-900);
+	background-image: url("assets/images/pattern-dark-bg.svg");
+	color: var(--tbc-neutral-0);
+}
+
+.tbc-cta {
+	border-top-left-radius: var(--tbc-radius-lg);
+	border-top-right-radius: var(--tbc-radius-lg);
+	padding-block: 4rem;
+	text-align: center;
+}
+
+.tbc-cta .tbc-shell {
+	display: grid;
+	justify-items: center;
+}
+
+.tbc-cta h2 {
+	max-width: 42rem;
+}
+
+.tbc-button--dark {
+	background: transparent;
+	border-color: var(--tbc-neutral-0);
+	color: var(--tbc-neutral-0);
+	margin-top: 2.5rem;
+}
+
+.tbc-button--dark span {
+	background-image: url("assets/images/icon-arrow-up.svg");
+	filter: brightness(0) invert(1);
+}
+
+.tbc-button--dark:hover {
+	background: var(--tbc-neutral-700);
+}
+
+.tbc-proof--dark p {
+	color: var(--tbc-neutral-0);
+}
+
+.tbc-footer__inner {
+	align-items: center;
+	border-top: 1px solid rgba(255, 255, 255, 0.16);
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+	padding-block: 1.5rem;
+}
+
+.tbc-footer small {
+	font-size: 0.875rem;
+}
+
+.tbc-footer nav {
+	display: flex;
+	gap: 1rem;
+}
+
+.tbc-social {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	display: block;
+	height: 1.5rem;
+	width: 1.5rem;
+}
+
+.tbc-social--bluesky {
+	background-image: url("assets/images/logo-bluesky.svg");
+}
+
+.tbc-social--linkedin {
+	background-image: url("assets/images/logo-linkedin.svg");
+}
+
+.tbc-fallback {
+	padding-block: 5rem;
+}
+
+@media (min-width: 48rem) {
+	:root {
+		--tbc-shell: min(100% - 4rem, 73.75rem);
+	}
+
+	.tbc-header__inner {
+		padding-block: 2rem 1.5rem;
+	}
+
+	.tbc-hero {
+		padding-block: 2rem 5rem;
+	}
+
+	.tbc-pricing {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+@media (min-width: 64rem) {
+	.tbc-hero__grid,
+	.tbc-feature {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 63.9375rem) {
+	.tbc-journey {
+		display: none;
+	}
+}
+
+@media (max-width: 47.9375rem) {
+	.tbc-button {
+		font-size: 0.875rem;
+		width: 100%;
+	}
+
+	.tbc-proof {
+		align-items: flex-start;
+	}
+
+	.tbc-feature {
+		gap: 2.5rem;
+		padding-block-start: 4rem;
+	}
+
+	.tbc-feature--image-left .tbc-image {
+		order: 2;
+	}
+
+	.tbc-feature__copy--average h2::after {
+		left: 6.25rem;
+		top: 4.8rem;
+		width: 8rem;
+	}
+
+	.tbc-membership {
+		padding-block-start: 4rem;
+	}
+
+	.tbc-pricing {
+		margin-top: 1.5rem;
+	}
+
+	.tbc-testimonial {
+		text-align: left;
+	}
+
+	.tbc-testimonial {
+		justify-items: start;
+	}
+
+	.tbc-footer__inner {
+		flex-direction: column;
+	}
+}
