@@ -173,7 +173,8 @@ h3 {
 	max-width: 36rem;
 }
 
-.tbc-button {
+a.tbc-button,
+.wp-block-button.tbc-button .wp-block-button__link {
 	align-items: center;
 	background: var(--tbc-salmon-50);
 	border: 2px solid var(--tbc-neutral-900);
@@ -194,7 +195,8 @@ h3 {
 	transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
-.tbc-button span {
+a.tbc-button span,
+.wp-block-button.tbc-button .wp-block-button__link span {
 	background: url("assets/images/icon-arrow-down.svg") center / contain no-repeat;
 	display: inline-block;
 	flex: 0 0 auto;
@@ -202,13 +204,15 @@ h3 {
 	width: 1.5rem;
 }
 
-.tbc-button:hover {
+a.tbc-button:hover,
+.wp-block-button.tbc-button .wp-block-button__link:hover {
 	background: var(--tbc-salmon-100);
 	box-shadow: 0 0 0 0.25rem rgba(254, 163, 111, 0.22);
 	transform: translateY(-1px);
 }
 
-.tbc-button:focus-visible,
+a.tbc-button:focus-visible,
+.wp-block-button.tbc-button .wp-block-button__link:focus-visible,
 .tbc-social:focus-visible,
 .tbc-logo:focus-visible {
 	outline: 2px solid var(--tbc-neutral-900);
@@ -400,7 +404,10 @@ h3 {
 	margin-left: 0.5rem;
 }
 
-.tbc-card .tbc-button {
+.tbc-card a.tbc-button,
+.tbc-card .wp-block-buttons,
+.tbc-card .wp-block-button.tbc-button,
+.tbc-card .wp-block-button.tbc-button .wp-block-button__link {
 	width: 100%;
 }
 
@@ -452,19 +459,29 @@ h3 {
 	max-width: 42rem;
 }
 
-.tbc-button--dark {
-	background: transparent;
-	border-color: var(--tbc-neutral-0);
-	color: var(--tbc-neutral-0);
+.wp-block-button.tbc-button--dark {
 	margin-top: 2.5rem;
 }
 
-.tbc-button--dark span {
+a.tbc-button--dark {
+	margin-top: 2.5rem;
+}
+
+a.tbc-button--dark,
+.wp-block-button.tbc-button--dark .wp-block-button__link {
+	background: transparent;
+	border-color: var(--tbc-neutral-0);
+	color: var(--tbc-neutral-0);
+}
+
+a.tbc-button--dark span,
+.wp-block-button.tbc-button--dark .wp-block-button__link span {
 	background-image: url("assets/images/icon-arrow-up.svg");
 	filter: brightness(0) invert(1);
 }
 
-.tbc-button--dark:hover {
+a.tbc-button--dark:hover,
+.wp-block-button.tbc-button--dark .wp-block-button__link:hover {
 	background: var(--tbc-neutral-700);
 }
 
@@ -543,8 +560,14 @@ h3 {
 }
 
 @media (max-width: 47.9375rem) {
-	.tbc-button {
+	a.tbc-button,
+	.wp-block-button.tbc-button .wp-block-button__link {
 		font-size: 0.875rem;
+		width: 100%;
+	}
+
+	a.tbc-button,
+	.wp-block-button.tbc-button {
 		width: 100%;
 	}
 
