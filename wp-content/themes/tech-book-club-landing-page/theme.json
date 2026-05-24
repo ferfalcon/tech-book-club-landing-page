@@ -5,6 +5,13 @@
 		"appearanceTools": true,
 		"color": {
 			"custom": false,
+			"gradients": [
+				{
+					"slug": "text-gradient",
+					"name": "Text Gradient",
+					"gradient": "linear-gradient(107deg, #fea36f -11%, #062630 62%)"
+				}
+			],
 			"palette": [
 				{ "slug": "neutral-900", "name": "Neutral 900", "color": "#062630" },
 				{ "slug": "neutral-700", "name": "Neutral 700", "color": "#385159" },
@@ -15,6 +22,19 @@
 				{ "slug": "salmon-100", "name": "Salmon 100", "color": "#ffe2d1" },
 				{ "slug": "salmon-50", "name": "Salmon 50", "color": "#fff5ef" }
 			]
+		},
+		"custom": {
+			"tbc": {
+				"radius": {
+					"sm": "0.5rem",
+					"md": "0.75rem",
+					"lg": "1.5rem"
+				},
+				"shell": {
+					"base": "min(100% - 2rem, 73.75rem)",
+					"wide": "min(100% - 4rem, 73.75rem)"
+				}
+			}
 		},
 		"layout": {
 			"contentSize": "70rem",
@@ -39,12 +59,14 @@
 					"slug": "inter",
 					"fontFace": [
 						{
+							"fontDisplay": "swap",
 							"fontFamily": "Inter",
 							"fontStyle": "normal",
 							"fontWeight": "100 900",
 							"src": [ "file:./assets/fonts/inter/Inter-VariableFont_opsz,wght.ttf" ]
 						},
 						{
+							"fontDisplay": "swap",
 							"fontFamily": "Inter",
 							"fontStyle": "italic",
 							"fontWeight": "100 900",
@@ -58,6 +80,7 @@
 					"slug": "martian-mono",
 					"fontFace": [
 						{
+							"fontDisplay": "swap",
 							"fontFamily": "Martian Mono",
 							"fontStyle": "normal",
 							"fontWeight": "100 800",
@@ -67,10 +90,15 @@
 				}
 			],
 			"fontSizes": [
-				{ "slug": "body", "name": "Body", "size": "1.25rem" },
+				{ "slug": "caption", "name": "Caption", "size": "0.875rem" },
+				{ "slug": "button", "name": "Button", "size": "1rem" },
 				{ "slug": "label", "name": "Label", "size": "1.125rem" },
-				{ "slug": "heading", "name": "Heading", "size": "clamp(2.125rem, 4vw, 3.125rem)" },
-				{ "slug": "display", "name": "Display", "size": "clamp(2.375rem, 5.4vw, 3.875rem)" }
+				{ "slug": "body", "name": "Body", "size": "1.25rem" },
+				{ "slug": "title", "name": "Title", "size": "1.5rem" },
+				{ "slug": "price", "name": "Price", "size": "2.125rem" },
+				{ "slug": "quote", "name": "Quote", "size": "clamp(1.5rem, 3vw, 2.125rem)" },
+				{ "slug": "heading", "name": "Heading", "size": "clamp(2.125rem, 5.5vw, 3.125rem)" },
+				{ "slug": "display", "name": "Display", "size": "clamp(2.375rem, 8vw, 3.875rem)" }
 			]
 		}
 	},
@@ -83,7 +111,7 @@
 			"button": {
 				"border": {
 					"color": "var:preset|color|neutral-900",
-					"radius": "0.5rem",
+					"radius": "var(--wp--custom--tbc--radius--sm)",
 					"style": "solid",
 					"width": "2px"
 				},

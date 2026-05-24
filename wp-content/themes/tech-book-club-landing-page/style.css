@@ -12,46 +12,6 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tech-book-club-landing-page
 */
 
-@font-face {
-	font-display: swap;
-	font-family: "Inter";
-	font-style: normal;
-	font-weight: 100 900;
-	src: url("assets/fonts/inter/Inter-VariableFont_opsz,wght.ttf") format("truetype");
-}
-
-@font-face {
-	font-display: swap;
-	font-family: "Inter";
-	font-style: italic;
-	font-weight: 100 900;
-	src: url("assets/fonts/inter/Inter-Italic-VariableFont_opsz,wght.ttf") format("truetype");
-}
-
-@font-face {
-	font-display: swap;
-	font-family: "Martian Mono";
-	font-style: normal;
-	font-weight: 100 800;
-	src: url("assets/fonts/martian-mono/MartianMono-VariableFont_wdth,wght.ttf") format("truetype");
-}
-
-:root {
-	--tbc-neutral-900: #062630;
-	--tbc-neutral-700: #385159;
-	--tbc-neutral-200: #e6e1df;
-	--tbc-neutral-100: #faf5f3;
-	--tbc-neutral-0: #ffffff;
-	--tbc-salmon-500: #fea36f;
-	--tbc-salmon-100: #ffe2d1;
-	--tbc-salmon-50: #fff5ef;
-	--tbc-gradient: linear-gradient(107deg, #fea36f -11%, #062630 62%);
-	--tbc-shell: min(100% - 2rem, 73.75rem);
-	--tbc-radius-sm: 0.5rem;
-	--tbc-radius-md: 0.75rem;
-	--tbc-radius-lg: 1.5rem;
-}
-
 *,
 *::before,
 *::after {
@@ -63,11 +23,6 @@ html {
 }
 
 body {
-	background: var(--tbc-neutral-100);
-	color: var(--tbc-neutral-900);
-	font-family: "Inter", sans-serif;
-	font-size: 1.25rem;
-	line-height: 1.4;
 	margin: 0;
 }
 
@@ -91,11 +46,11 @@ a {
 
 .tbc-shell {
 	margin-inline: auto;
-	width: var(--tbc-shell);
+	width: var(--wp--custom--tbc--shell--base);
 }
 
 .tbc-header {
-	background: var(--tbc-neutral-100);
+	background: var(--wp--preset--color--neutral-100);
 }
 
 .tbc-header__inner {
@@ -114,7 +69,7 @@ a {
 }
 
 .tbc-section--pattern {
-	background-color: var(--tbc-neutral-100);
+	background-color: var(--wp--preset--color--neutral-100);
 	background-image:
 		url("assets/images/pattern-light-bg.svg"),
 		url("assets/images/pattern-glow.svg");
@@ -124,8 +79,8 @@ a {
 }
 
 .tbc-hero {
-	border-bottom-left-radius: var(--tbc-radius-lg);
-	border-bottom-right-radius: var(--tbc-radius-lg);
+	border-bottom-left-radius: var(--wp--custom--tbc--radius--lg);
+	border-bottom-right-radius: var(--wp--custom--tbc--radius--lg);
 	padding-block: 1.5rem 5rem;
 }
 
@@ -142,33 +97,33 @@ a {
 h1,
 h2,
 h3 {
-	font-family: "Martian Mono", monospace;
+	font-family: var(--wp--preset--font-family--martian-mono);
 	line-height: 1.2;
 	margin: 0;
 	text-wrap: balance;
 }
 
 h1 {
-	background: var(--tbc-gradient);
+	background: var(--wp--preset--gradient--text-gradient);
 	background-clip: text;
-	font-size: clamp(2.375rem, 8vw, 3.875rem);
+	font-size: var(--wp--preset--font-size--display);
 	letter-spacing: -0.125rem;
 	-webkit-text-fill-color: transparent;
 }
 
 h2 {
-	font-size: clamp(2.125rem, 5.5vw, 3.125rem);
+	font-size: var(--wp--preset--font-size--heading);
 	letter-spacing: -0.125rem;
 }
 
 h3 {
-	font-size: 1.5rem;
+	font-size: var(--wp--preset--font-size--title);
 	letter-spacing: -0.0625rem;
 }
 
 .tbc-hero p,
 .tbc-feature p {
-	color: var(--tbc-neutral-700);
+	color: var(--wp--preset--color--neutral-700);
 	margin: 1.5rem 0 2rem;
 	max-width: 36rem;
 }
@@ -176,13 +131,13 @@ h3 {
 a.tbc-button,
 .wp-block-button.tbc-button .wp-block-button__link {
 	align-items: center;
-	background: var(--tbc-salmon-50);
-	border: 2px solid var(--tbc-neutral-900);
-	border-radius: var(--tbc-radius-sm);
-	color: var(--tbc-neutral-900);
+	background: var(--wp--preset--color--salmon-50);
+	border: 2px solid var(--wp--preset--color--neutral-900);
+	border-radius: var(--wp--custom--tbc--radius--sm);
+	color: var(--wp--preset--color--neutral-900);
 	display: inline-flex;
-	font-family: "Martian Mono", monospace;
-	font-size: 1rem;
+	font-family: var(--wp--preset--font-family--martian-mono);
+	font-size: var(--wp--preset--font-size--button);
 	font-weight: 700;
 	gap: 1rem;
 	justify-content: center;
@@ -206,7 +161,7 @@ a.tbc-button span,
 
 a.tbc-button:hover,
 .wp-block-button.tbc-button .wp-block-button__link:hover {
-	background: var(--tbc-salmon-100);
+	background: var(--wp--preset--color--salmon-100);
 	box-shadow: 0 0 0 0.25rem rgba(254, 163, 111, 0.22);
 	transform: translateY(-1px);
 }
@@ -215,7 +170,7 @@ a.tbc-button:focus-visible,
 .wp-block-button.tbc-button .wp-block-button__link:focus-visible,
 .tbc-social:focus-visible,
 .tbc-logo:focus-visible {
-	outline: 2px solid var(--tbc-neutral-900);
+	outline: 2px solid var(--wp--preset--color--neutral-900);
 	outline-offset: 0.25rem;
 }
 
@@ -227,9 +182,9 @@ a.tbc-button:focus-visible,
 }
 
 .tbc-proof p {
-	color: var(--tbc-neutral-700);
-	font-family: "Martian Mono", monospace;
-	font-size: 0.875rem;
+	color: var(--wp--preset--color--neutral-700);
+	font-family: var(--wp--preset--font-family--martian-mono);
+	font-size: var(--wp--preset--font-size--caption);
 	letter-spacing: -0.0625rem;
 	margin: 0;
 }
@@ -246,7 +201,7 @@ a.tbc-button:focus-visible,
 
 .tbc-image img,
 .tbc-image {
-	border-radius: var(--tbc-radius-lg);
+	border-radius: var(--wp--custom--tbc--radius--lg);
 	width: 100%;
 }
 
@@ -268,7 +223,7 @@ a.tbc-button:focus-visible,
 }
 
 .tbc-check-list li {
-	color: var(--tbc-neutral-700);
+	color: var(--wp--preset--color--neutral-700);
 	padding-left: 2.5rem;
 	position: relative;
 }
@@ -304,7 +259,7 @@ a.tbc-button:focus-visible,
 }
 
 .tbc-journey {
-	border-radius: var(--tbc-radius-lg);
+	border-radius: var(--wp--custom--tbc--radius--lg);
 	margin-top: 5rem;
 	padding: 4rem;
 }
@@ -326,8 +281,8 @@ a.tbc-button:focus-visible,
 }
 
 .tbc-journey li {
-	font-family: "Martian Mono", monospace;
-	font-size: 1.125rem;
+	font-family: var(--wp--preset--font-family--martian-mono);
+	font-size: var(--wp--preset--font-size--label);
 	font-weight: 600;
 	letter-spacing: -0.0625rem;
 	line-height: 1.3;
@@ -337,7 +292,7 @@ a.tbc-button:focus-visible,
 
 .tbc-journey li::before {
 	align-items: center;
-	border: 2px solid var(--tbc-neutral-900);
+	border: 2px solid var(--wp--preset--color--neutral-900);
 	border-radius: 0.25rem;
 	content: counter(journey);
 	counter-increment: journey;
@@ -372,9 +327,9 @@ a.tbc-button:focus-visible,
 }
 
 .tbc-card {
-	background: var(--tbc-neutral-0);
-	border: 1px solid var(--tbc-neutral-200);
-	border-radius: var(--tbc-radius-sm);
+	background: var(--wp--preset--color--neutral-0);
+	border: 1px solid var(--wp--preset--color--neutral-200);
+	border-radius: var(--wp--custom--tbc--radius--sm);
 	display: grid;
 	gap: 1.5rem;
 	padding: 1.5rem;
@@ -383,24 +338,24 @@ a.tbc-button:focus-visible,
 .tbc-card--featured {
 	background:
 		url("assets/images/pattern-glow.svg") 100% 100% / 22rem no-repeat,
-		var(--tbc-salmon-50);
+		var(--wp--preset--color--salmon-50);
 	padding-block: 2.5rem;
 }
 
 .tbc-card p {
-	border-bottom: 1px solid var(--tbc-neutral-200);
+	border-bottom: 1px solid var(--wp--preset--color--neutral-200);
 	margin: 0;
 	padding-bottom: 1.5rem;
 }
 
 .tbc-card strong {
-	font-family: "Martian Mono", monospace;
-	font-size: 2.125rem;
+	font-family: var(--wp--preset--font-family--martian-mono);
+	font-size: var(--wp--preset--font-size--price);
 	letter-spacing: -0.0625rem;
 }
 
 .tbc-card span {
-	color: var(--tbc-neutral-700);
+	color: var(--wp--preset--color--neutral-700);
 	margin-left: 0.5rem;
 }
 
@@ -423,8 +378,8 @@ a.tbc-button:focus-visible,
 }
 
 .tbc-testimonial p {
-	font-family: "Martian Mono", monospace;
-	font-size: clamp(1.5rem, 3vw, 2.125rem);
+	font-family: var(--wp--preset--font-family--martian-mono);
+	font-size: var(--wp--preset--font-size--quote);
 	font-weight: 600;
 	letter-spacing: -0.0625rem;
 	line-height: 1.3;
@@ -432,20 +387,20 @@ a.tbc-button:focus-visible,
 }
 
 .tbc-testimonial cite {
-	color: var(--tbc-neutral-700);
+	color: var(--wp--preset--color--neutral-700);
 	font-style: normal;
 }
 
 .tbc-cta,
 .tbc-footer {
-	background-color: var(--tbc-neutral-900);
+	background-color: var(--wp--preset--color--neutral-900);
 	background-image: url("assets/images/pattern-dark-bg.svg");
-	color: var(--tbc-neutral-0);
+	color: var(--wp--preset--color--neutral-0);
 }
 
 .tbc-cta {
-	border-top-left-radius: var(--tbc-radius-lg);
-	border-top-right-radius: var(--tbc-radius-lg);
+	border-top-left-radius: var(--wp--custom--tbc--radius--lg);
+	border-top-right-radius: var(--wp--custom--tbc--radius--lg);
 	padding-block: 4rem;
 	text-align: center;
 }
@@ -470,8 +425,8 @@ a.tbc-button--dark {
 a.tbc-button--dark,
 .wp-block-button.tbc-button--dark .wp-block-button__link {
 	background: transparent;
-	border-color: var(--tbc-neutral-0);
-	color: var(--tbc-neutral-0);
+	border-color: var(--wp--preset--color--neutral-0);
+	color: var(--wp--preset--color--neutral-0);
 }
 
 a.tbc-button--dark span,
@@ -482,11 +437,11 @@ a.tbc-button--dark span,
 
 a.tbc-button--dark:hover,
 .wp-block-button.tbc-button--dark .wp-block-button__link:hover {
-	background: var(--tbc-neutral-700);
+	background: var(--wp--preset--color--neutral-700);
 }
 
 .tbc-proof--dark p {
-	color: var(--tbc-neutral-0);
+	color: var(--wp--preset--color--neutral-0);
 }
 
 .tbc-footer__inner {
@@ -499,7 +454,7 @@ a.tbc-button--dark:hover,
 }
 
 .tbc-footer small {
-	font-size: 0.875rem;
+	font-size: var(--wp--preset--font-size--caption);
 }
 
 .tbc-footer nav {
@@ -529,8 +484,8 @@ a.tbc-button--dark:hover,
 }
 
 @media (min-width: 48rem) {
-	:root {
-		--tbc-shell: min(100% - 4rem, 73.75rem);
+	.tbc-shell {
+		width: var(--wp--custom--tbc--shell--wide);
 	}
 
 	.tbc-header__inner {
@@ -562,7 +517,7 @@ a.tbc-button--dark:hover,
 @media (max-width: 47.9375rem) {
 	a.tbc-button,
 	.wp-block-button.tbc-button .wp-block-button__link {
-		font-size: 0.875rem;
+		font-size: var(--wp--preset--font-size--caption);
 		width: 100%;
 	}
 
