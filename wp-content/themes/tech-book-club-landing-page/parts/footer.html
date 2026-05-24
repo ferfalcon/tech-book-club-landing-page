@@ -1,9 +1,14 @@
-<!-- wp:html -->
-<div class="tbc-shell tbc-footer__inner">
-	<small>&copy; 2024 - Tech Book Club</small>
-	<nav aria-label="Social links">
-		<a class="tbc-social tbc-social--bluesky" href="https://bsky.app/" aria-label="Bluesky"></a>
-		<a class="tbc-social tbc-social--linkedin" href="https://www.linkedin.com/" aria-label="LinkedIn"></a>
-	</nav>
+<!-- wp:group {"className":"tbc-shell tbc-footer__inner","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group tbc-shell tbc-footer__inner">
+	<!-- wp:paragraph {"className":"tbc-footer__copyright"} -->
+	<p class="tbc-footer__copyright"><small>&copy; 2024 - Tech Book Club</small></p>
+	<!-- /wp:paragraph -->
+
+	<!-- wp:social-links {"iconColor":"neutral-0","iconColorValue":"#ffffff","showLabels":false,"className":"is-style-logos-only tbc-footer__social-links","style":{"spacing":{"blockGap":{"left":"1rem"}}}} -->
+	<ul class="wp-block-social-links has-icon-color is-style-logos-only tbc-footer__social-links">
+		<!-- wp:social-link {"url":"https://bsky.app/","service":"bluesky","label":"Bluesky"} /-->
+		<!-- wp:social-link {"url":"https://www.linkedin.com/","service":"linkedin","label":"LinkedIn"} /-->
+	</ul>
+	<!-- /wp:social-links -->
 </div>
-<!-- /wp:html -->
+<!-- /wp:group -->
