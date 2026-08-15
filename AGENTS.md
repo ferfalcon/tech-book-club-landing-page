@@ -1,42 +1,137 @@
-# Repository Guidelines
+# Repository Operating Contract
 
-## Project Structure & Module Organization
+## Purpose
 
-This repository is a DDEV-backed WordPress site for the custom block theme `Tech Book Club Landing Page`. WordPress runs from the repository root; avoid changing `wp-admin/` and `wp-includes/` unless explicitly required.
+This repository implements the Art gallery website from the approved design source. Agents working here must preserve design fidelity, accessibility, maintainability, and traceability between Figma, implementation, Git history, and deployments.
 
-- `wp-content/themes/tech-book-club-landing-page/` is the project-owned block theme for templates, patterns, styles, and assets.
-- `wp-content/themes/` also contains bundled default themes. Treat them as references.
-- `wp-content/plugins/` contains installed plugins such as Akismet and Hello Dolly.
-- `frontend-mentor/` contains the challenge brief, screenshots, starter HTML, and design assets.
-- `.ddev/` contains local environment configuration: PHP 8.4, MariaDB 11.8, and nginx-fpm.
+## Project sources
 
-## Build, Test, and Development Commands
+- Repository: `ferfalcon/art-gallery-website`
+- Frontend application: `frontend/`
+- Framework: Astro + TypeScript
+- Package manager: pnpm
+- Node.js: follow `frontend/package.json` (`24.x`)
+- Figma design: `https://www.figma.com/design/g2a8iUAviJAsHl5PBUwaUY/art-gallery-website?node-id=2148-2`
+- Primary Figma page: `🤖 Workflow` (`2148:2`)
+- Vercel team: `fer-falcons-team`
+- Vercel project: `art-gallery-website`
 
-- `ddev start` starts the local WordPress environment.
-- `ddev describe` shows site URLs and service status.
-- `ddev wp <command>` runs WP-CLI inside the container, for example `ddev wp theme list`.
-- `ddev wp theme activate tech-book-club-landing-page` activates the custom theme.
-- `cd wp-content/themes/tech-book-club-landing-page && npm install` installs theme tooling when `package.json` exists.
-- `cd wp-content/themes/tech-book-club-landing-page && npm run build` builds theme assets when available.
+## Instruction hierarchy
 
-There is no root `package.json`, Composer project, or automated test suite at the repository root.
+Apply instructions in this order, with scope-specific rules overriding broader ones where they do not conflict:
 
-## Coding Style & Naming Conventions
+1. Explicit user instruction for the current task.
+2. This root `AGENTS.md`.
+3. The nearest nested `AGENTS.md` for the files being changed.
+4. Once the implementation workflow is initialized, `design-workflow context --json` is canonical for mutable workflow state such as current stage, task, mode, blockers, artifacts, and code-edit policy.
+5. Actual repository, Figma, and deployment sources.
+6. Narrative documentation and generated artifacts.
 
-Follow WordPress block theme conventions. Use `style.css` for theme metadata, `theme.json` for global settings/styles, `templates/*.html` for templates, `parts/*.html` for template parts, `patterns/*.php` for patterns, and `styles/*.json` for style variations. Use tabs for PHP indentation where existing files do.
+Do not infer mutable workflow state from prose when canonical CLI state is available.
 
-For CSS, use readable custom properties and purpose-based class names. Keep custom code scoped to the custom theme and regenerate built assets when needed.
+## Figma scope
 
-## Testing Guidelines
+The primary editing scope is the `🤖 Workflow` page.
 
-No PHPUnit, Jest, Playwright, or `wp-env` configuration is currently present. Verify changes manually through the DDEV site and Site Editor. For visual work, compare against `frontend-mentor/design/` at mobile, tablet, and desktop widths. For WordPress checks, use `ddev wp theme list` and `ddev wp theme status tech-book-club-landing-page`.
+Do not create, move, delete, rename, restructure, or visually modify nodes on any other Figma page unless the user explicitly asks for it.
 
-## Commit & Pull Request Guidelines
+### File-global design-system exception
 
-Git history only shows an initial commit, so there is no established convention. Use concise, imperative messages such as `Add landing page styles`.
+Agents may inspect and modify file-global design-system resources when necessary to correctly prepare, normalize, or audit `🤖 Workflow`. This includes:
 
-Pull requests should include a summary, testing notes, screenshots for visual changes, and related issue or Frontend Mentor links. Call out any database, DDEV, or WordPress admin steps.
+- local text styles
+- local color, effect, and grid styles
+- variable collections and modes
+- variables, names, hierarchy, scopes, aliases, and code syntax
+- style names and descriptions
 
-## Agent-Specific Instructions
+Before any global change:
 
-Keep edits focused on `wp-content/themes/tech-book-club-landing-page/` unless told otherwise. Do not refactor WordPress core, bundled default themes, or bundled plugins. Preserve user changes and prefer existing WordPress/DDEV workflows.
+1. Inspect usage across the file.
+2. Assess impact on other pages.
+3. Preserve existing references whenever possible instead of detaching or duplicating values.
+4. Preserve visual output on other pages unless the user explicitly approves a visual change.
+5. Verify affected references after the change and check for unintended visual regressions.
+
+This exception does not permit structural or content edits on other pages. If a required fix would structurally or visually alter another page rather than only a shared global resource, stop and request explicit approval.
+
+## Source fidelity and implementation
+
+Inspect actual design and repository sources before implementing. Do not invent files, APIs, commands, dependencies, breakpoint values, tokens, component behavior, interaction rules, or accessibility behavior.
+
+When implementing from Figma, inspect as applicable:
+
+- target screens and viewports
+- component and variant structure
+- variables, styles, and tokens
+- typography and spacing
+- imagery and assets
+- interaction states
+- responsive transformations
+- content edge cases
+- accessibility implications
+
+Figma does not independently prove semantic HTML, keyboard or screen-reader behavior, intermediate responsive behavior, backend rules, or browser performance. Those must be designed and validated in the implementation.
+
+Implementation should integrate semantic HTML, keyboard and focus behavior, accessible names and relationships, responsive behavior, reduced-motion considerations, relevant UI states, content edges, and regression checks as applicable.
+
+Avoid unrelated refactors and premature abstractions.
+
+## Frontend guidance
+
+Before HTML, CSS, or client-side JavaScript work, follow the installed project skill at `.agents/skills/modern-web-guidance/SKILL.md` and retrieve the relevant modern web guidance before implementation.
+
+Also follow `frontend/AGENTS.md` for Astro-specific development instructions.
+
+## Git and deployment policy
+
+Treat `main` as production state.
+
+- Make implementation and project-guidance changes on a dedicated branch.
+- Prefer branch → pull request → Vercel preview → verification → merge.
+- Do not push implementation changes directly to `main` unless the user explicitly requests it.
+- Do not manually trigger or promote a production deployment unless the user explicitly requests it.
+- Keep commits narrowly scoped and use clear, imperative subjects.
+- Before merging, verify the relevant implementation and, when applicable, the Vercel preview.
+
+## Implementation workflow lifecycle
+
+The workflow source lives in `docs/implementation-workflow/`.
+
+Before workflow initialization, the absence of `.workflow/` is expected and is not an error.
+
+Do not create `.workflow/`, infer workflow state, or manually fabricate workflow records unless the user explicitly asks to start or initialize the workflow.
+
+Once initialized, begin workflow-related work by running:
+
+```bash
+design-workflow context --json
+```
+
+Treat that output as canonical operational state. Respect its current execution kind, stage, mode, blockers, artifacts, task scope, and code-edit policy.
+
+Never manually edit `.workflow/generated/*`.
+
+## Validation and evidence
+
+Never claim a check passed unless it actually ran successfully and there is evidence.
+
+For task-oriented work, report:
+
+- what changed
+- relevant input and output snapshots
+- verification or validation actually executed
+- deviations, blockers, or risks
+- generated-state status when applicable
+- the next permitted action
+
+When implementation changes are visual, verify against the relevant Figma source and the rendered application. When deployment behavior matters, verify the relevant Vercel deployment or preview rather than assuming Git state alone proves correctness.
+
+## Scope-specific instructions
+
+Nested `AGENTS.md` files remain authoritative for their directories:
+
+- `frontend/AGENTS.md` — Astro/frontend development behavior
+- `docs/implementation-workflow/AGENTS.md` — workflow package development rules
+
+Do not duplicate or override those rules here unless a repository-wide constraint genuinely applies.
