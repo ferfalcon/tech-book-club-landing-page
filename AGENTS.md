@@ -6,15 +6,15 @@ This repository implements the Art gallery website from the approved design sour
 
 ## Project sources
 
-- Repository: `ferfalcon/art-gallery-website`
+- Repository: `ferfalcon/tech-book-club-landing-page`
 - Frontend application: `frontend/`
 - Framework: Astro + TypeScript
 - Package manager: pnpm
 - Node.js: follow `frontend/package.json` (`24.x`)
-- Figma design: `https://www.figma.com/design/g2a8iUAviJAsHl5PBUwaUY/art-gallery-website?node-id=2148-2`
-- Primary Figma page: `🤖 Workflow` (`2148:2`)
+- Figma design: `https://www.figma.com/design/N9NGlGjQhwRVdnTZloWweh/tech-book-club-landing-page?node-id=2142-363`
+- Primary Figma page: `🤖 Workflow` (`2142:363`)
 - Vercel team: `fer-falcons-team`
-- Vercel project: `art-gallery-website`
+- Vercel project: `tech-book-club-landing-page`
 
 ## Instruction hierarchy
 
