@@ -312,18 +312,131 @@ None for Stage 2.
 
 ## 3. Design Intent
 
-Stage 3 has not started.
+### Stage 3 source status
 
-### DES-001 — Design decision title
+- Active inputs: `SRC-DS-001`, `SRC-REPO-001`; Stage 2 is recorded as owner-approved in the workflow record.
+- Design source re-verification: On 2026-08-16, connected Figma metadata plus fresh rendered screenshots confirmed the audited desktop (`2142:1298`, 1440 px), tablet (`2142:1911`, 768 px), and mobile (`2142:2091`, 375 px) compositions, their seven-section order, section-component variants, and the Primary/Alternate CTA state sets. No material visual or structural conflict with `DESIGN-AUDIT.md` was detected.
+- The three supplied frame widths are design-reference conditions and validation anchors. They are not automatically implementation breakpoint thresholds.
+- Stage 3 records visual, responsive, content, interaction, and accessibility intent only. Implementation architecture and file/module choices remain outside this stage.
 
-- Classification:
-- Intent:
-- Snapshot and evidence:
-- Requirement references:
+### DES-001 — Preserve the landing-page narrative and visual hierarchy
 
-### Responsive and interaction intent
+- **Classification:** Confirmed and observed.
+- **Intent:** Preserve the approved seven-section sequence and its visual emphasis: Hero → Read Together → Community → Reading Journey → Membership Options → Testimonial → Footer. The hero establishes the primary value proposition and first CTA; the two editorial sections explain the community value; Reading Journey explains progression; Membership Options is the commercial comparison focal point; the testimonial provides social validation; and the dark footer closes with the repeated membership CTA and social proof. Do not reorder, merge, hide, or visually demote these sections in a way that changes the approved narrative.
+- **Snapshot and evidence:** `EVD-002`, `EVD-003`, `EVD-004`, `EVD-012`; fresh Stage 3 renders of `2142:1298`, `2142:1911`, and `2142:2091` from `SRC-DS-001`.
+- **Requirement references:** `REQ-FR-001`, `REQ-FR-002`, `REQ-FR-005`, `REQ-NFR-001`.
+- **Confidence:** High — section order and hierarchy are consistent across all supplied reference compositions.
 
-Use `DES-RWD-*` and `DES-INT-*` identifiers. Document supplied viewport evidence, behavior between examples, states, content edge cases, and accessibility intent from the pinned design snapshots.
+### DES-002 — Preserve the approved typography, color, spacing, and emphasis system
+
+- **Classification:** Observed.
+- **Intent:** Preserve the distinct typographic roles documented by the local design system: Martian Mono for display/heading/label emphasis, Inter for body copy, and Fira Code for the brand wordmark. Preserve the neutral and light-salmon foundation palette, the light patterned content surfaces, the dark footer surface, and the coral/salmon accent language. Maintain the Pro membership card as the visibly emphasized plan without introducing a selected-state meaning. Preserve the source spacing rhythm, rounded-corner language, thin outlines, and decorative grid/glow treatments as secondary to content rather than allowing decoration to reduce legibility.
+- **Snapshot and evidence:** Style Guide and local variables in `EVD-008`, `EVD-009`; visual inventory in `DESIGN-AUDIT.md`; `EVD-002`, `EVD-003`, `EVD-004`.
+- **Requirement references:** `REQ-FR-002`, `REQ-NFR-001`, `REQ-AR-005`.
+- **Confidence:** High — the design system and repeated section instances provide explicit visual evidence.
+
+### DES-003 — Treat photography and decorative artwork according to page purpose
+
+- **Classification:** Recommended accessibility interpretation based on observed source purpose.
+- **Intent:** Keep the approved hero, reading-group, and community photographs in their demonstrated visual roles and crops, but treat them as decorative/context-setting for assistive technology because the adjacent headings and copy carry the material product information. Treat member-avatar artwork as decorative because the adjacent “200+ developers joined already” text carries the social-proof meaning. Treat background patterns, glow, journey arrows, circle marks, and the technology-logo cluster as decorative. The Tech Book Club brand mark is content-bearing identity and must expose the brand name once without causing duplicate announcements. No decorative visual should become an interactive control unless a later approved requirement changes scope.
+- **Snapshot and evidence:** `EVD-005`, `EVD-010`, `EVD-011`; `AUD-006`, `AUD-008`; fresh Stage 3 renders from `SRC-DS-001`.
+- **Requirement references:** `REQ-AR-003`, `REQ-FR-005`, `REQ-NFR-001`.
+- **Confidence:** Medium — the visual roles are clear, while accessibility semantics are an implementation-facing interpretation not encoded by Figma itself.
+
+### DES-004 — Preserve readable content and allow vertical growth under reflow
+
+- **Classification:** Confirmed outcome with recommended edge-case treatment.
+- **Intent:** Preserve all approved copy without truncation. Headings, descriptive copy, list items, social-proof text, prices, testimonial text, and footer content may wrap as space tightens; section and card height should grow rather than clip content. CTA labels should remain readable and intact. The approved source copy is the content baseline; no localization or arbitrary long-content scenario is introduced, but modest browser/text-resize wrapping must not break the hierarchy or hide material information.
+- **Snapshot and evidence:** `EVD-002`, `EVD-003`, `EVD-004`, `EVD-012`; `AUD-001`; accessibility observations in `DESIGN-AUDIT.md`.
+- **Requirement references:** `REQ-FR-002`, `REQ-FR-003`, `REQ-AR-005`, `REQ-NFR-001`.
+- **Confidence:** High for the no-loss/no-clipping outcome; medium for exact intermediate wrapping because Figma supplies only three reference conditions.
+
+### DES-RWD-001 — Use the supplied viewport compositions as reference conditions, not hard-coded thresholds
+
+- **Classification:** Observed with recommended interpolation principle.
+- **Intent:** Match the 1440 px desktop, 768 px tablet, and 375 px mobile compositions at those reference conditions. Between them, transition to the next simpler layout before content or controls collide, become overly compressed, or create horizontal page scrolling. Stage 4 may select implementation thresholds from observed layout failure points; it must not assume that 1440, 768, or 375 are the threshold values merely because they are Figma frame widths.
+- **Snapshot and evidence:** `EVD-002`, `EVD-003`, `EVD-004`; `AUD-001`; fresh Stage 3 renders from `SRC-DS-001`.
+- **Requirement references:** `REQ-FR-003`, `REQ-AR-005`, `REQ-NFR-001`, `REQ-CON-004`.
+- **Confidence:** High for the three reference conditions; medium for intermediate-width interpolation because thresholds are intentionally absent from the source.
+
+### DES-RWD-002 — Stack the hero and editorial sections while preserving text-first reading order
+
+- **Classification:** Observed.
+- **Intent:** On desktop, preserve the hero’s text/social-proof and image columns, Read Together’s image-left/text-right composition, and Community’s text-left/image-right composition. At tablet and mobile conditions, stack these sections vertically: hero text/CTA/social proof before the hero image; Read Together text/checklist before its image; Community text before its image. The DOM/assistive-technology order should follow the meaningful text-first sequence so responsive visual changes do not require a different reading order.
+- **Snapshot and evidence:** `EVD-002`, `EVD-003`, `EVD-004`, `EVD-005`, `EVD-012`; `2142:1298`, `2142:1911`, `2142:2091`.
+- **Requirement references:** `REQ-FR-003`, `REQ-AR-001`, `REQ-NFR-001`.
+- **Confidence:** High — the transformation is directly demonstrated at all three supplied conditions.
+
+### DES-RWD-003 — Transform journey, membership, testimonial, and footer layouts progressively
+
+- **Classification:** Observed.
+- **Intent:** Keep Reading Journey as a horizontal four-step progression on desktop and a vertical sequence on tablet/mobile. Keep Membership Options as three cards in one row on desktop; at the supplied tablet condition use a two-column arrangement with the third card wrapping below; at mobile use one full-width card per row in Starter → Pro → Enterprise order. Keep testimonial content centered on desktop and left-aligned at tablet/mobile. Preserve the centered footer CTA/social-proof block while allowing the footer utility content to simplify from the wider desktop/tablet arrangement to the mobile stacked treatment shown by the source.
+- **Snapshot and evidence:** `EVD-002`, `EVD-003`, `EVD-004`, `EVD-005`; fresh Stage 3 renders of `2142:1298`, `2142:1911`, `2142:2091`.
+- **Requirement references:** `REQ-FR-001`, `REQ-FR-003`, `REQ-FR-005`, `REQ-NFR-001`.
+- **Confidence:** High — each transformation is visible in the supplied compositions.
+
+### DES-RWD-004 — Keep intermediate widths and accessibility reflow free of layout-caused loss
+
+- **Classification:** Recommended implementation-facing design intent.
+- **Intent:** Use flexible container widths and allow images, cards, text blocks, and section heights to adapt between the reference compositions. Preserve image crops/aspect intent without stretching; allow cards to wrap or stack before their copy or CTAs become cramped; allow headings and testimonial copy to wrap naturally; and avoid layout-caused horizontal page scrolling. Zoom/text-resize validation must retain the same content order and available controls even when the rendered result no longer matches an exact Figma line break.
+- **Snapshot and evidence:** `AUD-001`; `EVD-002`, `EVD-003`, `EVD-004`; accessibility expectations from `SRC-REPO-001`.
+- **Requirement references:** `REQ-FR-003`, `REQ-AR-005`, `REQ-NFR-001`.
+- **Confidence:** Medium — the outcome is required, but exact intermediate layouts are not directly supplied.
+
+### DES-INT-001 — Preserve CTA link behavior and the supplied default, hover, and focus visual language
+
+- **Classification:** Confirmed by owner decision plus observed component states.
+- **Intent:** Treat all CTA controls as links. Hero/footer “Review membership options” links navigate to the Membership Options section. Starter/Pro “Subscribe now” and Enterprise “Talk to us” retain literal `href="#"` placeholders with no hidden subscription/contact behavior. Preserve the supplied Primary and Alternate default/hover/focus appearances for their respective contexts and ensure the focus treatment is keyboard-visible. Do not invent loading, disabled, success, error, selected, or application-managed pressed states for these static links; ordinary link activation behavior does not create a new persistent UI state.
+- **Snapshot and evidence:** `EVD-006`, `EVD-007`; `AUD-002`, `AUD-003`, `AUD-004`, `AUD-009`; owner decisions recorded 2026-08-16; Primary Button `136:1610`; Alternate Button `172:820`.
+- **Requirement references:** `REQ-FR-004`, `REQ-AR-002`, `REQ-CON-005`.
+- **Confidence:** High — destinations for the current scope are owner-approved and visual states are explicitly supplied.
+
+### DES-INT-002 — Give icon-only social links clear names and a visible focus treatment
+
+- **Classification:** Confirmed semantics with recommended visual treatment.
+- **Intent:** Bluesky and LinkedIn remain icon-only links with literal `href="#"` placeholders and meaningful accessible names. Their keyboard focus must be clearly visible. Because Figma supplies no social-icon hover/focus variants, reuse the established focus language from the CTA system where practical rather than inventing a new branded interaction pattern. Any hover enhancement must remain subtle, preserve icon recognition/contrast, and must not be required to understand the control.
+- **Snapshot and evidence:** `AUD-005`; `150:878`, `150:879`; CTA focus-state evidence in `EVD-006`; owner decision 2026-08-16.
+- **Requirement references:** `REQ-AR-002`, `REQ-AR-004`.
+- **Confidence:** High for semantics and focus requirement; medium for the exact social-link visual treatment because the source omits those variants.
+
+### DES-INT-003 — Do not add authored motion that the design does not demonstrate
+
+- **Classification:** Recommended conservative interpretation of missing motion evidence.
+- **Intent:** Use normal link navigation and state changes without adding entrance animation, looping decoration, scroll-linked effects, or authored smooth scrolling solely for polish. This keeps the rendered behavior faithful to the static/prototype evidence and avoids introducing unnecessary motion or client-side behavior. If motion is later explicitly approved, reduced-motion handling becomes part of the owning design/specification change.
+- **Snapshot and evidence:** Interaction/motion audit in `DESIGN-AUDIT.md`; `AUD-002`, `AUD-009`; `SRC-REPO-001` lightweight-static-page expectation.
+- **Requirement references:** `REQ-NFR-002`, `REQ-CON-005`.
+- **Confidence:** High that no motion is demonstrated; medium that absence means “do not add” rather than merely “unspecified,” so this remains an explicit Stage 3 design decision for owner approval.
+
+### Stage 3 review pass 1 — Completeness and correctness
+
+- [x] Visual hierarchy, typography/color/spacing intent, imagery, content edges, supplied responsive transformations, intermediate-width intent, interaction states, motion, and accessibility implications are covered for the Lite scope.
+- [x] The 1440 px, 768 px, and 375 px frames are treated as validation anchors rather than invented breakpoint thresholds.
+- [x] Desktop/tablet/mobile differences are described from fresh Stage 3 Figma evidence, including the tablet two-column membership wrap and mobile single-column membership stack.
+- [x] CTA and social-link behavior remains consistent with the owner-approved Stage 2 decisions.
+- [x] No implementation architecture, framework structure, or unsupported business behavior was introduced.
+
+### Corrections from Stage 3 review pass 1
+
+- Made the tablet Membership Options intent explicit as two columns with Enterprise wrapping below rather than describing tablet merely as “multi-column.”
+- Classified the three contextual photographs, member avatars, patterns/glow, journey arrows, and technology-logo artwork as decorative for assistive technology, while keeping the Tech Book Club brand identity content-bearing.
+- Explicitly required text/card vertical growth rather than clipping when browser or text reflow changes line breaks.
+- Resolved the missing CTA active/disabled-state question by documenting that no authored persistent/async state is required for the approved static-link behavior.
+- Kept exact breakpoint thresholds deferred to Stage 4 and tied future thresholds to layout failure points instead of Figma frame widths.
+- Added a conservative no-authored-motion decision because no motion behavior is demonstrated by the approved source.
+
+### Stage 3 review pass 2 — Consistency, traceability, source integrity, risks, and uncertainty
+
+- [x] All `DES-*`, `DES-RWD-*`, and `DES-INT-*` items map to approved requirements and active source evidence.
+- [x] Fresh Figma metadata and rendered screenshots were checked on 2026-08-16 before recording Stage 3 intent; no material source change was detected.
+- [x] Observed, confirmed, recommended, and accessibility-derived decisions remain explicitly classified and include confidence.
+- [x] The design intent preserves the same content hierarchy and material information across responsive conditions and assistive-technology reading order.
+- [x] Placeholder destinations remain placeholders and do not imply subscription, contact, or social-profile flows.
+- [x] Image licensing and footer-year treatment remain visible non-blocking product/content risks rather than being silently decided in design intent.
+- [x] No Stage 3 blocking product decision remains.
+
+### Stage 3 readiness
+
+`Ready for Stage 3 gated approval` — design intent is complete for the current Lite scope. Per Gated execution mode, do not advance to Stage 4 until the project owner explicitly approves Stage 3.
 
 ## 4. Specification
 
@@ -385,28 +498,30 @@ Create new `SRC-*` IDs and perform an impact assessment rather than silently upd
 
 ### Blocking
 
-- None at the Stage 2 checkpoint.
+- None at the Stage 3 checkpoint.
 
 ### Non-blocking
 
-- Footer-year treatment, image production-use/licensing confirmation, exact intermediate responsive thresholds, and any additional active/pressed CTA treatment remain documented follow-up items.
+- Footer-year treatment remains unresolved: the design source still shows literal `© 2024 – Tech Book Club`.
+- Production-use/licensing confirmation for supplied photographs/member portraits remains unresolved; their accessibility semantics are now documented separately in Stage 3.
+- Exact intermediate responsive thresholds remain intentionally deferred to Stage 4 and must be derived from layout/content failure points rather than copied from Figma frame widths.
 - Subscription/contact/social destinations remain intentionally out of scope and use `#` placeholders.
 
 ## 10. Traceability
 
 | Snapshot or evidence | Requirement | Design | Specification or criterion | Plan item | Validation |
 |---|---|---|---|---|---|
-| `EVD-002`, `EVD-003`, `EVD-004`, `EVD-012` | `REQ-FR-001`, `REQ-FR-002`, `REQ-FR-003`, `REQ-NFR-001` | Pending Stage 3 | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
-| `EVD-005` | `REQ-FR-003`, `REQ-FR-005` | Pending Stage 3 | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
-| `EVD-006`, `EVD-007`, `AUD-002`, `AUD-003`, `AUD-009`; owner decision 2026-08-16 | `REQ-FR-004`, `REQ-AR-002` | Pending Stage 3 | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
-| `EVD-010`, `EVD-011`, `AUD-006` | `REQ-AR-003` | Pending Stage 3 | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
-| `AUD-005`; owner decision 2026-08-16 | `REQ-AR-004` | Pending Stage 3 | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
-| `SRC-REPO-001` | `REQ-AR-001`, `REQ-AR-002`, `REQ-AR-005`, `REQ-NFR-002`, `REQ-CON-001`, `REQ-CON-003`, `REQ-CON-006` | Pending Stage 3 | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
-| `SRC-DS-001`, `SRC-REPO-001` | `REQ-CON-002`, `REQ-CON-004`, `REQ-CON-005` | Pending Stage 3 | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
+| `EVD-002`, `EVD-003`, `EVD-004`, `EVD-012` | `REQ-FR-001`, `REQ-FR-002`, `REQ-FR-003`, `REQ-NFR-001` | `DES-001`, `DES-002`, `DES-004`, `DES-RWD-001`, `DES-RWD-002`, `DES-RWD-003`, `DES-RWD-004` | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
+| `EVD-005` | `REQ-FR-003`, `REQ-FR-005` | `DES-001`, `DES-003`, `DES-RWD-002`, `DES-RWD-003` | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
+| `EVD-006`, `EVD-007`, `AUD-002`, `AUD-003`, `AUD-009`; owner decision 2026-08-16 | `REQ-FR-004`, `REQ-AR-002` | `DES-INT-001`, `DES-INT-003` | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
+| `EVD-010`, `EVD-011`, `AUD-006` | `REQ-AR-003` | `DES-003` | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
+| `AUD-005`; owner decision 2026-08-16 | `REQ-AR-004` | `DES-INT-002` | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
+| `SRC-REPO-001` | `REQ-AR-001`, `REQ-AR-002`, `REQ-AR-005`, `REQ-NFR-002`, `REQ-CON-001`, `REQ-CON-003`, `REQ-CON-006` | `DES-003`, `DES-004`, `DES-RWD-002`, `DES-RWD-004`, `DES-INT-001`, `DES-INT-002`, `DES-INT-003` | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
+| `SRC-DS-001`, `SRC-REPO-001` | `REQ-CON-002`, `REQ-CON-004`, `REQ-CON-005` | `DES-RWD-001`, `DES-INT-001`, `DES-INT-003` | Pending Stage 4 | Pending Stage 7 | Pending Stage 11 |
 
 ## 11. Review Pass 1 — Completeness and Correctness
 
-Reserved for the complete Lite implementation-brief review at Stage 5. Stage 2 requirement-specific review passes are recorded in Section 2.
+Reserved for the complete Lite implementation-brief review at Stage 5. Stage 2 requirement-specific and Stage 3 design-specific review passes are recorded in their owning sections.
 
 - [ ] Scope and pinned repository context are accurate.
 - [ ] Snapshot IDs exist and were actually used.
@@ -420,7 +535,7 @@ Pending Stage 5.
 
 ## 13. Review Pass 2 — Consistency, Traceability, Source Integrity, Risks, and Uncertainty
 
-Reserved for the complete Lite implementation-brief review at Stage 8. Stage 2 requirement-specific review passes are recorded in Section 2.
+Reserved for the complete Lite implementation-brief review at Stage 8. Stage 2 requirement-specific and Stage 3 design-specific review passes are recorded in their owning sections.
 
 - [ ] Ownership sections and identifiers remain distinct.
 - [ ] Every material plan item maps to approved requirements or specifications and pinned sources.

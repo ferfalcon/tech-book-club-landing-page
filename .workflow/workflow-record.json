@@ -6,7 +6,7 @@
     "executionMode": "Gated"
   },
   "state": {
-    "stage": 3,
+    "stage": 4,
     "status": "In progress",
     "activeInputs": [
       "SRC-DS-001",
@@ -193,6 +193,30 @@
       ],
       "evidence": "Stage 2 requirements are complete, reviewed, source-traceable, and explicitly approved by the project owner in ChatGPT on 2026-08-16.",
       "recordedAt": "2026-08-16T03:34:02.734Z",
+      "approvedBy": "Owner"
+    },
+    {
+      "id": "GATE-004",
+      "stage": 3,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-003",
+        "VER-002"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT",
+        "ART-IMPLEMENTATION-BRIEF"
+      ],
+      "evidence": "Stage 3 design intent is complete, reviewed, source-traceable, and explicitly approved by the project owner in ChatGPT on 2026-08-16.",
+      "recordedAt": "2026-08-16T03:52:48.267Z",
       "approvedBy": "Owner"
     }
   ],
