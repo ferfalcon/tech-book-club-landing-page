@@ -1,0 +1,35 @@
+---
+import ButtonLink from './ButtonLink.astro';
+import checkUrl from '../assets/tech-book-club/images/icon-check.svg?url';
+
+interface Props {
+	name: string;
+	price: string;
+	period?: string;
+	features: string[];
+	cta: string;
+	emphasized?: boolean;
+}
+
+const { name, price, period, features, cta, emphasized = false } = Astro.props;
+---
+
+<article class:list={['membership-card', { 'membership-card--emphasized': emphasized }]}>
+	<div class="membership-card__details">
+		<h3>{name}</h3>
+		<div class="membership-card__price">
+			<strong>{price}</strong>
+			{period && <span>{period}</span>}
+		</div>
+		<hr />
+		<ul>
+			{features.map((feature) => (
+				<li>
+					<span class="benefit-check" aria-hidden="true"><img src={checkUrl} alt="" width="21" height="21" /></span>
+					<span>{feature}</span>
+				</li>
+			))}
+		</ul>
+	</div>
+	<ButtonLink href="#" label={cta} fullWidth />
+</article>

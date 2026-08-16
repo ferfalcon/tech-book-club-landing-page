@@ -1,0 +1,21 @@
+---
+import avatarsUrl from '../assets/tech-book-club/images/image-avatars.webp?url';
+import starUrl from '../assets/tech-book-club/images/icon-star.svg?url';
+
+interface Props {
+	context?: 'hero' | 'footer';
+}
+
+const { context = 'hero' } = Astro.props;
+const stars = Array.from({ length: 5 });
+---
+
+<div class:list={['social-proof', `social-proof--${context}`]}>
+	<img class="social-proof__avatars" src={avatarsUrl} alt="" width="110" height="40" aria-hidden="true" />
+	<div class="social-proof__rating">
+		<div class="social-proof__stars" aria-hidden="true">
+			{stars.map(() => <img src={starUrl} alt="" width="28" height="28" />)}
+		</div>
+		<p>200+ developers joined already</p>
+	</div>
+</div>

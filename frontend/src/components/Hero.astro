@@ -1,0 +1,31 @@
+---
+import Brand from './Brand.astro';
+import ButtonLink from './ButtonLink.astro';
+import SocialProof from './SocialProof.astro';
+import heroDesktopUrl from '../assets/tech-book-club/images/image-hero-desktop.webp?url';
+import heroTabletUrl from '../assets/tech-book-club/images/image-hero-tablet.webp?url';
+import heroMobileUrl from '../assets/tech-book-club/images/image-hero-mobile.webp?url';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+	<div class="hero__inner">
+		<Brand />
+		<div class="hero__grid">
+			<div class="hero__content">
+				<div class="hero__copy">
+					<h1 id="hero-title">Join the ultimate tech book club</h1>
+					<p>Turn your reading time into learning time with fellow tech enthusiasts. Get curated recommendations, join vibrant discussions, and level up your skills one chapter at a time.</p>
+				</div>
+				<div class="hero__cta">
+					<ButtonLink href="#membership-options" label="REVIEW MEMBERSHIP OPTIONS" icon="down" />
+					<SocialProof />
+				</div>
+			</div>
+			<picture class="hero__picture">
+				<source media="(max-width: 767px)" srcset={heroMobileUrl} />
+				<source media="(max-width: 1199px)" srcset={heroTabletUrl} />
+				<img src={heroDesktopUrl} alt="" width="540" height="606" fetchpriority="high" />
+			</picture>
+		</div>
+	</div>
+</section>

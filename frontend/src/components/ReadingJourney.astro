@@ -1,0 +1,23 @@
+---
+import arrowUrl from '../assets/tech-book-club/images/pattern-arrow.svg?url';
+
+const steps = [
+	'Choose your membership tier',
+	'Get your monthly book selection',
+	'Join our discussion forums',
+	'Attend exclusive meetups',
+];
+---
+
+<section class="reading-journey" aria-labelledby="journey-title">
+	<h2 id="journey-title">Your tech reading journey</h2>
+	<ol class="journey-steps">
+		{steps.map((step, index) => (
+			<li>
+				<span class="journey-steps__number" aria-hidden="true">{index + 1}</span>
+				<span class="journey-steps__label">{step}</span>
+				{index < steps.length - 1 && <img class="journey-steps__arrow" src={arrowUrl} alt="" aria-hidden="true" />}
+			</li>
+		))}
+	</ol>
+</section>

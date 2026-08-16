@@ -1,0 +1,32 @@
+---
+import checkUrl from '../assets/tech-book-club/images/icon-check.svg?url';
+import readDesktopUrl from '../assets/tech-book-club/images/image-read-together-desktop.webp?url';
+import readTabletUrl from '../assets/tech-book-club/images/image-read-together-tablet.webp?url';
+import readMobileUrl from '../assets/tech-book-club/images/image-read-together-mobile.webp?url';
+
+const features = [
+	'Monthly curated tech reads selected by industry experts',
+	'Virtual and in-person meetups for deep-dive discussions',
+	'Early access to new tech book releases',
+	'Author Q&A sessions with tech thought leaders',
+];
+---
+
+<section class="content-section split-section read-together" aria-labelledby="read-together-title">
+	<div class="split-section__copy read-together__copy">
+		<h2 id="read-together-title">Read together, grow together</h2>
+		<ul class="feature-list">
+			{features.map((feature) => (
+				<li>
+					<span class="check-icon" aria-hidden="true"><img src={checkUrl} alt="" width="24" height="24" /></span>
+					<span>{feature}</span>
+				</li>
+			))}
+		</ul>
+	</div>
+	<picture class="section-picture read-together__picture">
+		<source media="(max-width: 767px)" srcset={readMobileUrl} />
+		<source media="(max-width: 1199px)" srcset={readTabletUrl} />
+		<img src={readDesktopUrl} alt="" width="560" height="520" loading="lazy" />
+	</picture>
+</section>

@@ -1,0 +1,12 @@
+---
+import MembershipCard from './MembershipCard.astro';
+---
+
+<section id="membership-options" class="membership-options" aria-labelledby="membership-title">
+	<h2 id="membership-title">Membership options</h2>
+	<div class="membership-options__grid">
+		<MembershipCard name="Starter" price="$19" period="/month" features={['1 book/month', 'Online forums']} cta="SUBSCRIBE NOW" />
+		<MembershipCard name="Pro" price="$29" period="/month" features={['2 books/month', 'Virtual meetups']} cta="SUBSCRIBE NOW" emphasized />
+		<MembershipCard name="Enterprise" price="Custom" features={['Team access', 'Private sessions']} cta="TALK TO US" />
+	</div>
+</section>
