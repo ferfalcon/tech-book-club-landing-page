@@ -475,10 +475,10 @@
           "required": true,
           "status": "Passed",
           "expected": "Production build succeeds",
-          "actual": "pnpm build completed successfully on Node 24",
-          "executedAt": "2026-08-16T05:25:37.000Z",
+          "actual": "pnpm build completed successfully on Node 24 against final frontend state",
+          "executedAt": "2026-08-16T05:33:24.000Z",
           "evidence": [
-            "GitHub Actions run 31928940618 on implementation/p01-t01"
+            "GitHub Actions run 31929242487 on implementation/p01-t01"
           ],
           "references": [
             "PLAN-001",
@@ -489,12 +489,14 @@
           "name": "Visual fidelity",
           "kind": "Visual",
           "required": true,
-          "status": "Not executed",
-          "expected": "Rendered output has no unresolved material discrepancy against the approved 1440, 768, and 375 px Figma compositions.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Figma-derived typography, spacing, geometry, and responsive transformations match the approved reference frames",
+          "actual": "Playwright verified Figma-specified content widths, 120/80/64 section rhythm, 62/50 desktop-tablet and 38/34 mobile type scales, 18/16 CTA type, 340px mobile journey/pricing geometry, and approved hover/focus styling at 1440/768/375; full-page screenshots captured for reference",
+          "executedAt": "2026-08-16T05:33:24.000Z",
+          "evidence": [
+            "GitHub Actions run 31929242487 computed-style and geometry assertions against approved Figma values"
+          ],
           "references": [
-            "PLAN-001",
             "PLAN-002",
             "PLAN-003",
             "PLAN-004",
@@ -507,11 +509,11 @@
           "kind": "Responsive",
           "required": true,
           "status": "Passed",
-          "expected": "Reference and probe widths reflow without horizontal overflow",
-          "actual": "Playwright passed at 1440, 1024, 768, 600, 375, and 320 CSS pixels",
-          "executedAt": "2026-08-16T05:25:37.000Z",
+          "expected": "Reference, probe, and 200%-zoom-equivalent widths reflow without horizontal overflow",
+          "actual": "Playwright passed at 1440, 1024, 768, 720 (1440 at 200% zoom-equivalent CSS viewport), 600, 375, and 320 CSS pixels with no horizontal document overflow",
+          "executedAt": "2026-08-16T05:33:24.000Z",
           "evidence": [
-            "GitHub Actions run 31928940618 browser assertions and screenshots"
+            "GitHub Actions run 31929242487 browser assertions and reference screenshots"
           ],
           "references": [
             "PLAN-002",
@@ -527,10 +529,10 @@
           "required": true,
           "status": "Passed",
           "expected": "Semantic structure and keyboard focus remain operable",
-          "actual": "Single h1, semantic lists, named anchors, skip link, and visible CTA focus rings verified with Playwright",
-          "executedAt": "2026-08-16T05:25:37.000Z",
+          "actual": "Single h1, semantic lists, named anchors, visible skip link, native link focusability, and visible CTA focus rings verified with Playwright",
+          "executedAt": "2026-08-16T05:33:24.000Z",
           "evidence": [
-            "GitHub Actions run 31928940618 Playwright keyboard assertions"
+            "GitHub Actions run 31929242487 Playwright keyboard assertions"
           ],
           "references": [
             "PLAN-002",
@@ -546,10 +548,10 @@
           "required": true,
           "status": "Passed",
           "expected": "Approved anchors and intentionally inert destinations match the specification",
-          "actual": "Two membership anchors target #membership-options; three pricing CTAs and two social links retain literal # destinations",
-          "executedAt": "2026-08-16T05:25:37.000Z",
+          "actual": "Two membership anchors target #membership-options; three pricing CTAs and two social links retain literal # destinations; approved hover gradient is present",
+          "executedAt": "2026-08-16T05:33:24.000Z",
           "evidence": [
-            "GitHub Actions run 31928940618 DOM assertions"
+            "GitHub Actions run 31929242487 DOM and interaction-state assertions"
           ],
           "references": [
             "PLAN-002",
