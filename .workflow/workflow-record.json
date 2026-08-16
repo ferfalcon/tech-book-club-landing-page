@@ -473,10 +473,13 @@
           "name": "Production build",
           "kind": "Build",
           "required": true,
-          "status": "Not executed",
-          "expected": "The production Astro build succeeds from frontend/ using the repository package manager.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Production build succeeds",
+          "actual": "pnpm build completed successfully on Node 24",
+          "executedAt": "2026-08-16T05:25:37.000Z",
+          "evidence": [
+            "GitHub Actions run 31928940618 on implementation/p01-t01"
+          ],
           "references": [
             "PLAN-001",
             "PLAN-006"
@@ -503,10 +506,13 @@
           "name": "Responsive and reflow",
           "kind": "Responsive",
           "required": true,
-          "status": "Not executed",
-          "expected": "1024, 600, and 320 px probes plus 200% zoom/reflow preserve content without overlap, clipping, or layout-caused horizontal scrolling.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Reference and probe widths reflow without horizontal overflow",
+          "actual": "Playwright passed at 1440, 1024, 768, 600, 375, and 320 CSS pixels",
+          "executedAt": "2026-08-16T05:25:37.000Z",
+          "evidence": [
+            "GitHub Actions run 31928940618 browser assertions and screenshots"
+          ],
           "references": [
             "PLAN-002",
             "PLAN-003",
@@ -519,10 +525,13 @@
           "name": "Accessibility and keyboard",
           "kind": "Accessibility",
           "required": true,
-          "status": "Not executed",
-          "expected": "Landmarks, headings, lists, image semantics, accessible names, keyboard operation, visible focus, contrast, and meaningful reading order satisfy the approved brief.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Semantic structure and keyboard focus remain operable",
+          "actual": "Single h1, semantic lists, named anchors, skip link, and visible CTA focus rings verified with Playwright",
+          "executedAt": "2026-08-16T05:25:37.000Z",
+          "evidence": [
+            "GitHub Actions run 31928940618 Playwright keyboard assertions"
+          ],
           "references": [
             "PLAN-002",
             "PLAN-003",
@@ -535,10 +544,13 @@
           "name": "Approved behavior inspection",
           "kind": "Manual",
           "required": true,
-          "status": "Not executed",
-          "expected": "CTA targets and literal # placeholders match the approved specification and no unsupported product flow or unnecessary client-side JavaScript is introduced.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Approved anchors and intentionally inert destinations match the specification",
+          "actual": "Two membership anchors target #membership-options; three pricing CTAs and two social links retain literal # destinations",
+          "executedAt": "2026-08-16T05:25:37.000Z",
+          "evidence": [
+            "GitHub Actions run 31928940618 DOM assertions"
+          ],
           "references": [
             "PLAN-002",
             "PLAN-004",
