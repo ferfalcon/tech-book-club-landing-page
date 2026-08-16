@@ -6,7 +6,7 @@
     "executionMode": "Gated"
   },
   "state": {
-    "stage": 0,
+    "stage": 1,
     "status": "In progress",
     "activeInputs": [
       "SRC-DS-001",
@@ -22,44 +22,80 @@
       "id": "SRC-DS-001",
       "role": "Input baseline",
       "pinStrength": "Time-bound",
-      "status": "Unverified",
+      "status": "Active",
       "reference": "https://www.figma.com/design/N9NGlGjQhwRVdnTZloWweh/tech-book-club-landing-page?node-id=2142-363"
     },
     {
       "id": "SRC-REPO-001",
       "role": "Input baseline",
       "pinStrength": "Immutable",
-      "status": "Unverified",
+      "status": "Active",
       "reference": "/home/runner/work/tech-book-club-landing-page/tech-book-club-landing-page",
       "commit": "82471d57b717786adc9c2f9a83cd6a5cd696768f"
     }
   ],
-  "verifications": [],
+  "verifications": [
+    {
+      "id": "VER-001",
+      "snapshot": "SRC-DS-001",
+      "result": "Unchanged",
+      "method": "Connected Figma metadata inspection",
+      "evidence": "Figma file N9NGlGjQhwRVdnTZloWweh page 2142:363 was accessible and contained the scoped 1440px desktop, 768px tablet, 375px mobile frames plus Components, Style Guide, Visuals, and Section Components.",
+      "checkedAt": "2026-08-16T02:39:28.265Z"
+    },
+    {
+      "id": "VER-002",
+      "snapshot": "SRC-REPO-001",
+      "result": "Unchanged",
+      "method": "Git commit and repository-tree inspection",
+      "evidence": "Recorded immutable commit 82471d57b717786adc9c2f9a83cd6a5cd696768f remains in repository lineage; subsequent differences are expected workflow-control outputs and did not modify frontend application code.",
+      "checkedAt": "2026-08-16T02:39:28.320Z"
+    }
+  ],
   "artifacts": [
     {
       "id": "ART-SOURCE-BASELINE",
       "type": "SOURCE-BASELINE",
       "path": "SOURCE-BASELINE.md",
-      "status": "Draft",
+      "status": "Approved",
       "baseline": [
         "SRC-DS-001",
         "SRC-REPO-001"
-      ]
+      ],
+      "statusChangedAt": "2026-08-16T02:39:28.427Z",
+      "statusEvidence": "Stage 0 source baseline approved by project owner.",
+      "statusBy": "Owner"
     },
     {
       "id": "ART-PROJECT-CONTEXT",
       "type": "PROJECT-CONTEXT",
       "path": "PROJECT-CONTEXT.md",
-      "status": "Draft",
+      "status": "Approved",
       "baseline": [
         "SRC-DS-001",
         "SRC-REPO-001"
-      ]
+      ],
+      "statusChangedAt": "2026-08-16T02:39:28.536Z",
+      "statusEvidence": "Stage 0 project context approved by project owner.",
+      "statusBy": "Owner"
     },
     {
       "id": "ART-WORKFLOW-STATE",
       "type": "WORKFLOW-STATE",
       "path": "WORKFLOW-STATE.md",
+      "status": "Approved",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "statusChangedAt": "2026-08-16T02:39:28.645Z",
+      "statusEvidence": "Stage 0 workflow state approved by project owner.",
+      "statusBy": "Owner"
+    },
+    {
+      "id": "ART-DESIGN-AUDIT",
+      "type": "DESIGN-AUDIT",
+      "path": "DESIGN-AUDIT.md",
       "status": "Draft",
       "baseline": [
         "SRC-DS-001",
@@ -68,7 +104,30 @@
     }
   ],
   "traceItems": [],
-  "gates": [],
+  "gates": [
+    {
+      "id": "GATE-001",
+      "stage": 0,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-001",
+        "VER-002"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE"
+      ],
+      "evidence": "Stage 0 source baseline, project context, workflow controls, constraints, and known risks are complete and explicitly approved by the project owner.",
+      "recordedAt": "2026-08-16T02:39:28.753Z",
+      "approvedBy": "Owner"
+    }
+  ],
   "tasks": [],
   "profileTransitions": [],
   "implementationReviews": []
