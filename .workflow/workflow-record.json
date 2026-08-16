@@ -6,7 +6,7 @@
     "executionMode": "Gated"
   },
   "state": {
-    "stage": 8,
+    "stage": 9,
     "status": "Ready",
     "activeInputs": [
       "SRC-DS-001",
@@ -153,9 +153,65 @@
       "statusChangedAt": "2026-08-16T04:53:19.640Z",
       "statusEvidence": "Project owner explicitly approved Stage 8 in ChatGPT on 2026-08-16 and instructed the workflow not to start the next stage.",
       "statusBy": "Owner"
+    },
+    {
+      "id": "ART-TASK-P01-T01",
+      "type": "TASK",
+      "path": "Phase-01--Task-01.md",
+      "status": "Approved",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "statusChangedAt": "2026-08-16T05:09:21.249Z",
+      "statusEvidence": "Project owner approved continuation into Stage 9 in ChatGPT on 2026-08-16; the single Lite task is consistent with the approved implementation plan.",
+      "statusBy": "Owner"
     }
   ],
-  "traceItems": [],
+  "traceItems": [
+    {
+      "id": "PLAN-001",
+      "owner": "ART-IMPLEMENTATION-BRIEF",
+      "status": "Active",
+      "required": false,
+      "references": []
+    },
+    {
+      "id": "PLAN-002",
+      "owner": "ART-IMPLEMENTATION-BRIEF",
+      "status": "Active",
+      "required": false,
+      "references": []
+    },
+    {
+      "id": "PLAN-003",
+      "owner": "ART-IMPLEMENTATION-BRIEF",
+      "status": "Active",
+      "required": false,
+      "references": []
+    },
+    {
+      "id": "PLAN-004",
+      "owner": "ART-IMPLEMENTATION-BRIEF",
+      "status": "Active",
+      "required": false,
+      "references": []
+    },
+    {
+      "id": "PLAN-005",
+      "owner": "ART-IMPLEMENTATION-BRIEF",
+      "status": "Active",
+      "required": false,
+      "references": []
+    },
+    {
+      "id": "PLAN-006",
+      "owner": "ART-IMPLEMENTATION-BRIEF",
+      "status": "Active",
+      "required": false,
+      "references": []
+    }
+  ],
   "gates": [
     {
       "id": "GATE-001",
@@ -369,9 +425,142 @@
       "evidence": "Stage 8 adversarial plan review is complete, corrections are incorporated, the Lite implementation brief is approved, and the project owner explicitly approved Stage 8 while instructing the workflow not to start Stage 9.",
       "recordedAt": "2026-08-16T04:53:19.682Z",
       "approvedBy": "Owner"
+    },
+    {
+      "id": "GATE-010",
+      "stage": 9,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-004",
+        "VER-006"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT",
+        "ART-IMPLEMENTATION-BRIEF",
+        "ART-TASK-P01-T01"
+      ],
+      "evidence": "Stage 9 decomposition defines one coherent Ready Lite implementation task covering PLAN-001 through PLAN-006, with an approved task artifact and required structured validation checks; owner approved Stage 9 continuation on 2026-08-16.",
+      "recordedAt": "2026-08-16T05:09:21.428Z",
+      "approvedBy": "Owner"
     }
   ],
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "P01-T01",
+      "status": "Ready",
+      "baseline": "SRC-REPO-001",
+      "prerequisites": [],
+      "references": [
+        "PLAN-001",
+        "PLAN-002",
+        "PLAN-003",
+        "PLAN-004",
+        "PLAN-005",
+        "PLAN-006"
+      ],
+      "output": null,
+      "blocker": null,
+      "validation": [
+        {
+          "name": "Production build",
+          "kind": "Build",
+          "required": true,
+          "status": "Not executed",
+          "expected": "The production Astro build succeeds from frontend/ using the repository package manager.",
+          "evidence": [],
+          "reason": "Pending Stage 10 implementation.",
+          "references": [
+            "PLAN-001",
+            "PLAN-006"
+          ]
+        },
+        {
+          "name": "Visual fidelity",
+          "kind": "Visual",
+          "required": true,
+          "status": "Not executed",
+          "expected": "Rendered output has no unresolved material discrepancy against the approved 1440, 768, and 375 px Figma compositions.",
+          "evidence": [],
+          "reason": "Pending Stage 10 implementation.",
+          "references": [
+            "PLAN-001",
+            "PLAN-002",
+            "PLAN-003",
+            "PLAN-004",
+            "PLAN-005",
+            "PLAN-006"
+          ]
+        },
+        {
+          "name": "Responsive and reflow",
+          "kind": "Responsive",
+          "required": true,
+          "status": "Not executed",
+          "expected": "1024, 600, and 320 px probes plus 200% zoom/reflow preserve content without overlap, clipping, or layout-caused horizontal scrolling.",
+          "evidence": [],
+          "reason": "Pending Stage 10 implementation.",
+          "references": [
+            "PLAN-002",
+            "PLAN-003",
+            "PLAN-004",
+            "PLAN-005",
+            "PLAN-006"
+          ]
+        },
+        {
+          "name": "Accessibility and keyboard",
+          "kind": "Accessibility",
+          "required": true,
+          "status": "Not executed",
+          "expected": "Landmarks, headings, lists, image semantics, accessible names, keyboard operation, visible focus, contrast, and meaningful reading order satisfy the approved brief.",
+          "evidence": [],
+          "reason": "Pending Stage 10 implementation.",
+          "references": [
+            "PLAN-002",
+            "PLAN-003",
+            "PLAN-004",
+            "PLAN-005",
+            "PLAN-006"
+          ]
+        },
+        {
+          "name": "Approved behavior inspection",
+          "kind": "Manual",
+          "required": true,
+          "status": "Not executed",
+          "expected": "CTA targets and literal # placeholders match the approved specification and no unsupported product flow or unnecessary client-side JavaScript is introduced.",
+          "evidence": [],
+          "reason": "Pending Stage 10 implementation.",
+          "references": [
+            "PLAN-002",
+            "PLAN-004",
+            "PLAN-005",
+            "PLAN-006"
+          ]
+        },
+        {
+          "name": "Vercel preview verification",
+          "kind": "Manual",
+          "required": true,
+          "status": "Not executed",
+          "expected": "The Vercel preview tied to the implementation branch renders the intended implementation commit successfully.",
+          "evidence": [],
+          "reason": "Pending Stage 10 implementation and preview deployment.",
+          "references": [
+            "PLAN-006"
+          ]
+        }
+      ]
+    }
+  ],
   "profileTransitions": [],
   "implementationReviews": []
 }
