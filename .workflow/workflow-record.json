@@ -7,7 +7,7 @@
   },
   "state": {
     "stage": 8,
-    "status": "In progress",
+    "status": "Ready",
     "activeInputs": [
       "SRC-DS-001",
       "SRC-REPO-001"
@@ -145,13 +145,14 @@
       "id": "ART-IMPLEMENTATION-BRIEF",
       "type": "IMPLEMENTATION-BRIEF",
       "path": "IMPLEMENTATION-BRIEF.md",
-      "status": "Reviewed",
+      "status": "Approved",
       "baseline": [
         "SRC-DS-001",
         "SRC-REPO-001"
       ],
-      "statusChangedAt": "2026-08-16T04:26:30.023Z",
-      "statusEvidence": "Stage 7 repository-aware plan completed after two planning reviews covering repository accuracy, file/dependency/command feasibility, traceability, ordering, accessibility, responsive behavior, states, validation, and risks."
+      "statusChangedAt": "2026-08-16T04:53:19.640Z",
+      "statusEvidence": "Project owner explicitly approved Stage 8 in ChatGPT on 2026-08-16 and instructed the workflow not to start the next stage.",
+      "statusBy": "Owner"
     }
   ],
   "traceItems": [],
@@ -343,6 +344,30 @@
       ],
       "evidence": "Stage 7 repository-aware implementation plan is complete, repository assumptions were verified, the Lite consolidated implementation brief is Reviewed, and the project owner explicitly approved Stage 7 in ChatGPT on 2026-08-16 with the instruction not to start Stage 8.",
       "recordedAt": "2026-08-16T04:33:31.914Z",
+      "approvedBy": "Owner"
+    },
+    {
+      "id": "GATE-009",
+      "stage": 8,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-004",
+        "VER-006"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT",
+        "ART-IMPLEMENTATION-BRIEF"
+      ],
+      "evidence": "Stage 8 adversarial plan review is complete, corrections are incorporated, the Lite implementation brief is approved, and the project owner explicitly approved Stage 8 while instructing the workflow not to start Stage 9.",
+      "recordedAt": "2026-08-16T04:53:19.682Z",
       "approvedBy": "Owner"
     }
   ],
