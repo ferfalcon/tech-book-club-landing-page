@@ -1,0 +1,54 @@
+name: Record P01-T01 Vercel blocker
+
+on:
+  push:
+    branches:
+      - implementation/p01-t01
+    paths:
+      - .github/workflows/block-p01-t01-vercel.yml
+
+permissions:
+  contents: write
+
+jobs:
+  block:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: implementation/p01-t01
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Record required Vercel preview check and block task
+        shell: bash
+        run: |
+          CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
+          $CLI task validation set P01-T01 \
+            --name "Vercel preview verification" \
+            --kind Manual \
+            --required true \
+            --status "Not executed" \
+            --expected "A READY Vercel preview for the final implementation is available and verified before completion" \
+            --reason "Vercel status on final frontend commit 87d0c048e694010c4fd1145b620916cd3f553de4 reports: Deployment rate limited — retry in 24 hours." \
+            --references PLAN-006
+          $CLI task block P01-T01 --reason "Required Vercel preview cannot be created or verified because Vercel rate-limited deployment of final frontend commit 87d0c048e694010c4fd1145b620916cd3f553de4; GitHub status says retry in 24 hours."
+          $CLI context --json
+
+      - name: Remove temporary validation artifacts and commit canonical blocked state
+        shell: bash
+        run: |
+          rm -f .github/workflows/block-p01-t01-vercel.yml
+          rm -f .github/workflows/validate-p01-t01.yml
+          rm -rf validation/screenshots
+          rmdir validation 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Record P01-T01 Vercel preview blocker"
+          git push origin HEAD:implementation/p01-t01
