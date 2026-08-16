@@ -50,6 +50,7 @@ Record narrative history and impact here. Current snapshot status and lineage be
 | ID | Expected process or behavior | Deviation | Reason | Impact | Approval or resolution | Status |
 |---|---|---|---|---|---|---|
 | EXC-001 | Initialize canonical workflow state through the repository CLI | A temporary one-shot GitHub Actions workflow was used to execute the CLI because the active runtime could not clone the repository directly | Preserved CLI-owned initialization rather than fabricating `.workflow/` manually | No application-code impact; temporary workflow removed itself after successful initialization | Resolved by self-removal and successful CLI validation/sync check | Corrected |
+| EXC-002 | Make repository/workflow changes on a dedicated branch before merging to `main` | During Stage 7 setup, two accidental placeholder writes were sent to `main` through the connector before branch creation was correctly selected; each was immediately deleted in the next commit | Connector-action misrouting while setting up the Stage 7 branch | No net application-tree or documentation change; production frontend content was never modified, but `main` history contains the create/revert pairs | Corrected immediately, explicitly disclosed to the project owner, and Stage 7 work resumed only after creating `workflow/stage-7-plan` | Corrected |
 
 ## 8. Stage Advancement Rules
 
