@@ -1,0 +1,192 @@
+from pathlib import Path
+
+
+def write(path: str, text: str) -> None:
+    Path(path).write_text(text, encoding="utf-8")
+
+
+def replace_once(text: str, old: str, new: str, label: str) -> str:
+    if old not in text:
+        raise SystemExit(f"Missing expected text for {label}")
+    return text.replace(old, new, 1)
+
+
+# DESIGN-AUDIT.md — fix malformed Lite metadata, Lite ownership links,
+# and distinguish source-open questions from downstream approved resolution.
+path = "DESIGN-AUDIT.md"
+text = Path(path).read_text(encoding="utf-8")
+text = replace_once(
+    text,
+    "artifact: DESIGN-AUDIT\n  design:\n",
+    "artifact: DESIGN-AUDIT\nbaseline:\n  design:\n",
+    "design audit baseline frontmatter",
+)
+text = replace_once(
+    text,
+    "- Related documents:\n  - `REQUIREMENTS.md`\n  - `DESIGN.md`\n  - `SPEC.md`",
+    "- Related documents:\n  - `IMPLEMENTATION-BRIEF.md`",
+    "Lite related documents",
+)
+start = text.index("## 17. Questions")
+end = text.index("## 18. Assumptions and Recommendations")
+questions = """## 17. Source Questions and Downstream Disposition
+
+The Stage 1 audit records what the Figma source itself does not establish. Stage 5 keeps that source-evidence boundary intact while recording approved downstream resolutions; those resolutions do not retroactively become Figma evidence.
+
+### Product questions
+
+- `AUD-002` / `AUD-009`: Figma does not define CTA destinations. **Resolved downstream:** the Stage 2 owner decision and Stage 4 specification require Hero/Footer “Review membership options” links to use `#membership-options`, while Starter/Pro “Subscribe now” and Enterprise “Talk to us” remain literal `href="#"` placeholders with no hidden product flow.
+- `AUD-005`: Figma does not define social destinations. **Resolved downstream:** Bluesky and LinkedIn are icon-only links with literal `href="#"` placeholders; real profiles remain out of scope.
+
+### Design questions
+
+- `AUD-004`: Active/pressed and disabled CTA variants are not supplied. **Resolved downstream for current scope:** Stages 3–4 require no authored persistent, disabled, loading, success, error, selected, or application-managed pressed state for these static links.
+- `AUD-005`: Social-link hover/focus visuals are not supplied. **Resolved downstream:** visible keyboard focus and accessible names are required; optional hover feedback may be nonessential and must not carry unique meaning.
+
+### Content questions
+
+- `AUD-007`: Figma does not establish whether the footer year should change. **Resolved downstream for current scope:** Stage 4 keeps the literal `© 2024 – Tech Book Club` unless an approved upstream content change supersedes it.
+- Production-use/licensing evidence for supplied photographs/member portraits remains **unresolved and non-blocking for Stage 5 documentation consistency**. No licensing claim is inferred from Figma availability.
+
+### Technical and accessibility questions
+
+- `AUD-001`: Figma does not define CSS breakpoint thresholds or intermediate layouts. **Resolved downstream at the behavior level:** Stages 3–4 keep exact thresholds as implementation decisions driven by layout failure points, use 1440/768/375 as reference conditions, and add 1024/600 validation probes without declaring them breakpoints.
+- `AUD-006`: Figma does not define image semantics. **Resolved downstream for the current scoped visuals:** `DES-003` and `SPEC-ACC-002` classify contextual photographs, avatars, patterns, glow, arrows, check artwork, and the technology-logo cluster as decorative; the brand identity and meaningful rating are exposed once.
+- Final browser/runtime accessibility compliance remains subject to implementation and Stage 11 validation; the design audit itself makes no conformance claim.
+
+"""
+text = text[:start] + questions + text[end:]
+text = replace_once(
+    text,
+    "- Open questions or blockers: CTA destinations, breakpoint interpolation, production image semantics/licensing, and final accessibility behavior.",
+    "- Open questions or blockers at Stage 1 were CTA destinations, breakpoint interpolation, production image semantics/licensing, and final accessibility behavior. By Stage 5, approved downstream documentation has resolved CTA behavior, responsive interpolation strategy, current visual semantics, CTA/social state scope, and footer-year behavior. Production asset licensing remains a documented non-blocking risk, and runtime accessibility still requires Stage 11 evidence.",
+    "audit completion disposition",
+)
+write(path, text)
+
+
+# PROJECT-CONTEXT.md — remove present-tense Stage 0 branch and breakpoint claims.
+path = "PROJECT-CONTEXT.md"
+text = Path(path).read_text(encoding="utf-8")
+text = replace_once(
+    text,
+    "- Target branch: Workflow control currently lives on `workflow/initialize-implementation`. Implementation changes must use a dedicated branch and follow branch → pull request → Vercel preview → verification → merge.",
+    "- Workflow branch context: Stage 0 initialization used `workflow/initialize-implementation`; current mutable workflow stage/branch must be read from the canonical workflow record and Git branch rather than this historical narrative. Implementation changes must use a dedicated branch and follow branch → pull request → Vercel preview → verification → merge.",
+    "project branch context",
+)
+text = replace_once(
+    text,
+    "- Exact intermediate breakpoints until design evidence and content/layout failure points are evaluated.",
+    "- Exact CSS breakpoint thresholds remain an implementation decision. Approved Stages 3–4 now define interpolation principles and 1024 px / 600 px validation probes while explicitly avoiding invented breakpoint numbers.",
+    "deferred breakpoint status",
+)
+text = replace_once(
+    text,
+    "- The responsive source provides three reference widths, but intermediate behavior must still be derived and validated during design/specification work.",
+    "- The responsive source provides three reference widths. Approved Stages 3–4 now define intermediate behavior outcomes and validation probes; implementation still must select any CSS thresholds from observed content/layout failure points and validate them.",
+    "project responsive risk",
+)
+write(path, text)
+
+
+# WORKFLOW-STATE.md — keep Stage 0 history clearly historical and update one resolved assumption.
+path = "WORKFLOW-STATE.md"
+text = Path(path).read_text(encoding="utf-8")
+text = replace_once(
+    text,
+    "| The landing page remains a static single-page implementation with no backend, authentication, persistence, or external API requirement | Inferred from current design and repository scope | Supports Lite profile and avoids premature architecture work | Recheck during Stage 1 design audit and Stage 2 implementation brief | Open |",
+    "| The landing page remains a static single-page implementation with no backend, authentication, persistence, or external API requirement | Inferred at Stage 0; confirmed by approved Stages 2–4 for the current scope | Supports Lite profile and avoids premature architecture work | Recheck only if upstream scope changes or later architecture/repository evidence conflicts | Confirmed |",
+    "resolved static-page assumption",
+)
+text = replace_once(
+    text,
+    "## 9. Latest Completion Summary",
+    "## 9. Stage 0 Completion Summary (Historical)",
+    "historical workflow summary heading",
+)
+text = replace_once(
+    text,
+    "- Next permitted action: Record canonical source verification and artifact approvals, record the project owner's Stage 0 approval, advance to Stage 1, validate/sync, and stop before performing the Stage 1 audit.",
+    "- Historical next action at Stage 0: Record canonical source verification and artifact approvals, record the project owner's Stage 0 approval, advance to Stage 1, validate/sync, and stop before performing the Stage 1 audit. Current next action is owned only by `.workflow/workflow-record.json` and its generated views.",
+    "historical next action",
+)
+write(path, text)
+
+
+# IMPLEMENTATION-BRIEF.md — remove stale future/deferred claims and complete Stage 5 pass 1.
+path = "IMPLEMENTATION-BRIEF.md"
+text = Path(path).read_text(encoding="utf-8")
+text = replace_once(
+    text,
+    "- Treating 1440 px, 768 px, or 375 px as automatic CSS breakpoint thresholds; exact interpolation belongs to later design/specification work.",
+    "- Treating 1440 px, 768 px, or 375 px as automatic CSS breakpoint thresholds. Approved Stage 3/4 intent defines interpolation outcomes and validation probes while leaving exact threshold selection to implementation based on layout failure points.",
+    "requirements breakpoint disposition",
+)
+text = replace_once(
+    text,
+    "- **Classification:** Confirmed by project quality baseline; exact per-image classification pending later design/specification work",
+    "- **Classification:** Confirmed by project quality baseline; current scoped visual classifications resolved by approved Stage 3/4 design and specification",
+    "image semantics classification",
+)
+start = text.index("### Non-blocking questions and risks")
+end = text.index("### Stage 2 review pass 1 — Completeness and correctness")
+stage2_risks = """### Non-blocking questions and risks
+
+- Footer copyright: resolved downstream for current scope by Stage 4 as the literal `© 2024 – Tech Book Club` unless an approved upstream content decision changes it.
+- Supplied photographs/member portraits: production-use/licensing confirmation remains unresolved; no licensing claim is introduced by the workflow.
+- CTA active/pressed/disabled treatment: resolved downstream for current static-link scope; Stages 3–4 require no authored persistent/async state beyond supplied default/hover/focus intent and native transient activation.
+- Responsive thresholds: Stage 3/4 resolved the interpolation strategy and validation probes while intentionally leaving exact CSS thresholds to implementation based on layout/content failure points.
+- Links with `href="#"` are intentional scope placeholders, not representations of finished external product journeys.
+
+"""
+text = text[:start] + stage2_risks + text[end:]
+text = replace_once(
+    text,
+    "- Kept image semantics outcome-based; exact alt text and content/decorative classification remain for later design/specification work.",
+    "- Kept image semantics outcome-based in Stage 2; Stage 3/4 later resolved the current visual classifications in `DES-003` and `SPEC-ACC-002`.",
+    "Stage 2 image semantics downstream note",
+)
+text = replace_once(
+    text,
+    "- Kept exact breakpoint thresholds deferred to Stage 4 and tied future thresholds to layout failure points instead of Figma frame widths.",
+    "- Kept exact breakpoint thresholds deferred from Stage 3 and tied future implementation thresholds to layout failure points instead of Figma frame widths; Stage 4 later preserved that implementation-level threshold decision and added validation probes.",
+    "Stage 3 breakpoint downstream note",
+)
+text = replace_once(
+    text,
+    "- None at the Stage 4 checkpoint.",
+    "- None at the Stage 5 documentation-consistency checkpoint.",
+    "current blocking risk checkpoint",
+)
+start = text.index("## 11. Review Pass 1 — Completeness and Correctness")
+end = text.index("## 13. Review Pass 2 — Consistency, Traceability, Source Integrity, Risks, and Uncertainty")
+stage5_review = """## 11. Review Pass 1 — Completeness and Correctness
+
+Stage 5 reviews the approved Stage 1–4 documentation before architecture/planning. Per the normative Lite workflow, implementation planning is intentionally not required until Stage 7 and Review Pass 2 remains a Stage 8 activity.
+
+- [x] Scope and pinned repository context are accurate after correcting stale present-tense Stage 0 branch wording.
+- [x] `SRC-DS-001` and `SRC-REPO-001` exist, are active, and were reverified before this review; the current Figma structure is materially unchanged and the immutable repository baseline remains an ancestor with no intervening `frontend/` implementation changes.
+- [x] Requirements, design intent, and testable specification are complete for the pre-planning Lite scope; repository-aware implementation planning remains intentionally pending Stage 7.
+- [x] Responsive behavior, accessibility, link states, content edge cases, source-change handling, and validation requirements are integrated into the owning Stage 2–4 sections rather than deferred to cleanup.
+- [x] Unsupported backend/product flows, arbitrary breakpoint thresholds, unsupported motion, and unsupported application states are kept out of scope.
+- [x] Downstream owner-approved decisions now have explicit dispositions where the Stage 1 audit originally recorded open questions, without rewriting those decisions as Figma evidence.
+- [x] The work still qualifies for Lite: one static page, no persistence/authentication/API/shared-state/migration concern, and no newly discovered architecture trigger.
+
+## 12. Corrections from Pass 1
+
+- Fixed malformed `DESIGN-AUDIT.md` frontmatter by restoring the missing `baseline:` owner key.
+- Replaced Standard-profile `REQUIREMENTS.md` / `DESIGN.md` / `SPEC.md` references in the Lite design audit with `IMPLEMENTATION-BRIEF.md`.
+- Converted stale Stage 1 open-question wording into source-question plus downstream-disposition wording for CTA/social destinations, interaction states, footer year, responsive interpolation, and image semantics; asset licensing remains explicitly unresolved and non-blocking.
+- Clarified `PROJECT-CONTEXT.md` so the Stage 0 initialization branch is historical and current workflow state is not duplicated outside the canonical record.
+- Marked the original static-page scope assumption as confirmed by approved Stages 2–4 and made the Stage 0 workflow summary explicitly historical.
+- Updated stale “later Stage 3/4” language in the brief so resolved visual semantics and responsive interpolation decisions are reflected without inventing fixed CSS breakpoints.
+- Corrected the Lite review checklist so Stage 5 does not falsely require the Stage 7 implementation plan to exist.
+- Reverified the time-bound Figma input and immutable repository input before completing this review; no material source drift requiring rebaseline was found.
+
+### Stage 5 readiness
+
+`Ready for architecture and planning`
+
+"""
+text = text[:start] + stage5_review + text[end:]
+write(path, text)
