@@ -46,50 +46,46 @@ jobs:
 
           path = Path('WORKFLOW-STATE.md')
           text = path.read_text(encoding='utf-8')
-          old = '''## 4. Architecture Decision
-
-- Separate `ARCHITECTURE.md`: Undecided
-- Reason: Lite profile does not require a separate architecture artifact unless later evidence reveals a material structural concern. Current scope is a static Astro landing page.
-- Evidence and constraints: `SRC-DS-001`, `SRC-REPO-001`, root `AGENTS.md`, and `frontend/AGENTS.md`.
-- Recorded by: Workflow agent; final Stage 6 decision remains gated.
-
-When architecture is skipped, behavioral structural constraints will remain in the Lite implementation brief and repository/implementation structure will be documented in its planning section.
-'''
-          new = '''## 4. Architecture Decision
-
-- Separate `ARCHITECTURE.md`: **Not required** for the current Lite scope.
-- Reason: Stage 6 repository inspection confirms one `frontend/src/pages/index.astro` route, a starter Astro component/layout structure, Astro as the only application dependency, an empty `astro.config.mjs`, and no backend, API, persistence, authentication, shared state, client-framework integration, migration, or server-runtime concern. The approved Stage 4 specification explicitly excludes those product behaviors.
-- Evidence and constraints: `SRC-DS-001`, `SRC-REPO-001`, root `AGENTS.md`, `frontend/AGENTS.md`, `frontend/package.json`, `frontend/src/pages/index.astro`, `frontend/astro.config.mjs`, and `frontend/vercel.json`.
-- Consequence: Behavioral structural constraints remain in the Lite specification section of `IMPLEMENTATION-BRIEF.md`; concrete repository/module structure belongs to the Stage 7 plan. No `ARCHITECTURE.md` or ADR is created.
-- Recorded by: Workflow agent on 2026-08-16; Stage 6 remains gated pending explicit project-owner approval.
-'''
+          old = (
+              "## 4. Architecture Decision\n\n"
+              "- Separate `ARCHITECTURE.md`: Undecided\n"
+              "- Reason: Lite profile does not require a separate architecture artifact unless later evidence reveals a material structural concern. Current scope is a static Astro landing page.\n"
+              "- Evidence and constraints: `SRC-DS-001`, `SRC-REPO-001`, root `AGENTS.md`, and `frontend/AGENTS.md`.\n"
+              "- Recorded by: Workflow agent; final Stage 6 decision remains gated.\n\n"
+              "When architecture is skipped, behavioral structural constraints will remain in the Lite implementation brief and repository/implementation structure will be documented in its planning section.\n"
+          )
+          new = (
+              "## 4. Architecture Decision\n\n"
+              "- Separate `ARCHITECTURE.md`: **Not required** for the current Lite scope.\n"
+              "- Reason: Stage 6 repository inspection confirms one `frontend/src/pages/index.astro` route, a starter Astro component/layout structure, Astro as the only application dependency, an empty `astro.config.mjs`, and no backend, API, persistence, authentication, shared state, client-framework integration, migration, or server-runtime concern. The approved Stage 4 specification explicitly excludes those product behaviors.\n"
+              "- Evidence and constraints: `SRC-DS-001`, `SRC-REPO-001`, root `AGENTS.md`, `frontend/AGENTS.md`, `frontend/package.json`, `frontend/src/pages/index.astro`, `frontend/astro.config.mjs`, and `frontend/vercel.json`.\n"
+              "- Consequence: Behavioral structural constraints remain in the Lite specification section of `IMPLEMENTATION-BRIEF.md`; concrete repository/module structure belongs to the Stage 7 plan. No `ARCHITECTURE.md` or ADR is created.\n"
+              "- Recorded by: Workflow agent on 2026-08-16; Stage 6 remains gated pending explicit project-owner approval.\n"
+          )
           text = replace_once(text, old, new, 'workflow architecture decision')
           path.write_text(text, encoding='utf-8')
 
           path = Path('IMPLEMENTATION-BRIEF.md')
           text = path.read_text(encoding='utf-8')
-          old = '''## 7. Architecture Decision
-
-- Separate architecture needed: Pending Stage 6 assessment.
-- Reason: The current approved scope remains a static single-page Astro implementation with no meaningful routing, shared state, persistence, authentication, integration, or migration concern. Final architecture-skip handling belongs to Stage 6.
-'''
-          new = '''## 7. Architecture Decision
-
-- Separate architecture needed: **No — Stage 6 recommends an explicit architecture skip.**
-- Reason: Current repository evidence shows a single Astro page route, starter component/layout structure, Astro as the only application dependency, no configured Astro adapter/integration, and no backend, API, persistence, authentication, shared state, migration, or server-runtime requirement. The approved specification already constrains the experience to static links and content with no unsupported product flow.
-- Evidence: `SRC-REPO-001`, `SRC-DS-001`, `frontend/package.json`, `frontend/src/pages/index.astro`, `frontend/astro.config.mjs`, `frontend/vercel.json`, `SPEC-BEH-003`, and `SPEC-VAL-001`.
-- Structural handling without a separate artifact: semantic structure, link behavior, accessibility, responsive interpolation, and no-client-JavaScript expectations remain owned by the specification; Stage 7 will define the concrete component/file plan and validation commands.
-
-### Stage 6 architecture review
-
-- [x] No meaningful routing architecture is required; the approved implementation has one page route.
-- [x] No shared application state, data ownership, API, persistence, authentication, authorization, or integration boundary exists in scope.
-- [x] No migration, deployment topology, security/privacy boundary, reliability subsystem, or rollback design requires a separate architecture artifact.
-- [x] Existing Astro/Vercel configuration is minimal and does not introduce server-runtime architecture.
-- [x] The work remains within Lite profile limits.
-
-`Ready for Stage 6 gated approval` — record the architecture skip only after explicit project-owner approval; do not advance to Stage 7 before that gate passes.
-'''
+          old = (
+              "## 7. Architecture Decision\n\n"
+              "- Separate architecture needed: Pending Stage 6 assessment.\n"
+              "- Reason: The current approved scope remains a static single-page Astro implementation with no meaningful routing, shared state, persistence, authentication, integration, or migration concern. Final architecture-skip handling belongs to Stage 6.\n"
+          )
+          new = (
+              "## 7. Architecture Decision\n\n"
+              "- Separate architecture needed: **No — Stage 6 recommends an explicit architecture skip.**\n"
+              "- Reason: Current repository evidence shows a single Astro page route, starter component/layout structure, Astro as the only application dependency, no configured Astro adapter/integration, and no backend, API, persistence, authentication, shared state, migration, or server-runtime requirement. The approved specification already constrains the experience to static links and content with no unsupported product flow.\n"
+              "- Evidence: `SRC-REPO-001`, `SRC-DS-001`, `frontend/package.json`, `frontend/src/pages/index.astro`, `frontend/astro.config.mjs`, `frontend/vercel.json`, `SPEC-BEH-003`, and `SPEC-VAL-001`.\n"
+              "- Structural handling without a separate artifact: semantic structure, link behavior, accessibility, responsive interpolation, and no-client-JavaScript expectations remain owned by the specification; Stage 7 will define the concrete component/file plan and validation commands.\n\n"
+              "### Stage 6 architecture review\n\n"
+              "- [x] No meaningful routing architecture is required; the approved implementation has one page route.\n"
+              "- [x] No shared application state, data ownership, API, persistence, authentication, authorization, or integration boundary exists in scope.\n"
+              "- [x] No migration, deployment topology, security/privacy boundary, reliability subsystem, or rollback design requires a separate architecture artifact.\n"
+              "- [x] Existing Astro/Vercel configuration is minimal and does not introduce server-runtime architecture.\n"
+              "- [x] The work remains within Lite profile limits.\n\n"
+              "`Ready for Stage 6 gated approval` — record the architecture skip only after explicit project-owner approval; do not advance to Stage 7 before that gate passes.\n"
+          )
           text = replace_once(text, old, new, 'implementation brief architecture decision')
           text = replace_once(
               text,
