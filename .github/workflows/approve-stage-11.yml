@@ -1,0 +1,54 @@
+name: Approve Stage 11
+
+on:
+  push:
+    branches:
+      - workflow/stage-11-final-review
+    paths:
+      - .github/workflows/approve-stage-11.yml
+
+permissions:
+  contents: write
+
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Stage 11 branch
+        uses: actions/checkout@v4
+        with:
+          ref: workflow/stage-11-final-review
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Record owner approval and final result
+        shell: bash
+        run: |
+          CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
+          $CLI context --json
+          $CLI artifact approve ART-IMPLEMENTATION-REVIEW \
+            --evidence "Project owner explicitly approved Stage 11 in ChatGPT on 2026-08-16, accepting the reviewed result Implementation requires corrections and the open IMPL-001 finding." \
+            --approved-by Owner
+          $CLI stage check --json || true
+          $CLI review set-result requires-corrections \
+            --artifact ART-IMPLEMENTATION-REVIEW \
+            --output SRC-REPO-002 \
+            --runtime SRC-RUN-001 \
+            --evidence "Project owner approved the Stage 11 final implementation review on 2026-08-16. IMPL-001 remains open: hero H1 gradient contrast is approximately 1.82:1 at the salmon endpoint against the hero background, so implementation requires correction and full retesting before acceptance." \
+            --approved-by Owner
+          $CLI context --json
+          $CLI sync --check
+
+      - name: Remove temporary runner and commit canonical state
+        shell: bash
+        run: |
+          rm .github/workflows/approve-stage-11.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Record Stage 11 approval"
+          git push origin HEAD:workflow/stage-11-final-review
