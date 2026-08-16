@@ -7,14 +7,14 @@
   },
   "state": {
     "stage": 11,
-    "status": "In progress",
+    "status": "Blocked",
     "activeInputs": [
       "SRC-DS-001",
       "SRC-REPO-001"
     ],
     "currentTask": null,
     "latestOutput": "SRC-REPO-002",
-    "latestValidationRuntime": null,
+    "latestValidationRuntime": "SRC-RUN-001",
     "architectureDecision": {
       "result": "Not required",
       "reason": "Repository inspection after the Stage 5 merge confirms a single index.astro route, starter Astro component/layout structure, Astro as the only application dependency, an empty Astro config, and no backend, API, persistence, authentication, shared state, client framework integration, migration, or server-runtime concern. The approved specification also explicitly excludes those behaviors, so the Lite implementation can keep structural constraints in the specification and Stage 7 plan without a separate architecture artifact.",
@@ -212,13 +212,14 @@
       "id": "ART-IMPLEMENTATION-REVIEW",
       "type": "IMPLEMENTATION-REVIEW",
       "path": "IMPLEMENTATION-REVIEW.md",
-      "status": "Reviewed",
+      "status": "Approved",
       "baseline": [
         "SRC-DS-001",
         "SRC-REPO-001"
       ],
-      "statusChangedAt": "2026-08-16T05:54:58.263Z",
-      "statusEvidence": "Stage 11 final review is complete. Lineage, design, build, responsive, keyboard/focus, runtime, and static-page checks were reviewed; IMPL-001 records an open hero-heading contrast failure, so the narrative result is Implementation requires corrections."
+      "statusChangedAt": "2026-08-16T06:01:05.931Z",
+      "statusEvidence": "Project owner explicitly approved Stage 11 in ChatGPT on 2026-08-16, accepting the reviewed result Implementation requires corrections and the open IMPL-001 finding.",
+      "statusBy": "Owner"
     }
   ],
   "traceItems": [
@@ -657,5 +658,18 @@
     }
   ],
   "profileTransitions": [],
-  "implementationReviews": []
+  "implementationReviews": [
+    {
+      "id": "REVIEW-001",
+      "status": "Active",
+      "result": "requires-corrections",
+      "artifact": "ART-IMPLEMENTATION-REVIEW",
+      "output": "SRC-REPO-002",
+      "runtime": "SRC-RUN-001",
+      "evidence": "Project owner approved the Stage 11 final implementation review on 2026-08-16. IMPL-001 remains open: hero H1 gradient contrast is approximately 1.82:1 at the salmon endpoint against the hero background, so implementation requires correction and full retesting before acceptance.",
+      "recordedAt": "2026-08-16T06:01:06.057Z",
+      "approvedBy": "Owner",
+      "deviations": []
+    }
+  ]
 }
