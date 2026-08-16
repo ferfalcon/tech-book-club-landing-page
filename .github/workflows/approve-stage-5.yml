@@ -1,0 +1,47 @@
+name: Approve Stage 5
+
+on:
+  push:
+    branches:
+      - workflow/stage-5-document-review
+
+permissions:
+  contents: write
+
+jobs:
+  approve-stage-5:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: workflow/stage-5-document-review
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Record Stage 5 approval and validate
+        run: |
+          CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
+          $CLI context --json
+          $CLI stage check --json
+          $CLI stage review \
+            --result "Passed" \
+            --evidence "Stage 5 documentation consistency review completed successfully, active inputs were reverified with no material source drift, the Lite consolidated implementation brief is Reviewed, and the project owner explicitly approved Stage 5 in ChatGPT on 2026-08-16." \
+            --approved-by "Owner"
+          $CLI sync
+          $CLI validate
+          $CLI sync --check
+          $CLI stage check --json
+
+      - name: Commit canonical approval state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/approve-stage-5.yml
+          git add .workflow
+          git commit -m "Approve Stage 5 documentation review"
+          git push origin HEAD:workflow/stage-5-document-review
