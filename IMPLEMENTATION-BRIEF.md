@@ -639,8 +639,20 @@ Do not create a separate late accessibility implementation phase.
 
 ## 7. Architecture Decision
 
-- Separate architecture needed: Pending Stage 6 assessment.
-- Reason: The current approved scope remains a static single-page Astro implementation with no meaningful routing, shared state, persistence, authentication, integration, or migration concern. Final architecture-skip handling belongs to Stage 6.
+- Separate architecture needed: **No — Stage 6 recommends an explicit architecture skip.**
+- Reason: Current repository evidence shows a single Astro page route, starter component/layout structure, Astro as the only application dependency, no configured Astro adapter/integration, and no backend, API, persistence, authentication, shared state, migration, or server-runtime requirement. The approved specification already constrains the experience to static links and content with no unsupported product flow.
+- Evidence: `SRC-REPO-001`, `SRC-DS-001`, `frontend/package.json`, `frontend/src/pages/index.astro`, `frontend/astro.config.mjs`, `frontend/vercel.json`, `SPEC-BEH-003`, and `SPEC-VAL-001`.
+- Structural handling without a separate artifact: semantic structure, link behavior, accessibility, responsive interpolation, and no-client-JavaScript expectations remain owned by the specification; Stage 7 will define the concrete component/file plan and validation commands.
+
+### Stage 6 architecture review
+
+- [x] No meaningful routing architecture is required; the approved implementation has one page route.
+- [x] No shared application state, data ownership, API, persistence, authentication, authorization, or integration boundary exists in scope.
+- [x] No migration, deployment topology, security/privacy boundary, reliability subsystem, or rollback design requires a separate architecture artifact.
+- [x] Existing Astro/Vercel configuration is minimal and does not introduce server-runtime architecture.
+- [x] The work remains within Lite profile limits.
+
+`Ready for Stage 6 gated approval` — record the architecture skip only after explicit project-owner approval; do not advance to Stage 7 before that gate passes.
 
 ## 8. Source-change Handling
 
@@ -654,7 +666,7 @@ Create new `SRC-*` IDs and perform an impact assessment rather than silently upd
 
 ### Blocking
 
-- None at the Stage 5 documentation-consistency checkpoint.
+- None at the Stage 6 architecture checkpoint.
 
 ### Non-blocking
 
