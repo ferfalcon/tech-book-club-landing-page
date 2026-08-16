@@ -6,7 +6,7 @@
     "executionMode": "Gated"
   },
   "state": {
-    "stage": 1,
+    "stage": 2,
     "status": "In progress",
     "activeInputs": [
       "SRC-DS-001",
@@ -104,13 +104,24 @@
       "id": "ART-DESIGN-AUDIT",
       "type": "DESIGN-AUDIT",
       "path": "DESIGN-AUDIT.md",
-      "status": "Reviewed",
+      "status": "Approved",
       "baseline": [
         "SRC-DS-001",
         "SRC-REPO-001"
       ],
-      "statusChangedAt": "2026-08-16T02:55:07.800Z",
-      "statusEvidence": "Completed two audit review passes covering scope completeness, source references, responsive evidence, component/state coverage, interactions, assets, accessibility implications, uncertainty, and traceability."
+      "statusChangedAt": "2026-08-16T03:11:00.539Z",
+      "statusEvidence": "Stage 1 design audit approved by project owner in ChatGPT on 2026-08-16.",
+      "statusBy": "Owner"
+    },
+    {
+      "id": "ART-IMPLEMENTATION-BRIEF",
+      "type": "IMPLEMENTATION-BRIEF",
+      "path": "IMPLEMENTATION-BRIEF.md",
+      "status": "Draft",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ]
     }
   ],
   "traceItems": [],
@@ -135,6 +146,29 @@
       ],
       "evidence": "Stage 0 source baseline, project context, workflow controls, constraints, and known risks are complete and explicitly approved by the project owner.",
       "recordedAt": "2026-08-16T02:39:28.753Z",
+      "approvedBy": "Owner"
+    },
+    {
+      "id": "GATE-002",
+      "stage": 1,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-003",
+        "VER-002"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT"
+      ],
+      "evidence": "Stage 1 pinned design evidence audit is complete, reviewed, source-verified, and explicitly approved by the project owner.",
+      "recordedAt": "2026-08-16T03:11:00.648Z",
       "approvedBy": "Owner"
     }
   ],
