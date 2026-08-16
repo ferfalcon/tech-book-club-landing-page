@@ -54,7 +54,7 @@ execution_mode: Gated
 - Adding routes, modals, forms, checkout, account management, subscription processing, contact processing, authentication, persistence, or APIs not demonstrated or explicitly approved.
 - Providing real external destinations for subscription, contact, Bluesky, or LinkedIn links; those destinations are explicitly out of scope and use `#` placeholders.
 - Changing the approved marketing copy, membership information, testimonial, section order, or Figma scope without an explicit upstream decision.
-- Treating 1440 px, 768 px, or 375 px as automatic CSS breakpoint thresholds; exact interpolation belongs to later design/specification work.
+- Treating 1440 px, 768 px, or 375 px as automatic CSS breakpoint thresholds. Approved Stage 3/4 intent defines interpolation outcomes and validation probes while leaving exact threshold selection to implementation based on layout failure points.
 - Inventing business rules, animation, or disabled/loading/error states not supported by the approved source or a later owner decision.
 - Editing Figma pages outside the repository-authorized `🤖 Workflow` scope.
 
@@ -142,7 +142,7 @@ execution_mode: Gated
 
 ### REQ-AR-003 — Give images appropriate accessible semantics
 
-- **Classification:** Confirmed by project quality baseline; exact per-image classification pending later design/specification work
+- **Classification:** Confirmed by project quality baseline; current scoped visual classifications resolved by approved Stage 3/4 design and specification
 - **Priority:** Must
 - **Description:** Content-bearing images must expose useful alternative text, while purely decorative imagery must not add redundant or meaningless announcements. Each relevant image/visual must be classified according to its page purpose before final validation.
 - **Rationale:** The design contains reusable photographs, avatars, patterns, glow, and technology artwork, but Figma does not specify alternative-text intent.
@@ -274,10 +274,10 @@ None for Stage 2.
 
 ### Non-blocking questions and risks
 
-- Should footer copyright remain literal `© 2024 – Tech Book Club` or use an approved updated/dynamic year? This does not block Stage 2 and can be resolved before content is treated as final.
-- Are the supplied photographs/member portraits approved production assets with acceptable licensing? The files are available in Figma, but the audit did not establish licensing.
-- Active/pressed visual treatment is not supplied for CTA controls. Later design/specification work should determine whether any additional state is materially required by the selected link semantics.
-- Exact intermediate responsive thresholds remain intentionally deferred to Stage 3/4; this is not a Stage 2 blocker provided the outcome requirements above remain intact.
+- Footer copyright: resolved downstream for current scope by Stage 4 as the literal `© 2024 – Tech Book Club` unless an approved upstream content decision changes it.
+- Supplied photographs/member portraits: production-use/licensing confirmation remains unresolved; no licensing claim is introduced by the workflow.
+- CTA active/pressed/disabled treatment: resolved downstream for current static-link scope; Stages 3–4 require no authored persistent/async state beyond supplied default/hover/focus intent and native transient activation.
+- Responsive thresholds: Stage 3/4 resolved the interpolation strategy and validation probes while intentionally leaving exact CSS thresholds to implementation based on layout/content failure points.
 - Links with `href="#"` are intentional scope placeholders, not representations of finished external product journeys.
 
 ### Stage 2 review pass 1 — Completeness and correctness
@@ -293,7 +293,7 @@ None for Stage 2.
 - Confirmed literal `href="#"` placeholders for Starter/Pro subscription, Enterprise contact, Bluesky, and LinkedIn links and explicitly kept their real destinations out of scope.
 - Removed the earlier requirement that all CTA links resolve to meaningful external destinations, because it contradicted the owner-approved placeholder scope.
 - Kept exact responsive breakpoints out of requirements and expressed responsive needs as observable outcomes.
-- Kept image semantics outcome-based; exact alt text and content/decorative classification remain for later design/specification work.
+- Kept image semantics outcome-based in Stage 2; Stage 3/4 later resolved the current visual classifications in `DES-003` and `SPEC-ACC-002`.
 - Preserved Stage 0 `REQ-CON-001` through `REQ-CON-004` identifiers in their owning Lite requirements section without renumbering them.
 
 ### Stage 2 review pass 2 — Consistency, traceability, source integrity, risks, and uncertainty
@@ -421,7 +421,7 @@ None for Stage 2.
 - Classified the three contextual photographs, member avatars, patterns/glow, journey arrows, and technology-logo artwork as decorative for assistive technology, while keeping the Tech Book Club brand identity content-bearing.
 - Explicitly required text/card vertical growth rather than clipping when browser or text reflow changes line breaks.
 - Resolved the missing CTA active/disabled-state question by documenting that no authored persistent/async state is required for the approved static-link behavior.
-- Kept exact breakpoint thresholds deferred to Stage 4 and tied future thresholds to layout failure points instead of Figma frame widths.
+- Kept exact breakpoint thresholds deferred from Stage 3 and tied future implementation thresholds to layout failure points instead of Figma frame widths; Stage 4 later preserved that implementation-level threshold decision and added validation probes.
 - Added a conservative no-authored-motion decision because no motion behavior is demonstrated by the approved source.
 
 ### Stage 3 review pass 2 — Consistency, traceability, source integrity, risks, and uncertainty
@@ -654,7 +654,7 @@ Create new `SRC-*` IDs and perform an impact assessment rather than silently upd
 
 ### Blocking
 
-- None at the Stage 4 checkpoint.
+- None at the Stage 5 documentation-consistency checkpoint.
 
 ### Non-blocking
 
@@ -678,17 +678,30 @@ Create new `SRC-*` IDs and perform an impact assessment rather than silently upd
 
 ## 11. Review Pass 1 — Completeness and Correctness
 
-Reserved for the complete Lite implementation-brief review at Stage 5. Stage 2 requirement-specific, Stage 3 design-specific, and Stage 4 specification-specific review passes are recorded in their owning sections.
+Stage 5 reviews the approved Stage 1–4 documentation before architecture/planning. Per the normative Lite workflow, implementation planning is intentionally not required until Stage 7 and Review Pass 2 remains a Stage 8 activity.
 
-- [ ] Scope and pinned repository context are accurate.
-- [ ] Snapshot IDs exist and were actually used.
-- [ ] Requirements, design intent, testable behavior, and implementation planning are complete for the Lite scope.
-- [ ] Responsive, accessibility, states, errors, content edge cases, and validation are integrated.
-- [ ] The work still qualifies for Lite.
+- [x] Scope and pinned repository context are accurate after correcting stale present-tense Stage 0 branch wording.
+- [x] `SRC-DS-001` and `SRC-REPO-001` exist, are active, and were reverified before this review; the current Figma structure is materially unchanged and the immutable repository baseline remains an ancestor with no intervening `frontend/` implementation changes.
+- [x] Requirements, design intent, and testable specification are complete for the pre-planning Lite scope; repository-aware implementation planning remains intentionally pending Stage 7.
+- [x] Responsive behavior, accessibility, link states, content edge cases, source-change handling, and validation requirements are integrated into the owning Stage 2–4 sections rather than deferred to cleanup.
+- [x] Unsupported backend/product flows, arbitrary breakpoint thresholds, unsupported motion, and unsupported application states are kept out of scope.
+- [x] Downstream owner-approved decisions now have explicit dispositions where the Stage 1 audit originally recorded open questions, without rewriting those decisions as Figma evidence.
+- [x] The work still qualifies for Lite: one static page, no persistence/authentication/API/shared-state/migration concern, and no newly discovered architecture trigger.
 
 ## 12. Corrections from Pass 1
 
-Pending Stage 5.
+- Fixed malformed `DESIGN-AUDIT.md` frontmatter by restoring the missing `baseline:` owner key.
+- Replaced Standard-profile `REQUIREMENTS.md` / `DESIGN.md` / `SPEC.md` references in the Lite design audit with `IMPLEMENTATION-BRIEF.md`.
+- Converted stale Stage 1 open-question wording into source-question plus downstream-disposition wording for CTA/social destinations, interaction states, footer year, responsive interpolation, and image semantics; asset licensing remains explicitly unresolved and non-blocking.
+- Clarified `PROJECT-CONTEXT.md` so the Stage 0 initialization branch is historical and current workflow state is not duplicated outside the canonical record.
+- Marked the original static-page scope assumption as confirmed by approved Stages 2–4 and made the Stage 0 workflow summary explicitly historical.
+- Updated stale “later Stage 3/4” language in the brief so resolved visual semantics and responsive interpolation decisions are reflected without inventing fixed CSS breakpoints.
+- Corrected the Lite review checklist so Stage 5 does not falsely require the Stage 7 implementation plan to exist.
+- Reverified the time-bound Figma input and immutable repository input before completing this review; no material source drift requiring rebaseline was found.
+
+### Stage 5 readiness
+
+`Ready for architecture and planning`
 
 ## 13. Review Pass 2 — Consistency, Traceability, Source Integrity, Risks, and Uncertainty
 
