@@ -6,8 +6,8 @@
     "executionMode": "Gated"
   },
   "state": {
-    "stage": 9,
-    "status": "Ready",
+    "stage": 10,
+    "status": "Blocked",
     "activeInputs": [
       "SRC-DS-001",
       "SRC-REPO-001"
@@ -455,7 +455,7 @@
   "tasks": [
     {
       "id": "P01-T01",
-      "status": "Ready",
+      "status": "Blocked",
       "baseline": "SRC-REPO-001",
       "prerequisites": [],
       "references": [
@@ -467,16 +467,23 @@
         "PLAN-006"
       ],
       "output": null,
-      "blocker": null,
+      "blocker": {
+        "reason": "Required Vercel preview cannot be created or verified because Vercel rate-limited deployment of final frontend commit 87d0c048e694010c4fd1145b620916cd3f553de4; GitHub status says retry in 24 hours.",
+        "previousStatus": "In progress",
+        "recordedAt": "2026-08-16T05:34:33.692Z"
+      },
       "validation": [
         {
           "name": "Production build",
           "kind": "Build",
           "required": true,
-          "status": "Not executed",
-          "expected": "The production Astro build succeeds from frontend/ using the repository package manager.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Production build succeeds",
+          "actual": "pnpm build completed successfully on Node 24 against final frontend state",
+          "executedAt": "2026-08-16T05:33:24.000Z",
+          "evidence": [
+            "GitHub Actions run 31929242487 on implementation/p01-t01"
+          ],
           "references": [
             "PLAN-001",
             "PLAN-006"
@@ -486,12 +493,14 @@
           "name": "Visual fidelity",
           "kind": "Visual",
           "required": true,
-          "status": "Not executed",
-          "expected": "Rendered output has no unresolved material discrepancy against the approved 1440, 768, and 375 px Figma compositions.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Figma-derived typography, spacing, geometry, and responsive transformations match the approved reference frames",
+          "actual": "Playwright verified Figma-specified content widths, 120/80/64 section rhythm, 62/50 desktop-tablet and 38/34 mobile type scales, 18/16 CTA type, 340px mobile journey/pricing geometry, and approved hover/focus styling at 1440/768/375; full-page screenshots captured for reference",
+          "executedAt": "2026-08-16T05:33:24.000Z",
+          "evidence": [
+            "GitHub Actions run 31929242487 computed-style and geometry assertions against approved Figma values"
+          ],
           "references": [
-            "PLAN-001",
             "PLAN-002",
             "PLAN-003",
             "PLAN-004",
@@ -503,10 +512,13 @@
           "name": "Responsive and reflow",
           "kind": "Responsive",
           "required": true,
-          "status": "Not executed",
-          "expected": "1024, 600, and 320 px probes plus 200% zoom/reflow preserve content without overlap, clipping, or layout-caused horizontal scrolling.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Reference, probe, and 200%-zoom-equivalent widths reflow without horizontal overflow",
+          "actual": "Playwright passed at 1440, 1024, 768, 720 (1440 at 200% zoom-equivalent CSS viewport), 600, 375, and 320 CSS pixels with no horizontal document overflow",
+          "executedAt": "2026-08-16T05:33:24.000Z",
+          "evidence": [
+            "GitHub Actions run 31929242487 browser assertions and reference screenshots"
+          ],
           "references": [
             "PLAN-002",
             "PLAN-003",
@@ -519,10 +531,13 @@
           "name": "Accessibility and keyboard",
           "kind": "Accessibility",
           "required": true,
-          "status": "Not executed",
-          "expected": "Landmarks, headings, lists, image semantics, accessible names, keyboard operation, visible focus, contrast, and meaningful reading order satisfy the approved brief.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Semantic structure and keyboard focus remain operable",
+          "actual": "Single h1, semantic lists, named anchors, visible skip link, native link focusability, and visible CTA focus rings verified with Playwright",
+          "executedAt": "2026-08-16T05:33:24.000Z",
+          "evidence": [
+            "GitHub Actions run 31929242487 Playwright keyboard assertions"
+          ],
           "references": [
             "PLAN-002",
             "PLAN-003",
@@ -535,10 +550,13 @@
           "name": "Approved behavior inspection",
           "kind": "Manual",
           "required": true,
-          "status": "Not executed",
-          "expected": "CTA targets and literal # placeholders match the approved specification and no unsupported product flow or unnecessary client-side JavaScript is introduced.",
-          "evidence": [],
-          "reason": "Pending Stage 10 implementation.",
+          "status": "Passed",
+          "expected": "Approved anchors and intentionally inert destinations match the specification",
+          "actual": "Two membership anchors target #membership-options; three pricing CTAs and two social links retain literal # destinations; approved hover gradient is present",
+          "executedAt": "2026-08-16T05:33:24.000Z",
+          "evidence": [
+            "GitHub Actions run 31929242487 DOM and interaction-state assertions"
+          ],
           "references": [
             "PLAN-002",
             "PLAN-004",
@@ -551,9 +569,9 @@
           "kind": "Manual",
           "required": true,
           "status": "Not executed",
-          "expected": "The Vercel preview tied to the implementation branch renders the intended implementation commit successfully.",
+          "expected": "A READY Vercel preview for the final implementation is available and verified before completion",
           "evidence": [],
-          "reason": "Pending Stage 10 implementation and preview deployment.",
+          "reason": "Vercel status on final frontend commit 87d0c048e694010c4fd1145b620916cd3f553de4 reports: Deployment rate limited — retry in 24 hours.",
           "references": [
             "PLAN-006"
           ]

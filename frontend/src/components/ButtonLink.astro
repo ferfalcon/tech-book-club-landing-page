@@ -1,0 +1,34 @@
+---
+import arrowDownUrl from '../assets/tech-book-club/images/icon-arrow-down.svg?url';
+import arrowUpUrl from '../assets/tech-book-club/images/icon-arrow-up.svg?url';
+
+interface Props {
+	href: string;
+	label: string;
+	variant?: 'primary' | 'alternate';
+	icon?: 'down' | 'up' | 'none';
+	fullWidth?: boolean;
+}
+
+const {
+	href,
+	label,
+	variant = 'primary',
+	icon = 'none',
+	fullWidth = false,
+} = Astro.props;
+
+const iconUrl = icon === 'down' ? arrowDownUrl : icon === 'up' ? arrowUpUrl : null;
+---
+
+<a
+	class:list={[
+		'button-link',
+		`button-link--${variant}`,
+		{ 'button-link--full': fullWidth },
+	]}
+	href={href}
+>
+	<span>{label}</span>
+	{iconUrl && <img class="button-link__icon" src={iconUrl} alt="" width="24" height="24" aria-hidden="true" />}
+</a>

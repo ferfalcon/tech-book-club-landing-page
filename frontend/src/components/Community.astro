@@ -1,0 +1,25 @@
+---
+import communityDesktopUrl from '../assets/tech-book-club/images/image-not-average-desktop.webp?url';
+import communityTabletUrl from '../assets/tech-book-club/images/image-not-average-tablet.webp?url';
+import communityMobileUrl from '../assets/tech-book-club/images/image-not-average-mobile.webp?url';
+import circleUrl from '../assets/tech-book-club/images/pattern-circle.png?url';
+import techLogosUrl from '../assets/tech-book-club/images/logos-tech.svg?url';
+---
+
+<section class="content-section split-section community" aria-labelledby="community-title">
+	<div class="split-section__copy community__copy">
+		<div class="community__heading-wrap">
+			<h2 id="community-title">Not your average book club</h2>
+			<img class="community__circle" src={circleUrl} alt="" aria-hidden="true" />
+		</div>
+		<p>Connect with a community that speaks your language - from <strong>Python</strong> to <strong>TypeScript</strong> and everything in between. Our discussions blend technical depth with practical applications.</p>
+	</div>
+	<div class="community__visual">
+		<picture class="section-picture community__picture">
+			<source media="(max-width: 767px)" srcset={communityMobileUrl} />
+			<source media="(max-width: 1199px)" srcset={communityTabletUrl} />
+			<img src={communityDesktopUrl} alt="" width="560" height="520" loading="lazy" />
+		</picture>
+		<img class="community__logos" src={techLogosUrl} alt="" aria-hidden="true" />
+	</div>
+</section>

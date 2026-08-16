@@ -1,0 +1,14 @@
+---
+import starUrl from '../assets/tech-book-club/images/icon-star.svg?url';
+const stars = Array.from({ length: 5 });
+---
+
+<section class="testimonial" aria-label="Member testimonial">
+	<div class="testimonial__stars" aria-label="5 out of 5 stars">
+		{stars.map(() => <img src={starUrl} alt="" width="28" height="28" aria-hidden="true" />)}
+	</div>
+	<blockquote>
+		<p>"This book club transformed my technical reading from a solitary activity into an enriching community experience. The discussions are gold!"</p>
+		<footer>Sarah Chen, Software Architect</footer>
+	</blockquote>
+</section>
