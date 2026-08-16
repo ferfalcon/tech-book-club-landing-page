@@ -36,7 +36,7 @@ updated: 2026-08-16
 
 ## 4. Repository Scope
 
-- Target branch: Workflow control currently lives on `workflow/initialize-implementation`. Implementation changes must use a dedicated branch and follow branch → pull request → Vercel preview → verification → merge.
+- Workflow branch context: Stage 0 initialization used `workflow/initialize-implementation`; current mutable workflow stage/branch must be read from the canonical workflow record and Git branch rather than this historical narrative. Implementation changes must use a dedicated branch and follow branch → pull request → Vercel preview → verification → merge.
 - Relevant application, package, or directory: `frontend/`
 - Existing implementation state: Astro starter application; the Tech Book Club landing page has not yet been implemented in `frontend/`.
 - Known technical constraints: Astro `^7.2.2`, TypeScript, pnpm `10.28.0`, Node `24.x`; use repository and nested `AGENTS.md` instructions; read `.agents/skills/modern-web-guidance/SKILL.md` before HTML/CSS/client-side JavaScript implementation.
@@ -72,7 +72,7 @@ The project has a known Vercel production deployment, but runtime claims will no
 
 - Exact implementation task decomposition until design audit and implementation-brief stages.
 - Runtime/deployment snapshot registration until preview or runtime verification becomes material.
-- Exact intermediate breakpoints until design evidence and content/layout failure points are evaluated.
+- Exact CSS breakpoint thresholds remain an implementation decision. Approved Stages 3–4 now define interpolation principles and 1024 px / 600 px validation probes while explicitly avoiding invented breakpoint numbers.
 
 ## 7. Authoritative Sources
 
@@ -121,7 +121,7 @@ These Stage 0 narrative identifiers will be formally registered in traceability 
 
 - The Figma design snapshot is time-bound and can change at the same URL; downstream stages must reverify it.
 - A workflow runtime snapshot has not yet been registered; runtime verification is deferred until it becomes material.
-- The responsive source provides three reference widths, but intermediate behavior must still be derived and validated during design/specification work.
+- The responsive source provides three reference widths. Approved Stages 3–4 now define intermediate behavior outcomes and validation probes; implementation still must select any CSS thresholds from observed content/layout failure points and validate them.
 
 ## 12. Stage 0 Completion
 

@@ -17,7 +17,7 @@ No blocking questions remain for Stage 0 after design-source and repository-sour
 
 | Assumption | Classification | Impact | Validation or correction point | Status |
 |---|---|---|---|---|
-| The landing page remains a static single-page implementation with no backend, authentication, persistence, or external API requirement | Inferred from current design and repository scope | Supports Lite profile and avoids premature architecture work | Recheck during Stage 1 design audit and Stage 2 implementation brief | Open |
+| The landing page remains a static single-page implementation with no backend, authentication, persistence, or external API requirement | Inferred at Stage 0; confirmed by approved Stages 2–4 for the current scope | Supports Lite profile and avoids premature architecture work | Recheck only if upstream scope changes or later architecture/repository evidence conflicts | Confirmed |
 | Figma visual evidence does not define semantic HTML, keyboard behavior, screen-reader behavior, or all intermediate responsive behavior | Confirmed by repository operating contract | Those concerns must be explicitly designed and validated in implementation | Stages 1–4 and final validation | Confirmed |
 | Repository starter assets are candidate implementation assets but must still be checked against the Figma source | Recommended | Prevents assuming asset fidelity from filenames alone | Stage 1 design audit | Open |
 
@@ -67,7 +67,7 @@ Record narrative history and impact here. Current snapshot status and lineage be
 - Do not bypass a blocked stage through unsupported assumptions.
 - In CLI-managed mode, update operational state through the CLI and keep generated views synchronized.
 
-## 9. Latest Completion Summary
+## 9. Stage 0 Completion Summary (Historical)
 
 - Files created or modified: `.workflow/` generated/control files, `SOURCE-BASELINE.md`, `PROJECT-CONTEXT.md`, `WORKFLOW-STATE.md`; Stage 1 will scaffold `DESIGN-AUDIT.md` only after a passing Stage 0 gate is advanced.
 - Input snapshot IDs used: `SRC-DS-001`, `SRC-REPO-001`
@@ -80,6 +80,6 @@ Record narrative history and impact here. Current snapshot status and lineage be
 - Validation performed: Stage 0 narrative completeness review completed; canonical CLI snapshot verification, artifact lifecycle updates, stage check, validator, and generated-state check must execute before advancement.
 - Deviations: Temporary one-shot initialization action documented as EXC-001 and already corrected.
 - Remaining risks: Mutable/time-bound Figma source; runtime snapshot not yet registered; intermediate responsive behavior still needs Stage 1–4 analysis.
-- Next permitted action: Record canonical source verification and artifact approvals, record the project owner's Stage 0 approval, advance to Stage 1, validate/sync, and stop before performing the Stage 1 audit.
+- Historical next action at Stage 0: Record canonical source verification and artifact approvals, record the project owner's Stage 0 approval, advance to Stage 1, validate/sync, and stop before performing the Stage 1 audit. Current next action is owned only by `.workflow/workflow-record.json` and its generated views.
 
 Do not use this narrative summary as a second mutable status registry.

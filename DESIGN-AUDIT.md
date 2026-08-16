@@ -1,5 +1,6 @@
 ---
 artifact: DESIGN-AUDIT
+baseline:
   design:
     - SRC-DS-001
   repository: []
@@ -25,9 +26,7 @@ execution_mode: Gated
 - Active design snapshots: `SRC-DS-001`
 - Repository snapshots used for design evidence: None
 - Related documents:
-  - `REQUIREMENTS.md`
-  - `DESIGN.md`
-  - `SPEC.md`
+  - `IMPLEMENTATION-BRIEF.md`
 
 ## 2. Audit Purpose
 
@@ -287,28 +286,30 @@ Missing or unresolved evidence:
 | AUD-008 | Visual system | Some decorative technology artwork uses brand-specific literal colors outside the core neutral/salmon variable set. | Community/Visuals technology artwork | Should not be misclassified as core theme tokens. | Observed |
 | AUD-009 | Flow | No subscription, contact, checkout, account, or external destination screen exists in the audited scope. | Entire `🤖 Workflow` page | Landing-page CTAs cannot be wired from Figma evidence alone. | Observed |
 
-## 17. Questions
+## 17. Source Questions and Downstream Disposition
+
+The Stage 1 audit records what the Figma source itself does not establish. Stage 5 keeps that source-evidence boundary intact while recording approved downstream resolutions; those resolutions do not retroactively become Figma evidence.
 
 ### Product questions
 
-- What should “Review membership options” do? Likely scroll to the Membership Options section, but this is not demonstrated and therefore remains open. Blocking for final CTA behavior: **Yes**.
-- What should Starter and Pro “Subscribe now” buttons do? Blocking for final CTA behavior: **Yes**.
-- What should Enterprise “Talk to us” do? Blocking for final CTA behavior: **Yes**.
+- `AUD-002` / `AUD-009`: Figma does not define CTA destinations. **Resolved downstream:** the Stage 2 owner decision and Stage 4 specification require Hero/Footer “Review membership options” links to use `#membership-options`, while Starter/Pro “Subscribe now” and Enterprise “Talk to us” remain literal `href="#"` placeholders with no hidden product flow.
+- `AUD-005`: Figma does not define social destinations. **Resolved downstream:** Bluesky and LinkedIn are icon-only links with literal `href="#"` placeholders; real profiles remain out of scope.
 
 ### Design questions
 
-- Are hover and focus the complete required interactive visual states, or should active/pressed also be designed? Blocking for initial static build: **No**; blocking for final interaction polish: **Potentially**.
-- Should social icons receive explicit hover/focus visuals beyond browser focus treatment? Blocking for initial layout: **No**.
+- `AUD-004`: Active/pressed and disabled CTA variants are not supplied. **Resolved downstream for current scope:** Stages 3–4 require no authored persistent, disabled, loading, success, error, selected, or application-managed pressed state for these static links.
+- `AUD-005`: Social-link hover/focus visuals are not supplied. **Resolved downstream:** visible keyboard focus and accessible names are required; optional hover feedback may be nonessential and must not carry unique meaning.
 
 ### Content questions
 
-- Should the footer year remain `2024` exactly as designed or be updated/dynamic? Blocking for layout implementation: **No**.
-- Are the supplied photographs approved production assets with acceptable licensing? Blocking for asset use if licensing is not already known elsewhere: **Potentially**.
+- `AUD-007`: Figma does not establish whether the footer year should change. **Resolved downstream for current scope:** Stage 4 keeps the literal `© 2024 – Tech Book Club` unless an approved upstream content change supersedes it.
+- Production-use/licensing evidence for supplied photographs/member portraits remains **unresolved and non-blocking for Stage 5 documentation consistency**. No licensing claim is inferred from Figma availability.
 
-### Technical questions
+### Technical and accessibility questions
 
-- What responsive breakpoint thresholds should interpolate between the supplied 1440/768/375 compositions? Blocking for responsive implementation: **Yes, but can be resolved as an implementation/design decision in later stages rather than by Figma audit**.
-- How should images be marked up and described for assistive technology? Blocking for final accessible implementation: **Yes**.
+- `AUD-001`: Figma does not define CSS breakpoint thresholds or intermediate layouts. **Resolved downstream at the behavior level:** Stages 3–4 keep exact thresholds as implementation decisions driven by layout failure points, use 1440/768/375 as reference conditions, and add 1024/600 validation probes without declaring them breakpoints.
+- `AUD-006`: Figma does not define image semantics. **Resolved downstream for the current scoped visuals:** `DES-003` and `SPEC-ACC-002` classify contextual photographs, avatars, patterns, glow, arrows, check artwork, and the technology-logo cluster as decorative; the brand identity and meaningful rating are exposed once.
+- Final browser/runtime accessibility compliance remains subject to implementation and Stage 11 validation; the design audit itself makes no conformance claim.
 
 ## 18. Assumptions and Recommendations
 
@@ -374,5 +375,5 @@ Missing or unresolved evidence:
 - Source verification performed: Connected Figma page metadata, three main-composition screenshots, local variables/text styles/components inspection, responsive component geometry inspection, and prototype-reaction inspection.
 - Important findings: Complete desktop/tablet/mobile section coverage; reusable section/component architecture; strong token/style coverage; CTA click destinations and intermediate responsive behavior remain unspecified.
 - Assumptions introduced: Single-page marketing intent; possible in-page membership jump is explicitly recorded only as an inference.
-- Open questions or blockers: CTA destinations, breakpoint interpolation, production image semantics/licensing, and final accessibility behavior.
+- Open questions or blockers at Stage 1 were CTA destinations, breakpoint interpolation, production image semantics/licensing, and final accessibility behavior. By Stage 5, approved downstream documentation has resolved CTA behavior, responsive interpolation strategy, current visual semantics, CTA/social state scope, and footer-year behavior. Production asset licensing remains a documented non-blocking risk, and runtime accessibility still requires Stage 11 evidence.
 - Ready for requirements: Yes — subject to Stage 1 review and owner approval.
