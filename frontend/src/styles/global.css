@@ -992,7 +992,7 @@ strong {
 	}
 
 	.membership-card {
-		width: 100%;
+		width: min(100%, 340px);
 	}
 
 	.testimonial blockquote > p {
