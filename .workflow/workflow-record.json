@@ -46,6 +46,13 @@
       "commit": "e5b55d0da6cf7f27492b1f5583153cbc476ae05d",
       "parent": "SRC-REPO-001",
       "task": "P01-T01"
+    },
+    {
+      "id": "SRC-RUN-001",
+      "role": "Validation runtime",
+      "pinStrength": "Versioned",
+      "status": "Active",
+      "reference": "https://tech-book-club-landing-page-4bf54njsc-fer-falcons-team.vercel.app"
     }
   ],
   "verifications": [
@@ -96,6 +103,30 @@
       "method": "GitHub repository lineage and frontend tree inspection before Stage 7 planning",
       "evidence": "The immutable repository input commit remains in lineage. Changes since that input are approved workflow/documentation outputs plus immediately reverted Stage 7 setup placeholders; the frontend tree remains the unimplemented Astro starter with one index.astro route, Layout.astro, Welcome.astro, starter assets, Astro as the only application dependency, and no application implementation changes.",
       "checkedAt": "2026-08-16T04:26:29.894Z"
+    },
+    {
+      "id": "VER-007",
+      "snapshot": "SRC-DS-001",
+      "result": "Unchanged",
+      "method": "Connected Figma screenshot re-verification",
+      "evidence": "Stage 11 rechecked current Figma frames 2142:1298, 2142:1911, and 2142:2091 on page 2142:363; the approved desktop, tablet, and mobile compositions remain available with no material source drift detected.",
+      "checkedAt": "2026-08-16T05:54:58.097Z"
+    },
+    {
+      "id": "VER-008",
+      "snapshot": "SRC-REPO-002",
+      "result": "Expected workflow output",
+      "method": "GitHub commit lineage and frontend-tree comparison",
+      "evidence": "SRC-REPO-002 commit e5b55d0da6cf7f27492b1f5583153cbc476ae05d descends from SRC-REPO-001. Compared with production merge 548ac26c82662efc8e0b64e3cc72c4ef38540434, its only delta is the temporary Stage 10 finalizer workflow; frontend application content is identical.",
+      "checkedAt": "2026-08-16T05:54:58.153Z"
+    },
+    {
+      "id": "VER-009",
+      "snapshot": "SRC-RUN-001",
+      "result": "Expected workflow output",
+      "method": "Vercel deployment, build, live HTTP, and runtime-error inspection",
+      "evidence": "Vercel deployment dpl_HsVeYdVbYQDNL8fcVyzEnTSKiaRc is READY for production commit 548ac26c82662efc8e0b64e3cc72c4ef38540434; build completed successfully, the live page returned HTTP 200, and no runtime errors were found in the previous day. SRC-REPO-002 has no frontend delta from that deployed commit.",
+      "checkedAt": "2026-08-16T05:54:58.207Z"
     }
   ],
   "artifacts": [
@@ -181,11 +212,13 @@
       "id": "ART-IMPLEMENTATION-REVIEW",
       "type": "IMPLEMENTATION-REVIEW",
       "path": "IMPLEMENTATION-REVIEW.md",
-      "status": "Draft",
+      "status": "Reviewed",
       "baseline": [
         "SRC-DS-001",
         "SRC-REPO-001"
-      ]
+      ],
+      "statusChangedAt": "2026-08-16T05:54:58.263Z",
+      "statusEvidence": "Stage 11 final review is complete. Lineage, design, build, responsive, keyboard/focus, runtime, and static-page checks were reviewed; IMPL-001 records an open hero-heading contrast failure, so the narrative result is Implementation requires corrections."
     }
   ],
   "traceItems": [
