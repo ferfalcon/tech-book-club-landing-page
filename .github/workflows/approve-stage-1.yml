@@ -1,0 +1,52 @@
+name: Approve Stage 1
+
+on:
+  push:
+    branches:
+      - workflow/stage-1-design-audit
+
+permissions:
+  contents: write
+
+jobs:
+  advance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: workflow/stage-1-design-audit
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Approve Stage 1 and advance
+        run: |
+          CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
+
+          $CLI artifact approve ART-DESIGN-AUDIT \
+            --evidence "Stage 1 design audit approved by project owner in ChatGPT on 2026-08-16." \
+            --approved-by "Owner"
+
+          $CLI stage check --json
+          $CLI stage review \
+            --result Passed \
+            --evidence "Stage 1 pinned design evidence audit is complete, reviewed, source-verified, and explicitly approved by the project owner." \
+            --approved-by "Owner"
+          $CLI stage advance
+
+          $CLI context --json
+          $CLI validate
+          $CLI sync --check
+
+      - name: Commit Stage 2 entry state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/approve-stage-1.yml
+          git add .workflow DESIGN-AUDIT.md REQUIREMENTS.md
+          git commit -m "Approve Stage 1 and begin requirements"
+          git push origin HEAD:workflow/stage-1-design-audit
