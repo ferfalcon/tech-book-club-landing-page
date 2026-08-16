@@ -33,6 +33,7 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import base64
 
           path = Path('IMPLEMENTATION-BRIEF.md')
           text = path.read_text()
@@ -55,45 +56,8 @@ jobs:
           if marker not in text:
               raise SystemExit('Stage 8 review marker not found')
 
+          review = base64.b64decode('IyMgMTMuIFJldmlldyBQYXNzIDIg4oCUIENvbnNpc3RlbmN5LCBUcmFjZWFiaWxpdHksIFNvdXJjZSBJbnRlZ3JpdHksIFJpc2tzLCBhbmQgVW5jZXJ0YWludHkKClN0YWdlIDggYWR2ZXJzYXJpYWwgcmV2aWV3IGNvbXBsZXRlZCBvbiAyMDI2LTA4LTE2IGFnYWluc3QgdGhlIGFjdGl2ZSBpbnB1dCBiYXNlbGluZXMgcGx1cyBjdXJyZW50IHNvdXJjZS9yZXBvc2l0b3J5IGV2aWRlbmNlLiBUaGUgcmV2aWV3IGNoYWxsZW5nZXMgdGhlIFN0YWdlIDcgcGxhbiB3aXRob3V0IHJlZGVmaW5pbmcgYFNSQy1EUy0wMDFgIG9yIGBTUkMtUkVQTy0wMDFgLgoKIyMjIFN0YWdlIDggc291cmNlIGFuZCByZXBvc2l0b3J5IHJlLXZlcmlmaWNhdGlvbgoKLSBDb25uZWN0ZWQgRmlnbWEgaW5zcGVjdGlvbiBjb25maXJtZWQgYPCfpJYgV29ya2Zsb3dgIChgMjE0MjozNjNgKSBzdGlsbCBjb250YWlucyB0aGUgc2FtZSAxNDQwIHB4IGRlc2t0b3AgKGAyMTQyOjEyOThgKSwgNzY4IHB4IHRhYmxldCAoYDIxNDI6MTkxMWApLCAzNzUgcHggbW9iaWxlIChgMjE0MjoyMDkxYCksIHJldXNhYmxlIHNlY3Rpb24gY29tcG9uZW50cywgQ1RBIHN0YXRlIGNvbXBvbmVudHMsIHN0eWxlLWd1aWRlIHN0cnVjdHVyZXMsIGFuZCB2aXN1YWwgYXNzZXRzIHVzZWQgYnkgdGhlIGFwcHJvdmVkIGF1ZGl0IGFuZCBwbGFuLiBObyBtYXRlcmlhbCBzb3VyY2UgZHJpZnQgd2FzIGRldGVjdGVkLgotIEdpdEh1YiBjb21wYXJpc29uIGZyb20gaW1tdXRhYmxlIGlucHV0IGNvbW1pdCBgODI0NzFkNTdiNzE3Nzg2YWRjOWMyZjlhODNjZDZhNWNkNjk2NzY4ZmAgdG8gY3VycmVudCBwcmUtU3RhZ2UtOCBgbWFpbmAgY29tbWl0IGA5YzZjODI0YzRkZWJhMjI1YjkwZmIwZGM4M2FhYjI2MmM2NWRmYjA1YCBzaG93cyBleHBlY3RlZCB3b3JrZmxvdy9kb2N1bWVudGF0aW9uIG91dHB1dCBhbmQgbm8gYGZyb250ZW5kL2AgaW1wbGVtZW50YXRpb24gY2hhbmdlcy4KLSBDdXJyZW50IHJlcG9zaXRvcnkgaW5zcGVjdGlvbiByZWNvbmZpcm1lZCBgZnJvbnRlbmQvc3JjL3BhZ2VzL2luZGV4LmFzdHJvYCwgYGZyb250ZW5kL3NyYy9sYXlvdXRzL0xheW91dC5hc3Ryb2AsIGFuZCBgZnJvbnRlbmQvc3JjL2NvbXBvbmVudHMvV2VsY29tZS5hc3Ryb2AgcmVtYWluIHRoZSBzdG9jayBBc3RybyBzdGFydGVyOyBgZnJvbnRlbmQvcGFja2FnZS5qc29uYCBzdGlsbCBkZWNsYXJlcyBwbnBtIGAxMC4yOC4wYCwgTm9kZSBgMjQueGAsIGFuZCBBc3RybyBgXjcuMi4yYDsgYGFzdHJvLmNvbmZpZy5tanNgIHJlbWFpbnMgbWluaW1hbDsgYGZyb250ZW5kL3ZlcmNlbC5qc29uYCByZXRhaW5zIHRoZSBmcm9udGVuZC1kaXJlY3RvcnkgaWdub3JlIGNvbW1hbmQuCi0gVGhlIFN0YWdlIDYgYXJjaGl0ZWN0dXJlIHNraXAgcmVtYWlucyB2YWxpZDogdGhlIGFwcHJvdmVkIHNjb3BlIHN0aWxsIGhhcyBvbmUgc3RhdGljIHBhZ2UsIG5vIGJhY2tlbmQvQVBJL3BlcnNpc3RlbmNlL2F1dGhlbnRpY2F0aW9uL3NoYXJlZCBhcHBsaWNhdGlvbiBzdGF0ZSwgbm8gbWlncmF0aW9uLCBhbmQgbm8gc2VydmVyLXJ1bnRpbWUgYXJjaGl0ZWN0dXJlIGNvbmNlcm4uCgojIyMgU3RhZ2UgOCBjb3JyZWN0aW9ucwoKLSBUaWdodGVuZWQgYFBMQU4tMDAyYCBzbyB0aGUgc2VtYW50aWMgcGFnZSBzaGVsbCBleHBsaWNpdGx5IG93bnMgbm9uLXJlZHVuZGFudCBgaGVhZGVyYCwgYG1haW5gLCBhbmQgYGZvb3RlcmAgbGFuZG1hcmtzIHJhdGhlciB0aGFuIGFtYmlndW91c2x5IGRlc2NyaWJpbmcgdGhlIHdob2xlIHBhZ2UgYXMgb25lIGA8bWFpbj5gIGZsb3cuIFRoaXMgYWxpZ25zIHBsYW5uaW5nIHdpdGggYFNQRUMtQUNDLTAwMWAgYmVmb3JlIGltcGxlbWVudGF0aW9uIGJlZ2lucy4KLSBDb3JyZWN0ZWQgYFBMQU4tMDAzYCBvcmRlcmluZyBzbyBpdCBkZXBlbmRzIG9uIGJvdGggdGhlIHZpc3VhbCBmb3VuZGF0aW9uIChgUExBTi0wMDFgKSBhbmQgdGhlIHBhZ2Ugc2hlbGwvc2hhcmVkIHByaW1pdGl2ZXMgKGBQTEFOLTAwMmApIGJlZm9yZSBjb21wb3NpbmcgbWlkZGxlIHNlY3Rpb25zIGludG8gYGluZGV4LmFzdHJvYC4KLSBNYWRlIGBQTEFOLTAwNmAgbWlncmF0aW9uIGFuZCByb2xsYmFjayBoYW5kbGluZyBleHBsaWNpdDogbm8gZGF0YS9zY2hlbWEvc2VydmljZS9ydW50aW1lIG1pZ3JhdGlvbiBleGlzdHMgZm9yIHRoaXMgc2NvcGUsIGFuZCBhIHByb2R1Y3Rpb24gcmVncmVzc2lvbiBpcyByb2xsZWQgYmFjayB0aHJvdWdoIGEgbm9ybWFsIEdpdCByZXZlcnQgcGx1cyB0aGUgc3RhbmRhcmQgZGVwbG95bWVudCBwYXRoLgotIE5vIHBsYW4gaXRlbSB3YXMgZXhwYW5kZWQgaW50byBhbiB1bnN1cHBvcnRlZCByb3V0ZSwgZmxvdywgQVBJLCBzdGF0ZSBzeXN0ZW0sIGNsaWVudCBmcmFtZXdvcmssIHRlc3QgZnJhbWV3b3JrLCBhbmltYXRpb24gc3lzdGVtLCBvciBleHRlcm5hbCBkZXN0aW5hdGlvbi4KCiMjIyBSZXZpZXcgY2hlY2tsaXN0CgotIFt4XSBPd25lcnNoaXAgc2VjdGlvbnMgYW5kIGlkZW50aWZpZXIgbmFtZXNwYWNlcyByZW1haW4gZGlzdGluY3Q7IFN0YWdlIDggY29ycmVjdGlvbnMgc3RheSBpbnNpZGUgdGhlIHBsYW4vcmV2aWV3IHJlc3BvbnNpYmlsaXRpZXMgb2YgdGhpcyBMaXRlIGJyaWVmLgotIFt4XSBFdmVyeSBtYXRlcmlhbCBwbGFuIGl0ZW0gbWFwcyB0byBhcHByb3ZlZCByZXF1aXJlbWVudHMvc3BlY2lmaWNhdGlvbnMgYW5kIHRoZSBhY3RpdmUgc291cmNlIGJhc2VsaW5lcy4KLSBbeF0gTm8gc291cmNlIGNoYW5nZWQgc2lsZW50bHkgYWZ0ZXIgdGhlIGJyaWVmIGJhc2VsaW5lIHdhcyByZWNvcmRlZDsgY3VycmVudCBGaWdtYSBldmlkZW5jZSBpcyBtYXRlcmlhbGx5IHVuY2hhbmdlZCBhbmQgcmVwb3NpdG9yeSBkaWZmZXJlbmNlcyBhcmUgZXhwZWN0ZWQgd29ya2Zsb3cvZG9jdW1lbnRhdGlvbiBvdXRwdXRzIG9ubHkuCi0gW3hdIE5vIHVuc3VwcG9ydGVkIHNjb3BlIG9yIGFzc3VtcHRpb24gaXMgcHJlc2VudGVkIGFzIGNvbmZpcm1lZC4KLSBbeF0gQmxvY2tpbmcgcXVlc3Rpb25zIGFyZSB2aXNpYmxlOyBub25lIHJlbWFpbiBmb3IgdGFzayBkZWNvbXBvc2l0aW9uLgotIFt4XSBDb3JyZWN0aW9ucyBmcm9tIFJldmlldyBQYXNzIDEgcmVtYWluIGluY2x1ZGVkIGJlZm9yZSB0aGlzIHNlY29uZCBwYXNzLgotIFt4XSBQbGFuIG9yZGVyaW5nIGFuZCBkZXBlbmRlbmNpZXMgYXJlIGV4ZWN1dGFibGUgYWZ0ZXIgdGhlIGBQTEFOLTAwM2AgZGVwZW5kZW5jeSBjb3JyZWN0aW9uLgotIFt4XSBBY2Nlc3NpYmlsaXR5LCByZXNwb25zaXZlIGJlaGF2aW9yLCBpbnRlcmFjdGlvbiBzdGF0ZXMsIGNvbnRlbnQgZWRnZXMsIGFuZCBmYWlsdXJlIGhhbmRsaW5nIHJlbWFpbiBpbnRlZ3JhdGVkIGludG8gdGhlIHBsYW4gaXRlbXMgdGhhdCBjcmVhdGUgdGhlbSByYXRoZXIgdGhhbiBkZWZlcnJlZCB0byBmaW5hbCBjbGVhbnVwLgotIFt4XSBSZXF1aXJlZCB2YWxpZGF0aW9uIGlzIGZlYXNpYmxlIHdpdGggdGhlIGV4aXN0aW5nIGBwbnBtIGJ1aWxkYCwgYmFja2dyb3VuZCBBc3RybyBkZXYgd29ya2Zsb3csIGJyb3dzZXIgaW5zcGVjdGlvbiwgY29ubmVjdGVkIEZpZ21hIGV2aWRlbmNlLCBhbmQgVmVyY2VsIHByZXZpZXcgdmVyaWZpY2F0aW9uOyBubyB1bmluc3RhbGxlZCB0ZXN0IGNvbW1hbmQgaXMgY2xhaW1lZC4KLSBbeF0gTWlncmF0aW9uLCBzZWN1cml0eS9wcml2YWN5LCBkZXBsb3ltZW50LCByb2xsYmFjaywgcmVncmVzc2lvbiwgYW5kIHByb2ZpbGUtdXBncmFkZSByaXNrIHdlcmUgY2hhbGxlbmdlZDsgbm9uZSBpbnRyb2R1Y2VzIGEgYmxvY2tpbmcgYXJjaGl0ZWN0dXJlIG9yIHByb2ZpbGUgY2hhbmdlIGZvciB0aGUgYXBwcm92ZWQgc3RhdGljLXBhZ2Ugc2NvcGUuCgojIyAxNC4gUmVhZGluZXNzCgpgUmVhZHkgZm9yIHRhc2sgZGVjb21wb3NpdGlvbmAKClRoZSBhZHZlcnNhcmlhbCBTdGFnZSA4IHJldmlldyBmb3VuZCBubyB1bnJlc29sdmVkIHRlY2huaWNhbCBvciBwcm9kdWN0IGRlY2lzaW9uIGFmdGVyIHRoZSBjb3JyZWN0aW9ucyBhYm92ZS4gVGhlIGRvY3VtZW50ZWQgaW1hZ2UvbWVtYmVyLXBvcnRyYWl0IGxpY2Vuc2luZyBxdWVzdGlvbiBhbmQgdW5zcGVjaWZpZWQgbm9uZXNzZW50aWFsIHNvY2lhbC1saW5rIGhvdmVyIHRyZWF0bWVudCByZW1haW4gbm9uLWJsb2NraW5nIHJpc2tzIGFscmVhZHkgYm91bmRlZCBieSB0aGUgYXBwcm92ZWQgc3BlY2lmaWNhdGlvbi4gQmVjYXVzZSBleGVjdXRpb24gbW9kZSBpcyBHYXRlZCwgZG8gbm90IGFkdmFuY2UgdG8gU3RhZ2UgOSB1bnRpbCB0aGUgcHJvamVjdCBvd25lciBleHBsaWNpdGx5IGFwcHJvdmVzIFN0YWdlIDguCg==').decode('utf-8')
           prefix = text.split(marker, 1)[0]
-          review = '''## 13. Review Pass 2 — Consistency, Traceability, Source Integrity, Risks, and Uncertainty
-
-Stage 8 adversarial review completed on 2026-08-16 against the active input baselines plus current source/repository evidence. The review challenges the Stage 7 plan without redefining `SRC-DS-001` or `SRC-REPO-001`.
-
-### Stage 8 source and repository re-verification
-
-- Connected Figma inspection confirmed `🤖 Workflow` (`2142:363`) still contains the same 1440 px desktop (`2142:1298`), 768 px tablet (`2142:1911`), 375 px mobile (`2142:2091`), reusable section components, CTA state components, style-guide structures, and visual assets used by the approved audit and plan. No material source drift was detected.
-- GitHub comparison from immutable input commit `82471d57b717786adc9c2f9a83cd6a5cd696768f` to current pre-Stage-8 `main` commit `9c6c824c4deba225b90fb0dc83aab262c65dfb05` shows expected workflow/documentation output and no `frontend/` implementation changes.
-- Current repository inspection reconfirmed `frontend/src/pages/index.astro`, `frontend/src/layouts/Layout.astro`, and `frontend/src/components/Welcome.astro` remain the stock Astro starter; `frontend/package.json` still declares pnpm `10.28.0`, Node `24.x`, and Astro `^7.2.2`; `astro.config.mjs` remains minimal; `frontend/vercel.json` retains the frontend-directory ignore command.
-- The Stage 6 architecture skip remains valid: the approved scope still has one static page, no backend/API/persistence/authentication/shared application state, no migration, and no server-runtime architecture concern.
-
-### Stage 8 corrections
-
-- Tightened `PLAN-002` so the semantic page shell explicitly owns non-redundant `header`, `main`, and `footer` landmarks rather than ambiguously describing the whole page as one `<main>` flow. This aligns planning with `SPEC-ACC-001` before implementation begins.
-- Corrected `PLAN-003` ordering so it depends on both the visual foundation (`PLAN-001`) and the page shell/shared primitives (`PLAN-002`) before composing middle sections into `index.astro`.
-- Made `PLAN-006` migration and rollback handling explicit: no data/schema/service/runtime migration exists for this scope, and a production regression is rolled back through a normal Git revert plus the standard deployment path.
-- No plan item was expanded into an unsupported route, flow, API, state system, client framework, test framework, animation system, or external destination.
-
-### Review checklist
-
-- [x] Ownership sections and identifier namespaces remain distinct; Stage 8 corrections stay inside the plan/review responsibilities of this Lite brief.
-- [x] Every material plan item maps to approved requirements/specifications and the active source baselines.
-- [x] No source changed silently after the brief baseline was recorded; current Figma evidence is materially unchanged and repository differences are expected workflow/documentation outputs only.
-- [x] No unsupported scope or assumption is presented as confirmed.
-- [x] Blocking questions are visible; none remain for task decomposition.
-- [x] Corrections from Review Pass 1 remain included before this second pass.
-- [x] Plan ordering and dependencies are executable after the `PLAN-003` dependency correction.
-- [x] Accessibility, responsive behavior, interaction states, content edges, and failure handling remain integrated into the plan items that create them rather than deferred to final cleanup.
-- [x] Required validation is feasible with the existing `pnpm build`, background Astro dev workflow, browser inspection, connected Figma evidence, and Vercel preview verification; no uninstalled test command is claimed.
-- [x] Migration, security/privacy, deployment, rollback, regression, and profile-upgrade risk were challenged; none introduces a blocking architecture or profile change for the approved static-page scope.
-
-## 14. Readiness
-
-`Ready for task decomposition`
-
-The adversarial Stage 8 review found no unresolved technical or product decision after the corrections above. The documented image/member-portrait licensing question and unspecified nonessential social-link hover treatment remain non-blocking risks already bounded by the approved specification. Because execution mode is Gated, do not advance to Stage 9 until the project owner explicitly approves Stage 8.
-'''
-
           path.write_text(prefix + review)
           PY
 
