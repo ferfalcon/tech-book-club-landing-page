@@ -1,0 +1,271 @@
+name: Document Stage 4
+
+on:
+  push:
+    branches:
+      - workflow/stage-4-specification
+
+permissions:
+  contents: write
+
+jobs:
+  document:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: workflow/stage-4-specification
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Write Stage 4 specification
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('IMPLEMENTATION-BRIEF.md')
+          text = path.read_text()
+
+          section4 = r'''## 4. Specification
+
+### Stage 4 source status
+
+- Active inputs: `SRC-DS-001`, `SRC-REPO-001`; Stage 3 is recorded as owner-approved in the workflow record.
+- Design source re-verification: On 2026-08-16, connected Figma metadata confirmed that the audited desktop (`2142:1298`), tablet (`2142:1911`), mobile (`2142:2091`), section-component variants, and Primary/Alternate CTA state sets remain present with no material structural conflict.
+- This specification converts approved requirements and design intent into observable outcomes. It does not choose implementation architecture or treat the three Figma frame widths as CSS breakpoint thresholds.
+- There is no user-entered, persisted, fetched, authenticated, or server-owned application data in scope, so no `SPEC-DATA-*` item is required.
+
+### SPEC-BEH-001 — Render one complete landing page with approved content
+
+- **Requirement and design references:** `REQ-FR-001`, `REQ-FR-002`, `REQ-FR-005`, `REQ-NFR-001`; `DES-001`, `DES-002`, `DES-004`.
+- **Source snapshots:** `SRC-DS-001`, `SRC-REPO-001`; `EVD-002`, `EVD-003`, `EVD-004`, `EVD-012`.
+- **Observable behavior:**
+  - One page presents the seven major content sections in this order: Hero → Read Together → Community → Reading Journey → Membership Options → Testimonial → Footer.
+  - The visible headings, descriptive copy, benefit lists, four journey steps, Starter/Pro/Enterprise names, prices, plan benefits, CTA labels, social-proof message, testimonial, attribution, and footer copy match the approved source.
+  - Social proof appears in both the hero and footer contexts.
+  - Until an approved upstream content decision changes it, the footer copyright remains the literal source value `© 2024 – Tech Book Club`; it is not silently made dynamic.
+- **States and edge cases:** Approved text may wrap as available width or user text sizing changes. Content is not ellipsized, line-clamped, clipped, or omitted to preserve an exact Figma line break. Cards and sections grow vertically when needed.
+- **Acceptance criteria:** `AC-001`, `AC-002`, `AC-003`, `AC-004`, `AC-010`, `AC-021`, `AC-024`.
+
+### SPEC-BEH-002 — Reproduce the approved responsive compositions and usable interpolation
+
+- **Requirement and design references:** `REQ-FR-003`, `REQ-AR-001`, `REQ-AR-005`, `REQ-NFR-001`; `DES-RWD-001`, `DES-RWD-002`, `DES-RWD-003`, `DES-RWD-004`.
+- **Source snapshots:** `SRC-DS-001`; `EVD-002`, `EVD-003`, `EVD-004`, `EVD-005`; `AUD-001`.
+- **Observable behavior:**
+  - At a 1440 px viewport, the major layout matches the supplied desktop composition: hero in two columns; Read Together image-left/text-right; Community text-left/image-right; Reading Journey horizontal; three membership cards in one row; testimonial centered; desktop footer arrangement.
+  - At a 768 px viewport, the major layout matches the supplied tablet composition: hero content before its image; Read Together text/checklist before its image; Community text before its image; Reading Journey vertical; Membership Options in two columns with Enterprise wrapped beneath; testimonial left-aligned; tablet footer arrangement.
+  - At a 375 px viewport, the major layout matches the supplied mobile composition: stacked hero/editorial sections in text-first order; vertical Reading Journey; one membership card per row in Starter → Pro → Enterprise order; left-aligned testimonial; mobile footer arrangement.
+  - Between reference widths, the layout uses the widest reference-inspired arrangement that keeps text readable, controls usable, cards uncramped, and the page free of layout-caused horizontal scrolling. The layout simplifies before collision or clipping occurs.
+  - Image presentation preserves the demonstrated crop/aspect intent without stretching.
+- **States and edge cases:** 1024 px and 600 px are Stage 4 validation probes only, not CSS breakpoint thresholds. At those widths, all material content and controls remain available without overlap, clipping, or layout-caused horizontal page scrolling.
+- **Acceptance criteria:** `AC-005`, `AC-006`, `AC-019`, `AC-021`, `AC-025`, `AC-026`.
+
+### SPEC-BEH-003 — Keep the delivered experience static and free of unsupported product behavior
+
+- **Requirement and design references:** `REQ-NFR-002`, `REQ-CON-005`; `DES-INT-003`.
+- **Source snapshots:** `SRC-REPO-001`, `SRC-DS-001`; `AUD-009`.
+- **Observable behavior:** The page requires no backend, persistence, authentication, checkout, subscription processing, contact processing, external API, modal, additional route, or authored animation to satisfy the approved behavior. Navigation and link states use native browser behavior where possible.
+- **States and edge cases:** No loading, empty, success, error, disabled, selected, or application-managed pressed state is created for the static landing-page links. No entrance, looping, scroll-linked, or authored smooth-scroll motion is added solely for polish.
+- **Acceptance criteria:** `AC-009`, `AC-022`, `AC-023`, `AC-027`.
+
+### SPEC-INT-001 — Membership and plan CTA link behavior
+
+- **Requirement and design references:** `REQ-FR-004`, `REQ-AR-002`; `DES-INT-001`.
+- **Source snapshots:** `SRC-DS-001`; `EVD-006`, `EVD-007`; `AUD-002`, `AUD-003`, `AUD-004`, `AUD-009`; owner decision 2026-08-16.
+- **Observable behavior:**
+  - The Hero and Footer “Review membership options” controls are links with `href="#membership-options"` and target the Membership Options section whose fragment identifier is `membership-options`.
+  - Starter and Pro “Subscribe now” and Enterprise “Talk to us” are links whose `href` value is exactly `#`.
+  - Placeholder links do not call an API, open a modal, navigate to another route, submit a form, or expose an external destination. Their activation otherwise retains normal browser handling for the literal fragment value.
+  - Primary-context CTA links reproduce the supplied Primary Button default and hover appearances; the footer membership link reproduces the supplied Alternate Button default and hover appearances.
+  - Keyboard focus on CTA links is clearly visible and follows the corresponding supplied focus-state visual intent.
+- **States and edge cases:** There is no authored disabled/loading/success/error/selected state. Native transient link activation does not create a persistent product state.
+- **Acceptance criteria:** `AC-007`, `AC-008`, `AC-009`, `AC-013`, `AC-014`, `AC-028`.
+
+### SPEC-INT-002 — Social-link behavior
+
+- **Requirement and design references:** `REQ-AR-002`, `REQ-AR-004`; `DES-INT-002`.
+- **Source snapshots:** `SRC-DS-001`; `AUD-005`; `150:878`, `150:879`; owner decision 2026-08-16.
+- **Observable behavior:** Bluesky and LinkedIn are separate icon-only links with `href="#"`. They expose the accessible names “Bluesky” and “LinkedIn” respectively, are reachable and activatable with the keyboard, and have a clearly visible focus indication. No external profile behavior is added.
+- **States and edge cases:** Figma supplies no social-link hover/focus variant. Any hover treatment may only provide nonessential visual feedback and may not be the sole means of identifying the link. Focus remains visible independently of hover.
+- **Acceptance criteria:** `AC-017`, `AC-018`, `AC-029`.
+
+### SPEC-ACC-001 — Semantic document structure and reading order
+
+- **Requirement and design references:** `REQ-AR-001`, `REQ-FR-001`; `DES-001`, `DES-RWD-002`.
+- **Source snapshots:** `SRC-DS-001`, `SRC-REPO-001`; `EVD-012`.
+- **Observable behavior:**
+  - The rendered document exposes one primary page heading for “Join the ultimate tech book club”.
+  - Major content sections use a coherent descending heading structure; membership-plan names are subordinate to the Membership Options heading.
+  - Page landmarks distinguish the introductory/header content, primary content, and footer content without redundant landmark nesting.
+  - Reading Journey is exposed as an ordered four-step sequence. Feature/benefit groups whose order is not semantically significant are exposed as lists where appropriate.
+  - DOM and assistive-technology reading order follows the approved top-to-bottom narrative and the text-first responsive intent. Desktop visual positioning does not place image content earlier in the accessibility reading order than its related heading/copy.
+- **States and edge cases:** Responsive CSS may move visual columns, but it does not produce a contradictory tab or screen-reader order.
+- **Acceptance criteria:** `AC-011`, `AC-012`, `AC-030`.
+
+### SPEC-ACC-002 — Accessible visual semantics
+
+- **Requirement and design references:** `REQ-AR-003`, `REQ-FR-005`; `DES-003`.
+- **Source snapshots:** `SRC-DS-001`; `EVD-005`, `EVD-010`, `EVD-011`; `AUD-006`, `AUD-008`.
+- **Observable behavior:**
+  - Hero, reading-group, and community photographs are treated as decorative/context-setting visuals because adjacent text carries the material message; when rendered as image elements they use empty alternative text, and when rendered as CSS/decorative artwork they are not exposed as meaningful accessibility content.
+  - Member-avatar artwork is decorative; the adjacent “200+ developers joined already” text carries the social-proof count.
+  - Background patterns, glow, journey arrows, circle marks, check icons, and the technology-logo cluster are decorative and do not add redundant announcements.
+  - The Tech Book Club brand identity exposes “Tech Book Club” once; visual logo subparts do not create duplicate announcements.
+  - Five-star rating groups, where they communicate rating/social-proof meaning, expose one concise rating equivalent rather than five separately announced star icons.
+- **States and edge cases:** Decorative-classification choices must remain explicit if the implementation changes the rendering technique for an asset.
+- **Acceptance criteria:** `AC-015`, `AC-016`, `AC-031`.
+
+### SPEC-ACC-003 — Keyboard, focus, reflow, and readable visual states
+
+- **Requirement and design references:** `REQ-AR-002`, `REQ-AR-004`, `REQ-AR-005`; `DES-004`, `DES-RWD-004`, `DES-INT-001`, `DES-INT-002`.
+- **Source snapshots:** `SRC-DS-001`, `SRC-REPO-001`; `EVD-006`; `AUD-001`, `AUD-003`, `AUD-005`.
+- **Observable behavior:**
+  - Every interactive element is reachable through sequential keyboard navigation in meaningful DOM order and activates using native link keyboard behavior.
+  - Focus is never hidden by an authored style; each CTA and icon-only social link has a clearly visible focus indication on its light or dark background.
+  - No keyboard trap or custom focus-management flow exists.
+  - At 320 CSS px viewport width and during a 200% browser zoom check at a representative desktop viewport, material content and controls remain available without overlap, clipping, or layout-caused two-dimensional page scrolling.
+  - Implemented text and interactive-state contrast is explicitly checked before acceptance; any detected insufficient-contrast state is corrected or treated as blocking rather than waived silently.
+- **States and edge cases:** Exact Figma line breaks are not acceptance requirements under zoom/reflow. Content preservation and operability take precedence when typography wraps differently.
+- **Acceptance criteria:** `AC-013`, `AC-014`, `AC-018`, `AC-019`, `AC-020`, `AC-032`, `AC-033`.
+
+### SPEC-VAL-001 — Required validation matrix
+
+- **Requirement and design references:** All Must requirements; `DES-001` through `DES-004`, `DES-RWD-001` through `DES-RWD-004`, `DES-INT-001` through `DES-INT-003`.
+- **Source snapshots:** `SRC-DS-001`, `SRC-REPO-001`.
+- **Observable behavior:** Acceptance requires evidence from all applicable checks below rather than visual inspection alone:
+  - production Astro build;
+  - rendered visual comparison at 1440 px, 768 px, and 375 px against the approved Figma references;
+  - intermediate-width layout probes at 1024 px and 600 px;
+  - narrow/reflow probe at 320 CSS px and a 200% browser zoom check;
+  - keyboard traversal and activation of every link;
+  - semantic/accessible-name inspection for headings, landmarks, lists, images/decorative visuals, rating groups, and icon-only social links;
+  - explicit contrast inspection for text and interactive states;
+  - implementation inspection confirming no unsupported product flow and no unnecessary client-side JavaScript.
+- **States and edge cases:** A check recorded as not executed does not count as passing. A material discrepancy or accessibility failure remains blocking until corrected or explicitly returned to the owning upstream stage for an approved decision.
+- **Acceptance criteria:** `AC-020`, `AC-021`, `AC-022`, `AC-023`, `AC-034`.
+
+### SPEC-VAL-002 — Source-change and failure handling
+
+- **Requirement and design references:** `REQ-CON-004`, `REQ-CON-005`; Stage 3 source-change intent.
+- **Source snapshots:** `SRC-DS-001`, `SRC-REPO-001`.
+- **Observable behavior:** If the time-bound Figma source changes materially before implementation/validation, the workflow records a new source snapshot and impact assessment and returns to the earliest affected owning stage. Missing or unusable approved assets are not silently substituted with unrelated imagery. Validation failures are corrected and rerun; they are not converted into passing evidence by narrative alone.
+- **States and edge cases:** A source outage or unexpected upstream/concurrent change blocks dependent material work until verification can be restored or the source change is explicitly handled.
+- **Acceptance criteria:** `AC-035`.
+
+### Stage 4 acceptance criteria added by specification
+
+- `AC-024`: Unless an approved upstream content change exists, the rendered footer shows the literal text `© 2024 – Tech Book Club`.
+- `AC-025`: At a 1024 px viewport, all seven sections and all controls remain available with no overlap, clipping, or layout-caused horizontal page scrolling.
+- `AC-026`: At a 600 px viewport, all seven sections and all controls remain available with no overlap, clipping, or layout-caused horizontal page scrolling.
+- `AC-027`: The rendered page has no authored entrance, looping, scroll-linked, or smooth-scroll animation required for the approved experience.
+- `AC-028`: Hero and footer membership-review links use `href="#membership-options"`, and the Membership Options section exposes the matching `membership-options` fragment target.
+- `AC-029`: Bluesky and LinkedIn icon links have distinct accessible names and visible keyboard focus while retaining literal `href="#"` placeholders.
+- `AC-030`: Responsive visual reordering does not create a DOM/tab/screen-reader order that contradicts the approved top-to-bottom and text-first reading sequence.
+- `AC-031`: Decorative photographs/artwork/icons are not redundantly announced; the brand identity and star-rating meaning are exposed once where meaningful.
+- `AC-032`: At 320 CSS px viewport width, no material content or interactive control is lost through overlap, clipping, or layout-caused horizontal scrolling.
+- `AC-033`: At 200% browser zoom on a representative desktop viewport, all material content and interactive controls remain available and operable without overlap or clipping.
+- `AC-034`: Each required validation category in `SPEC-VAL-001` has executed evidence before final acceptance; “not executed” is not a passing result.
+- `AC-035`: A material change to `SRC-DS-001` or an unexpected source verification result triggers explicit source-change handling before dependent implementation continues.
+
+### Stage 4 review pass 1 — Completeness and correctness
+
+- [x] All approved functional, responsive, interaction, accessibility, visual-fidelity, and lightweight-static-page requirements have testable specification coverage.
+- [x] CTA destinations and placeholder behavior are precise, including the exact `#membership-options` fragment and literal `#` placeholder values.
+- [x] Reference-width behavior is explicit at 1440 px, 768 px, and 375 px; 1024 px and 600 px are clearly identified as validation probes rather than breakpoint thresholds.
+- [x] Keyboard, focus, semantic structure, visual semantics, reflow, zoom, contrast inspection, and no-motion behavior are integrated rather than deferred to a late accessibility phase.
+- [x] No backend, dynamic data, unsupported business state, arbitrary CSS breakpoint, or external destination was invented.
+
+### Corrections from Stage 4 review pass 1
+
+- Defined the exact in-page fragment as `membership-options` so the owner-approved membership navigation is directly testable.
+- Kept the literal 2024 copyright as the current source behavior unless an approved upstream content decision supersedes it, rather than silently making the year dynamic.
+- Added validation-only probes at 1024 px and 600 px to test intermediate interpolation without asserting implementation breakpoint values.
+- Added explicit 320 CSS px and 200% zoom probes for reflow robustness while preserving the rule that exact Figma line breaks are not required under accessibility reflow.
+- Added one accessible equivalent for meaningful five-star groups while keeping decorative icon repetition out of the accessibility tree.
+- Made source-change and validation-failure recovery observable instead of treating failures as narrative-only risks.
+
+### Stage 4 review pass 2 — Consistency, traceability, source integrity, risks, and uncertainty
+
+- [x] Every `SPEC-*` item references approved requirements/design intent and active source snapshots.
+- [x] New `AC-024` through `AC-035` are unique, observable, and do not contradict Stage 2 acceptance criteria.
+- [x] The mutable Figma input was reverified immediately before Stage 4 specification work; no material structural conflict was detected.
+- [x] Exact CSS breakpoint thresholds remain an implementation decision driven by observed failure points, not an invented specification fact.
+- [x] Placeholder links remain explicitly incomplete product destinations; no hidden flow is implied.
+- [x] Asset licensing remains a non-blocking project risk; specification does not assert licensing evidence that has not been established.
+- [x] No Stage 4 blocking product decision remains.
+
+### Stage 4 readiness
+
+`Ready for Stage 4 gated approval` — specification is complete and testable for the current Lite scope. Per Gated execution mode, do not advance to Stage 5 until the project owner explicitly approves Stage 4.'''
+
+          section9 = r'''## 9. Risks, Assumptions, and Questions
+
+### Blocking
+
+- None at the Stage 4 checkpoint.
+
+### Non-blocking
+
+- The current specification intentionally renders the literal source copyright `© 2024 – Tech Book Club`; changing it to a newer or dynamic year requires an approved upstream content decision.
+- Production-use/licensing confirmation for supplied photographs/member portraits remains unresolved; no licensing claim is introduced by the workflow.
+- CSS breakpoint thresholds remain an implementation detail. Stage 4 defines exact reference states plus 1024 px and 600 px validation probes, not breakpoint numbers.
+- Subscription/contact/social destinations remain intentionally out of scope and use `#` placeholders.
+- Exact social-link hover styling is not supplied by Figma; only accessible naming and visible focus are required behavior.'''
+
+          section10 = r'''## 10. Traceability
+
+| Snapshot or evidence | Requirement | Design | Specification or criterion | Plan item | Validation |
+|---|---|---|---|---|---|
+| `EVD-002`, `EVD-003`, `EVD-004`, `EVD-012` | `REQ-FR-001`, `REQ-FR-002`, `REQ-FR-003`, `REQ-NFR-001` | `DES-001`, `DES-002`, `DES-004`, `DES-RWD-001`, `DES-RWD-002`, `DES-RWD-003`, `DES-RWD-004` | `SPEC-BEH-001`, `SPEC-BEH-002`; `AC-024`–`AC-026` | Pending Stage 7 | `SPEC-VAL-001`; pending Stage 11 execution |
+| `EVD-005` | `REQ-FR-003`, `REQ-FR-005` | `DES-001`, `DES-003`, `DES-RWD-002`, `DES-RWD-003` | `SPEC-BEH-001`, `SPEC-BEH-002`, `SPEC-ACC-002`; `AC-031` | Pending Stage 7 | `SPEC-VAL-001`; pending Stage 11 execution |
+| `EVD-006`, `EVD-007`, `AUD-002`, `AUD-003`, `AUD-009`; owner decision 2026-08-16 | `REQ-FR-004`, `REQ-AR-002` | `DES-INT-001`, `DES-INT-003` | `SPEC-INT-001`, `SPEC-BEH-003`; `AC-027`, `AC-028` | Pending Stage 7 | `SPEC-VAL-001`; pending Stage 11 execution |
+| `EVD-010`, `EVD-011`, `AUD-006` | `REQ-AR-003` | `DES-003` | `SPEC-ACC-002`; `AC-031` | Pending Stage 7 | `SPEC-VAL-001`; pending Stage 11 execution |
+| `AUD-005`; owner decision 2026-08-16 | `REQ-AR-004` | `DES-INT-002` | `SPEC-INT-002`, `SPEC-ACC-003`; `AC-029` | Pending Stage 7 | `SPEC-VAL-001`; pending Stage 11 execution |
+| `SRC-REPO-001` | `REQ-AR-001`, `REQ-AR-002`, `REQ-AR-005`, `REQ-NFR-002`, `REQ-CON-001`, `REQ-CON-003`, `REQ-CON-006` | `DES-003`, `DES-004`, `DES-RWD-002`, `DES-RWD-004`, `DES-INT-001`, `DES-INT-002`, `DES-INT-003` | `SPEC-BEH-003`, `SPEC-ACC-001`, `SPEC-ACC-003`, `SPEC-VAL-001`; `AC-030`, `AC-032`–`AC-034` | Pending Stage 7 | `SPEC-VAL-001`; pending Stage 11 execution |
+| `SRC-DS-001`, `SRC-REPO-001` | `REQ-CON-002`, `REQ-CON-004`, `REQ-CON-005` | `DES-RWD-001`, `DES-INT-001`, `DES-INT-003` | `SPEC-VAL-002`; `AC-035` | Pending Stage 7 | Source re-verification required before affected implementation/acceptance work |'''
+
+          start = text.index('## 4. Specification')
+          end = text.index('## 5. Repository Context')
+          text = text[:start] + section4 + '\n\n' + text[end:]
+
+          start = text.index('## 9. Risks, Assumptions, and Questions')
+          end = text.index('## 10. Traceability')
+          text = text[:start] + section9 + '\n\n' + text[end:]
+
+          start = text.index('## 10. Traceability')
+          end = text.index('## 11. Review Pass 1')
+          text = text[:start] + section10 + '\n\n' + text[end:]
+
+          text = text.replace(
+              'Reserved for the complete Lite implementation-brief review at Stage 5. Stage 2 requirement-specific and Stage 3 design-specific review passes are recorded in their owning sections.',
+              'Reserved for the complete Lite implementation-brief review at Stage 5. Stage 2 requirement-specific, Stage 3 design-specific, and Stage 4 specification-specific review passes are recorded in their owning sections.'
+          )
+          text = text.replace(
+              'Reserved for the complete Lite implementation-brief review at Stage 8. Stage 2 requirement-specific and Stage 3 design-specific review passes are recorded in their owning sections.',
+              'Reserved for the complete Lite implementation-brief review at Stage 8. Stage 2 requirement-specific, Stage 3 design-specific, and Stage 4 specification-specific review passes are recorded in their owning sections.'
+          )
+
+          path.write_text(text)
+          PY
+
+      - name: Stage 4 preflight and repository validation
+        run: |
+          CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
+          $CLI stage check --json
+          $CLI validate
+          $CLI sync --check
+
+      - name: Commit Stage 4 specification
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/document-stage-4.yml
+          git add IMPLEMENTATION-BRIEF.md
+          git commit -m "Define Stage 4 testable behavior"
+          git push origin HEAD:workflow/stage-4-specification
