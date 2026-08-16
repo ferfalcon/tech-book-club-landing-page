@@ -23,12 +23,11 @@ No blocking questions remain for Stage 0 after design-source and repository-sour
 
 ## 4. Architecture Decision
 
-- Separate `ARCHITECTURE.md`: Undecided
-- Reason: Lite profile does not require a separate architecture artifact unless later evidence reveals a material structural concern. Current scope is a static Astro landing page.
-- Evidence and constraints: `SRC-DS-001`, `SRC-REPO-001`, root `AGENTS.md`, and `frontend/AGENTS.md`.
-- Recorded by: Workflow agent; final Stage 6 decision remains gated.
-
-When architecture is skipped, behavioral structural constraints will remain in the Lite implementation brief and repository/implementation structure will be documented in its planning section.
+- Separate `ARCHITECTURE.md`: **Not required** for the current Lite scope.
+- Reason: Stage 6 repository inspection confirms one `frontend/src/pages/index.astro` route, a starter Astro component/layout structure, Astro as the only application dependency, an empty `astro.config.mjs`, and no backend, API, persistence, authentication, shared state, client-framework integration, migration, or server-runtime concern. The approved Stage 4 specification explicitly excludes those product behaviors.
+- Evidence and constraints: `SRC-DS-001`, `SRC-REPO-001`, root `AGENTS.md`, `frontend/AGENTS.md`, `frontend/package.json`, `frontend/src/pages/index.astro`, `frontend/astro.config.mjs`, and `frontend/vercel.json`.
+- Consequence: Behavioral structural constraints remain in the Lite specification section of `IMPLEMENTATION-BRIEF.md`; concrete repository/module structure belongs to the Stage 7 plan. No `ARCHITECTURE.md` or ADR is created.
+- Recorded by: Workflow agent on 2026-08-16; Stage 6 remains gated pending explicit project-owner approval.
 
 ## 5. Source Verification, Outputs, and Rebaseline History
 
