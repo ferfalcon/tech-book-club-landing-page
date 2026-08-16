@@ -695,7 +695,7 @@ Stage 7 plan is repository-aware and keeps accessibility, responsive behavior, s
 - **Source snapshots:** `SRC-DS-001`, `SRC-REPO-001`.
 - **Files and modules:** Modify `frontend/src/pages/index.astro`; create `Brand.astro`, `ButtonLink.astro`, `SocialProof.astro`, and `Hero.astro`.
 - **Dependencies:** `PLAN-001` visual foundation/assets.
-- **Implementation steps:** Compose one `<main>` content flow from `index.astro`; implement one visible H1; render the Hero content in source order; make “Review membership options” a native link to `#membership-options`; implement Primary link default/hover/focus styling; implement the hero social-proof pattern with decorative avatars and one rating equivalent; keep the DOM text-first even where desktop visually places imagery beside content.
+- **Implementation steps:** Compose the page shell from `index.astro` with non-redundant page-level `header`, `main`, and `footer` landmarks: Hero owns the introductory/header region, the substantive non-footer sections live under one `<main>`, and Footer owns the page footer; implement one visible H1; render the Hero content in source order; make “Review membership options” a native link to `#membership-options`; implement Primary link default/hover/focus styling; implement the hero social-proof pattern with decorative avatars and one rating equivalent; keep the DOM text-first even where desktop visually places imagery beside content.
 - **Integrated accessibility, responsive, state, error, and test work:** Native links only; visible keyboard focus; no disabled/loading/custom pressed states; decorative hero imagery uses empty alt or CSS decoration as appropriate; Hero switches from desktop two-column to stacked layouts at observed failure points, not hard-coded device assumptions.
 - **Validation:** Hero matches 1440/768/375 intent; 1024/600/320 probes preserve content; keyboard activates the in-page link; no duplicate brand/rating announcements; no client-side JavaScript is introduced.
 - **Risks:** Exact typography/image crop can affect breakpoint failure points and must be tuned using rendered comparison rather than copied frame widths.
@@ -706,7 +706,7 @@ Stage 7 plan is repository-aware and keeps accessibility, responsive behavior, s
 - **Requirement and specification references:** `REQ-FR-001`, `REQ-FR-002`, `REQ-FR-003`, `REQ-AR-001`, `REQ-AR-003`, `REQ-AR-005`, `REQ-NFR-001`; `SPEC-BEH-001`, `SPEC-BEH-002`, `SPEC-ACC-001`, `SPEC-ACC-002`, `SPEC-ACC-003`.
 - **Source snapshots:** `SRC-DS-001`, `SRC-REPO-001`.
 - **Files and modules:** Create `ReadTogether.astro`, `Community.astro`, and `ReadingJourney.astro`; compose them from `index.astro`.
-- **Dependencies:** `PLAN-001` foundation/assets.
+- **Dependencies:** `PLAN-001` foundation/assets and `PLAN-002` page shell/shared primitives.
 - **Implementation steps:** Implement the Read Together feature/check list and photograph; implement Community copy and technology artwork; implement Reading Journey as a semantic ordered four-step sequence with decorative connectors/marks; preserve approved section order and text-first DOM order while allowing desktop visual alternation through CSS.
 - **Integrated accessibility, responsive, state, error, and test work:** Use semantic lists; keep all photography/technology artwork/connectors decorative per approved classification; ensure CSS visual reordering never contradicts DOM or tab order; allow text/cards/steps to grow vertically under zoom and wrapping; switch journey from horizontal to vertical before collision.
 - **Validation:** Section composition and order match 1440/768/375 references; 1024/600/320 and 200% zoom checks have no overlap/clipping/layout-caused horizontal scrolling; semantics expose lists/ordered steps without redundant image announcements.
@@ -743,7 +743,7 @@ Stage 7 plan is repository-aware and keeps accessibility, responsive behavior, s
 - **Source snapshots:** `SRC-DS-001`, `SRC-REPO-001`; task-start/output/runtime snapshots will be added by Stages 9–11.
 - **Files and modules:** All implementation files touched by prior plan items; no unrelated refactors.
 - **Dependencies:** `PLAN-001` through `PLAN-005` complete.
-- **Implementation steps:** Ensure `index.astro` contains only the approved seven-section composition; remove `Welcome.astro` and unused starter assets; run production build; run local/background browser verification and then Vercel preview verification when implementation changes are pushed; compare rendered output to Figma at 1440/768/375; probe 1024/600/320 and 200% zoom; traverse every link by keyboard; inspect headings/landmarks/lists/accessible names/image semantics/rating semantics; inspect text and interactive-state contrast; confirm no unsupported motion/product flow/client JS.
+- **Implementation steps:** Ensure `index.astro` contains only the approved seven-section composition; remove `Welcome.astro` and unused starter assets; run production build; run local/background browser verification and then Vercel preview verification when implementation changes are pushed; compare rendered output to Figma at 1440/768/375; probe 1024/600/320 and 200% zoom; traverse every link by keyboard; inspect headings/landmarks/lists/accessible names/image semantics/rating semantics; inspect text and interactive-state contrast; confirm no unsupported motion/product flow/client JS. No data, schema, service, or runtime migration exists for this static-page scope; if a merged implementation introduces a production regression, rollback is the normal Git revert of the implementation merge/commit followed by the repository’s standard deployment path.
 - **Integrated accessibility, responsive, state, error, and test work:** Failures are corrected in their owning component/style rather than waived; source drift triggers `SPEC-VAL-002`; no validation category is marked passed without evidence.
 - **Validation:** `pnpm build`; rendered visual comparisons; intermediate/reflow/zoom probes; keyboard/focus; semantic/accessibility inspection; contrast; implementation inspection; Vercel preview tied to the implementation branch. Stage 11 records final acceptance evidence against the implementation-output and runtime snapshots.
 - **Risks:** Production image licensing remains outside technical validation; any material Figma drift or unexpected concurrent frontend change blocks dependent work pending impact assessment.
@@ -847,21 +847,37 @@ Stage 5 reviews the approved Stage 1–4 documentation before architecture/plann
 
 ## 13. Review Pass 2 — Consistency, Traceability, Source Integrity, Risks, and Uncertainty
 
-Reserved for the complete Lite implementation-brief review at Stage 8. Stage 2 requirement-specific, Stage 3 design-specific, and Stage 4 specification-specific review passes are recorded in their owning sections.
+Stage 8 adversarial review completed on 2026-08-16 against the active input baselines plus current source/repository evidence. The review challenges the Stage 7 plan without redefining `SRC-DS-001` or `SRC-REPO-001`.
 
-- [ ] Ownership sections and identifiers remain distinct.
-- [ ] Every material plan item maps to approved requirements or specifications and pinned sources.
-- [ ] No source changed silently after the brief baseline was recorded.
-- [ ] No unsupported scope or assumption is presented as confirmed.
-- [ ] Blocking questions are visible.
-- [ ] Corrections from the first pass were included before this review.
+### Stage 8 source and repository re-verification
+
+- Connected Figma inspection confirmed `🤖 Workflow` (`2142:363`) still contains the same 1440 px desktop (`2142:1298`), 768 px tablet (`2142:1911`), 375 px mobile (`2142:2091`), reusable section components, CTA state components, style-guide structures, and visual assets used by the approved audit and plan. No material source drift was detected.
+- GitHub comparison from immutable input commit `82471d57b717786adc9c2f9a83cd6a5cd696768f` to current pre-Stage-8 `main` commit `9c6c824c4deba225b90fb0dc83aab262c65dfb05` shows expected workflow/documentation output and no `frontend/` implementation changes.
+- Current repository inspection reconfirmed `frontend/src/pages/index.astro`, `frontend/src/layouts/Layout.astro`, and `frontend/src/components/Welcome.astro` remain the stock Astro starter; `frontend/package.json` still declares pnpm `10.28.0`, Node `24.x`, and Astro `^7.2.2`; `astro.config.mjs` remains minimal; `frontend/vercel.json` retains the frontend-directory ignore command.
+- The Stage 6 architecture skip remains valid: the approved scope still has one static page, no backend/API/persistence/authentication/shared application state, no migration, and no server-runtime architecture concern.
+
+### Stage 8 corrections
+
+- Tightened `PLAN-002` so the semantic page shell explicitly owns non-redundant `header`, `main`, and `footer` landmarks rather than ambiguously describing the whole page as one `<main>` flow. This aligns planning with `SPEC-ACC-001` before implementation begins.
+- Corrected `PLAN-003` ordering so it depends on both the visual foundation (`PLAN-001`) and the page shell/shared primitives (`PLAN-002`) before composing middle sections into `index.astro`.
+- Made `PLAN-006` migration and rollback handling explicit: no data/schema/service/runtime migration exists for this scope, and a production regression is rolled back through a normal Git revert plus the standard deployment path.
+- No plan item was expanded into an unsupported route, flow, API, state system, client framework, test framework, animation system, or external destination.
+
+### Review checklist
+
+- [x] Ownership sections and identifier namespaces remain distinct; Stage 8 corrections stay inside the plan/review responsibilities of this Lite brief.
+- [x] Every material plan item maps to approved requirements/specifications and the active source baselines.
+- [x] No source changed silently after the brief baseline was recorded; current Figma evidence is materially unchanged and repository differences are expected workflow/documentation outputs only.
+- [x] No unsupported scope or assumption is presented as confirmed.
+- [x] Blocking questions are visible; none remain for task decomposition.
+- [x] Corrections from Review Pass 1 remain included before this second pass.
+- [x] Plan ordering and dependencies are executable after the `PLAN-003` dependency correction.
+- [x] Accessibility, responsive behavior, interaction states, content edges, and failure handling remain integrated into the plan items that create them rather than deferred to final cleanup.
+- [x] Required validation is feasible with the existing `pnpm build`, background Astro dev workflow, browser inspection, connected Figma evidence, and Vercel preview verification; no uninstalled test command is claimed.
+- [x] Migration, security/privacy, deployment, rollback, regression, and profile-upgrade risk were challenged; none introduces a blocking architecture or profile change for the approved static-page scope.
 
 ## 14. Readiness
 
-The final Lite brief readiness is not selected until the later consolidated checkpoints are complete.
+`Ready for task decomposition`
 
-Available final states:
-
-- `Ready for task decomposition`
-- `Ready with documented non-blocking assumptions`
-- `Blocked by unresolved decisions`
+The adversarial Stage 8 review found no unresolved technical or product decision after the corrections above. The documented image/member-portrait licensing question and unspecified nonessential social-link hover treatment remain non-blocking risks already bounded by the approved specification. Because execution mode is Gated, do not advance to Stage 9 until the project owner explicitly approves Stage 8.
