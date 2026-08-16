@@ -32,9 +32,10 @@ jobs:
       - name: Apply Stage 5 documentation corrections
         run: python .github/scripts/review-stage-5.py
 
-      - name: Sync and preflight
+      - name: Review consolidated brief and preflight
         run: |
           CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
+          $CLI artifact review IMPLEMENTATION-BRIEF --evidence "Stage 5 Lite Review Pass 1 completed after correcting cross-document inconsistencies, stale downstream dispositions, profile ownership references, and review-stage wording."
           $CLI sync
           $CLI validate
           $CLI sync --check
