@@ -1,0 +1,76 @@
+name: Approve Stage 0
+
+on:
+  push:
+    branches:
+      - workflow/initialize-implementation
+
+permissions:
+  contents: write
+
+jobs:
+  advance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: workflow/initialize-implementation
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify and approve Stage 0
+        run: |
+          CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
+
+          $CLI snapshot verify SRC-DS-001 \
+            --result Unchanged \
+            --method "Connected Figma metadata inspection" \
+            --evidence "Figma file N9NGlGjQhwRVdnTZloWweh page 2142:363 was accessible and contained the scoped 1440px desktop, 768px tablet, 375px mobile frames plus Components, Style Guide, Visuals, and Section Components."
+
+          $CLI snapshot verify SRC-REPO-001 \
+            --result Unchanged \
+            --method "Git commit and repository-tree inspection" \
+            --evidence "Recorded immutable commit 82471d57b717786adc9c2f9a83cd6a5cd696768f remains in repository lineage; subsequent differences are expected workflow-control outputs and did not modify frontend application code."
+
+          $CLI artifact review ART-SOURCE-BASELINE \
+            --evidence "Source scope, pin strength, reproduction limits, authority, and verification narrative reviewed."
+          $CLI artifact approve ART-SOURCE-BASELINE \
+            --evidence "Stage 0 source baseline approved by project owner." \
+            --approved-by "Owner"
+
+          $CLI artifact review ART-PROJECT-CONTEXT \
+            --evidence "Project scope, Lite profile rationale, repository constraints, quality baseline, and risks reviewed."
+          $CLI artifact approve ART-PROJECT-CONTEXT \
+            --evidence "Stage 0 project context approved by project owner." \
+            --approved-by "Owner"
+
+          $CLI artifact review ART-WORKFLOW-STATE \
+            --evidence "Blockers, assumptions, workflow history, deviations, and next permitted action reviewed."
+          $CLI artifact approve ART-WORKFLOW-STATE \
+            --evidence "Stage 0 workflow state approved by project owner." \
+            --approved-by "Owner"
+
+          $CLI stage check --json
+          $CLI stage review \
+            --result Passed \
+            --evidence "Stage 0 source baseline, project context, workflow controls, constraints, and known risks are complete and explicitly approved by the project owner." \
+            --approved-by "Owner"
+          $CLI stage advance
+
+          $CLI context --json
+          $CLI validate
+          $CLI sync --check
+
+      - name: Commit Stage 1 entry state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/approve-stage-0.yml
+          git add .workflow SOURCE-BASELINE.md PROJECT-CONTEXT.md WORKFLOW-STATE.md DESIGN-AUDIT.md
+          git commit -m "Approve Stage 0 and begin design audit"
+          git push origin HEAD:workflow/initialize-implementation
