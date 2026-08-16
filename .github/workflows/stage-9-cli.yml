@@ -1,0 +1,321 @@
+name: Temporary Stage 9 CLI runner
+
+on:
+  push:
+    branches:
+      - workflow/stage-9-tasks
+    paths:
+      - .github/workflows/stage-9-cli.yml
+
+permissions:
+  contents: write
+
+jobs:
+  stage9:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run canonical Stage 9 workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
+
+          $CLI context --json
+          $CLI stage advance
+
+          for plan in PLAN-001 PLAN-002 PLAN-003 PLAN-004 PLAN-005 PLAN-006; do
+            $CLI trace define "$plan" --owner ART-IMPLEMENTATION-BRIEF
+          done
+
+          $CLI task create \
+            --title "Implement the complete Tech Book Club landing page" \
+            --references PLAN-001,PLAN-002,PLAN-003,PLAN-004,PLAN-005,PLAN-006
+
+          cat > Phase-01--Task-01.md <<'TASK'
+          ---
+          artifact: TASK
+          id: P01-T01
+          created: 2026-08-16
+          updated: 2026-08-16
+          project: Tech book club landing page
+          profile: Lite
+          execution_mode: Gated
+          ---
+
+          # Phase 01 — Task 01: Implement the complete Tech Book Club landing page
+
+          ## 2. Objective
+
+          Implement the approved single-page Tech Book Club landing page in `frontend/` as one coherent Astro result, covering the complete seven-section page, approved responsive transformations, semantic/accessibility behavior, CTA/link behavior, source assets, and final integration checks defined by `PLAN-001` through `PLAN-006`.
+
+          ## 3. Source References
+
+          - Source baseline: `SOURCE-BASELINE.md`
+          - Design input: `SRC-DS-001`
+          - Task-start repository input: `SRC-REPO-001`
+          - Supporting runtime inputs: None at task start; a Vercel preview becomes validation evidence after implementation is pushed.
+          - Documentation inputs: `PROJECT-CONTEXT.md`, `DESIGN-AUDIT.md`, `IMPLEMENTATION-BRIEF.md`, `WORKFLOW-STATE.md`
+          - Plan references: `PLAN-001`, `PLAN-002`, `PLAN-003`, `PLAN-004`, `PLAN-005`, `PLAN-006`
+          - Architecture: explicitly not required by the approved Stage 6 decision.
+          - Design evidence and behavior references are owned by the approved `IMPLEMENTATION-BRIEF.md` and `DESIGN-AUDIT.md`.
+
+          ## 4. Snapshot Verification
+
+          Complete immediately before Stage 10 implementation begins.
+
+          - Reverify `SRC-DS-001` against the scoped `🤖 Workflow` Figma page before material implementation.
+          - Confirm the implementation branch descends from `SRC-REPO-001` and that differences since that input are expected workflow/documentation outputs rather than concurrent frontend implementation changes.
+          - Classify differences as Unchanged, Expected previous/workflow output, Unexpected concurrent change, or Unavailable.
+          - Stop affected work and rebaseline only if a material unexpected upstream or concurrent change is found.
+
+          ## 5. Prerequisites
+
+          - Stage 8 gate passed and owner-approved.
+          - `IMPLEMENTATION-BRIEF.md` approved.
+          - Architecture decision remains `Not required`.
+          - `SRC-DS-001` and `SRC-REPO-001` remain the approved input baselines.
+          - Before editing HTML, CSS, or client-side JavaScript, follow `.agents/skills/modern-web-guidance/SKILL.md` and `frontend/AGENTS.md` as required by the repository contract.
+
+          ## 6. Scope
+
+          ### Included
+
+          - Approved assets and global visual foundation.
+          - Semantic page shell and reusable Brand, ButtonLink, and SocialProof primitives.
+          - Hero, Read Together, Community, Reading Journey, Membership Options, Testimonial, and Footer sections.
+          - Membership cards and approved CTA/link behavior, including literal `href="#"` placeholders where specified.
+          - Desktop/tablet/mobile source fidelity and intermediate responsive behavior.
+          - Semantic HTML, keyboard/focus behavior, accessible names, image semantics, lists/ordered steps, contrast and reflow behavior.
+          - Removal of Astro starter residue after replacement.
+          - Production build, rendered browser checks, Figma comparison, and Vercel preview verification.
+
+          ### Excluded
+
+          - Backend, APIs, persistence, authentication, forms, checkout, subscription processing, contact processing, account management, or additional routes.
+          - Real subscription, contact, Bluesky, or LinkedIn destinations.
+          - Unsupported motion, client framework/state system, test framework, or unrelated refactors.
+          - Structural or visual edits to Figma pages outside `🤖 Workflow`.
+
+          ## 7. Repository Context
+
+          At the approved repository baseline the frontend is the Astro starter: one `index.astro` route, `Layout.astro`, `Welcome.astro`, starter assets, Astro as the application dependency, and a minimal Astro configuration. The implementation belongs in `frontend/`, uses pnpm and the repository-declared Node version, and must follow branch → pull request → Vercel preview → verification → merge. Workflow/documentation commits after `SRC-REPO-001` do not represent application implementation changes.
+
+          ## 8. Files and Modules
+
+          | Path | Action | Responsibility |
+          |---|---|---|
+          | `frontend/src/pages/index.astro` | Modify | Compose the approved page shell and seven-section content flow |
+          | `frontend/src/layouts/Layout.astro` | Modify | Document metadata and global page layout integration |
+          | `frontend/src/styles/global.css` | Create | Global tokens/base styles/reflow/focus foundation |
+          | `frontend/src/assets/tech-book-club/` | Create | Approved scoped production assets |
+          | `frontend/src/components/Brand.astro` | Create | Reusable brand rendering |
+          | `frontend/src/components/ButtonLink.astro` | Create | Approved native-link CTA variants and states |
+          | `frontend/src/components/SocialProof.astro` | Create | Repeated social-proof pattern |
+          | `frontend/src/components/Hero.astro` | Create | Hero/header region |
+          | `frontend/src/components/ReadTogether.astro` | Create | Read Together section |
+          | `frontend/src/components/Community.astro` | Create | Community section |
+          | `frontend/src/components/ReadingJourney.astro` | Create | Ordered reading-journey section |
+          | `frontend/src/components/MembershipCard.astro` | Create | Reusable membership plan card |
+          | `frontend/src/components/MembershipOptions.astro` | Create | Membership comparison and fragment target |
+          | `frontend/src/components/Testimonial.astro` | Create | Testimonial section |
+          | `frontend/src/components/Footer.astro` | Create | Footer, CTA, social proof, and social links |
+          | `frontend/src/components/Welcome.astro` | Delete | Remove starter component after replacement |
+          | Unused Astro starter assets | Delete | Remove starter-only production residue |
+
+          ## 9. Dependencies and Interfaces
+
+          - Execute the plan in dependency order: `PLAN-001` → `PLAN-002` → `PLAN-003`/`PLAN-004`/`PLAN-005` → `PLAN-006`.
+          - `ButtonLink.astro`, `Brand.astro`, and `SocialProof.astro` are shared presentational Astro primitives; do not introduce runtime state.
+          - Hero/footer membership links target `#membership-options`.
+          - Starter/Pro Subscribe, Enterprise Talk to us, Bluesky, and LinkedIn links retain literal `href="#"` placeholders.
+          - No client-side API or data contract is introduced.
+
+          ## 10. Implementation Steps
+
+          1. Reverify design and repository inputs and classify any differences.
+          2. Read the required repository/frontend guidance before HTML/CSS/client-JS work.
+          3. Implement `PLAN-001`: export/integrate approved assets, establish global tokens/base styles, metadata, reflow, and focus foundation.
+          4. Implement `PLAN-002`: semantic shell, shared primitives, and Hero with source-order DOM, native links, focus treatment, social proof, and responsive behavior.
+          5. Implement `PLAN-003`: Read Together, Community, and semantic ordered Reading Journey with decorative imagery and failure-point responsive transitions.
+          6. Implement `PLAN-004`: Membership Options/cards and Testimonial, preserving exact content, placeholder links, semantic headings/lists, and 3 / 2+1 / 1 responsive card behavior.
+          7. Implement `PLAN-005`: Footer, repeated membership CTA/social proof, icon-only accessible social links, and literal source copyright.
+          8. Implement `PLAN-006`: remove starter residue, run full integration/refinement, and correct failures in their owning components/styles.
+          9. Run all required automated/manual validation and verify the implementation branch Vercel preview.
+          10. Commit the approved implementation result, then complete the task through the canonical workflow CLI so an Implementation-output repository snapshot is recorded.
+
+          ## 11. State, Responsive, and Accessibility Requirements
+
+          ### States and errors
+
+          - Default, hover, and keyboard-focus states: implement where approved/applicable.
+          - Loading, empty, error, success, disabled/unavailable application states: Not applicable because the approved page is static and introduces no data operation or asynchronous product flow.
+          - Placeholder links must not silently introduce unsupported navigation or product behavior.
+
+          ### Responsive behavior
+
+          - Match the approved 1440 px, 768 px, and 375 px reference compositions.
+          - Probe 1024 px, 600 px, and 320 px and choose CSS transition thresholds at actual content/layout failure points rather than treating Figma frame widths as automatic breakpoints.
+          - Preserve all material content, source/reading order, and usable layout with no layout-caused horizontal page scrolling.
+          - At 200% zoom and text wrapping, content/cards/steps grow vertically instead of clipping.
+
+          ### Accessibility
+
+          - One coherent H1 and appropriate landmark/heading hierarchy.
+          - Native anchor semantics for all CTAs/social links; keyboard reachable and operable.
+          - Clearly visible focus treatment on every interactive element, including dark-footer variants.
+          - Meaningful accessible names for icon-only Bluesky/LinkedIn links.
+          - Decorative photography/artwork/patterns/connectors/avatars are not redundantly announced; content meaning is exposed once where required.
+          - Semantic lists for features/benefits and an ordered list for the reading journey.
+          - DOM/assistive-technology order remains meaningful even when CSS changes visual arrangement.
+          - Check implemented text and interactive states for sufficient contrast; no unsupported conformance claim before validation.
+          - No unsupported motion is introduced; reduced-motion behavior is therefore only required if implementation introduces motion for a justified reason.
+
+          ## 12. Validation
+
+          ### Automated validation
+
+          - Build: run `pnpm build` from `frontend/`; expected result is a successful production Astro build.
+          - Implementation inspection: confirm no unnecessary client-side JavaScript, unsupported route/API/state system, or remaining Astro starter production references.
+
+          ### Manual validation
+
+          - Visual: compare rendered output against `SRC-DS-001` at 1440, 768, and 375 px.
+          - Responsive: probe 1024, 600, and 320 px plus 200% zoom/reflow; no overlap, clipping, missing content, or layout-caused horizontal scrolling.
+          - Keyboard/focus: traverse and activate every interactive link in meaningful order with visible focus.
+          - Semantics/accessibility: inspect landmarks, heading hierarchy, lists/ordered steps, accessible names, image semantics, repeated rating/brand announcements, and contrast.
+          - Behavior: verify membership fragment links and all literal `#` placeholder destinations exactly as specified; verify no modal/form/API flow exists.
+          - Runtime: inspect the Vercel preview tied to the implementation branch and verify the intended branch commit is rendered successfully.
+
+          ## 13. Acceptance Criteria
+
+          - [ ] All seven approved sections appear once and in the approved order.
+          - [ ] Approved content, membership information, testimonial, CTA labels, and literal placeholder destinations match the approved brief.
+          - [ ] 1440/768/375 reference states have no unresolved material fidelity discrepancy.
+          - [ ] 1024/600/320 and 200% zoom/reflow checks remain usable without clipping/overlap/layout-caused horizontal scrolling.
+          - [ ] Semantic structure, keyboard operation, visible focus, accessible names, image semantics, lists, and contrast checks pass.
+          - [ ] `pnpm build` succeeds.
+          - [ ] No unsupported backend/API/form/auth/data/client-state behavior or unnecessary client JavaScript is introduced.
+          - [ ] The Vercel preview is tied to the implementation branch and verified.
+          - [ ] Required source re-verification is complete with no unresolved material drift.
+          - [ ] The committed task result is recorded by the workflow CLI as an Implementation-output snapshot.
+
+          ## 14. Risks and Considerations
+
+          | Risk or assumption | Impact | Mitigation or validation |
+          |---|---|---|
+          | `SRC-DS-001` is time-bound | Design may drift before implementation | Reverify before Stage 10 and stop/rebaseline on material unexpected change |
+          | Asset/member-image production licensing remains unconfirmed | Product/content release risk | Preserve as documented non-blocking risk; do not assert licensing |
+          | Exact font metrics/image crops influence failure points | Can shift responsive thresholds | Tune using rendered comparison instead of copying frame widths as CSS breakpoints |
+          | Placeholder `#` links are intentionally non-final destinations | User action does not perform real subscription/contact/social navigation | Preserve exact approved placeholder behavior; do not invent flows |
+
+          ## 15. Implementation Discoveries
+
+          Record implementation discoveries here during Stage 10 and propagate material documentation/source errors to their owning artifact instead of silently working around them.
+
+          ## 16. Deviations
+
+          `None` at Stage 9 decomposition. Record any Stage 10 deviation with reason, evidence/approval, and impact.
+
+          ## 18. Definition of Done
+
+          - [ ] The complete approved page objective is implemented within this task scope.
+          - [ ] Acceptance criteria and required validation pass with evidence.
+          - [ ] Source inputs remain valid or an approved rebaseline is completed.
+          - [ ] Implementation output snapshot and parent lineage are recorded through the CLI.
+          - [ ] No required check remains failed, blocked, or unexecuted.
+          - [ ] Relevant narrative artifacts and workflow state are updated for material discoveries/deviations.
+          - [ ] The implementation branch/PR and Vercel preview are verified before merge.
+
+          ## 19. Completion Report
+
+          Complete during Stage 10 with files changed, source verification, implementation-output snapshot, executed validation/evidence, deviations, remaining risks, documentation updates, and next permitted workflow action.
+          TASK
+
+          $CLI task validation set P01-T01 \
+            --name "Production build" \
+            --kind Build \
+            --required true \
+            --status "Not executed" \
+            --expected "The production Astro build succeeds from frontend/ using the repository package manager." \
+            --reason "Pending Stage 10 implementation." \
+            --references PLAN-001,PLAN-006
+
+          $CLI task validation set P01-T01 \
+            --name "Visual fidelity" \
+            --kind Visual \
+            --required true \
+            --status "Not executed" \
+            --expected "Rendered output has no unresolved material discrepancy against the approved 1440, 768, and 375 px Figma compositions." \
+            --reason "Pending Stage 10 implementation." \
+            --references PLAN-001,PLAN-002,PLAN-003,PLAN-004,PLAN-005,PLAN-006
+
+          $CLI task validation set P01-T01 \
+            --name "Responsive and reflow" \
+            --kind Responsive \
+            --required true \
+            --status "Not executed" \
+            --expected "1024, 600, and 320 px probes plus 200% zoom/reflow preserve content without overlap, clipping, or layout-caused horizontal scrolling." \
+            --reason "Pending Stage 10 implementation." \
+            --references PLAN-002,PLAN-003,PLAN-004,PLAN-005,PLAN-006
+
+          $CLI task validation set P01-T01 \
+            --name "Accessibility and keyboard" \
+            --kind Accessibility \
+            --required true \
+            --status "Not executed" \
+            --expected "Landmarks, headings, lists, image semantics, accessible names, keyboard operation, visible focus, contrast, and meaningful reading order satisfy the approved brief." \
+            --reason "Pending Stage 10 implementation." \
+            --references PLAN-002,PLAN-003,PLAN-004,PLAN-005,PLAN-006
+
+          $CLI task validation set P01-T01 \
+            --name "Approved behavior inspection" \
+            --kind Manual \
+            --required true \
+            --status "Not executed" \
+            --expected "CTA targets and literal # placeholders match the approved specification and no unsupported product flow or unnecessary client-side JavaScript is introduced." \
+            --reason "Pending Stage 10 implementation." \
+            --references PLAN-002,PLAN-004,PLAN-005,PLAN-006
+
+          $CLI task validation set P01-T01 \
+            --name "Vercel preview verification" \
+            --kind Manual \
+            --required true \
+            --status "Not executed" \
+            --expected "The Vercel preview tied to the implementation branch renders the intended implementation commit successfully." \
+            --reason "Pending Stage 10 implementation and preview deployment." \
+            --references PLAN-006
+
+          $CLI artifact review TASK \
+            --evidence "Stage 9 task narrative was checked against approved PLAN-001 through PLAN-006, integrated responsive/accessibility requirements, validation, scope, and task Definition of Done."
+          $CLI artifact approve TASK \
+            --evidence "Project owner approved continuation into Stage 9 in ChatGPT on 2026-08-16; the single Lite task is consistent with the approved implementation plan." \
+            --approved-by "Owner"
+          $CLI task ready P01-T01
+
+          $CLI stage check --json
+          $CLI stage review \
+            --result Passed \
+            --evidence "Stage 9 decomposition defines one coherent Ready Lite implementation task covering PLAN-001 through PLAN-006, with an approved task artifact and required structured validation checks; owner approved Stage 9 continuation on 2026-08-16." \
+            --approved-by "Owner"
+
+          $CLI sync --check
+          $CLI validate
+          $CLI context --json
+
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .workflow Phase-01--Task-01.md
+          git commit -m "Define Stage 9 implementation task"
+          git push origin HEAD
