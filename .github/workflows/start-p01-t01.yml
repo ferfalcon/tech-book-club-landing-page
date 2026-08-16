@@ -25,8 +25,12 @@ jobs:
         with:
           node-version: 24
 
-      - name: Start canonical workflow task
-        run: node docs/implementation-workflow/cli/design-workflow.mjs task start P01-T01
+      - name: Advance to Stage 10 and start canonical workflow task
+        shell: bash
+        run: |
+          node docs/implementation-workflow/cli/design-workflow.mjs stage advance
+          node docs/implementation-workflow/cli/design-workflow.mjs task start P01-T01
+          node docs/implementation-workflow/cli/design-workflow.mjs context --json
 
       - name: Remove temporary runner and commit canonical state
         shell: bash
