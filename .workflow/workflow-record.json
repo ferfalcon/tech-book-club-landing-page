@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "project": {
+    "name": "Tech book club landing page",
+    "profile": "Lite",
+    "executionMode": "Gated"
+  },
+  "state": {
+    "stage": 0,
+    "status": "In progress",
+    "activeInputs": [
+      "SRC-DS-001",
+      "SRC-REPO-001"
+    ],
+    "currentTask": null,
+    "latestOutput": null,
+    "latestValidationRuntime": null,
+    "architectureDecision": null
+  },
+  "snapshots": [
+    {
+      "id": "SRC-DS-001",
+      "role": "Input baseline",
+      "pinStrength": "Time-bound",
+      "status": "Unverified",
+      "reference": "https://www.figma.com/design/N9NGlGjQhwRVdnTZloWweh/tech-book-club-landing-page?node-id=2142-363"
+    },
+    {
+      "id": "SRC-REPO-001",
+      "role": "Input baseline",
+      "pinStrength": "Immutable",
+      "status": "Unverified",
+      "reference": "/home/runner/work/tech-book-club-landing-page/tech-book-club-landing-page",
+      "commit": "82471d57b717786adc9c2f9a83cd6a5cd696768f"
+    }
+  ],
+  "verifications": [],
+  "artifacts": [
+    {
+      "id": "ART-SOURCE-BASELINE",
+      "type": "SOURCE-BASELINE",
+      "path": "SOURCE-BASELINE.md",
+      "status": "Draft",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ]
+    },
+    {
+      "id": "ART-PROJECT-CONTEXT",
+      "type": "PROJECT-CONTEXT",
+      "path": "PROJECT-CONTEXT.md",
+      "status": "Draft",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ]
+    },
+    {
+      "id": "ART-WORKFLOW-STATE",
+      "type": "WORKFLOW-STATE",
+      "path": "WORKFLOW-STATE.md",
+      "status": "Draft",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ]
+    }
+  ],
+  "traceItems": [],
+  "gates": [],
+  "tasks": [],
+  "profileTransitions": [],
+  "implementationReviews": []
+}
