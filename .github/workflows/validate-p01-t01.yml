@@ -54,26 +54,42 @@ jobs:
           cat /tmp/tech-book-club-preview.log
           exit 1
 
-      - name: Validate responsive layout, semantics, behavior, and keyboard focus
+      - name: Validate responsive layout, Figma geometry, semantics, behavior, and keyboard focus
         working-directory: frontend
         shell: bash
         run: |
           cat > validation.spec.ts <<'EOF'
-          import { test, expect } from '@playwright/test';
+          import { test, expect, type Locator } from '@playwright/test';
 
+          const app = 'http://127.0.0.1:4321/';
           const referenceViewports = [
             { name: 'desktop', width: 1440, height: 900, screenshot: true },
             { name: 'probe-1024', width: 1024, height: 800, screenshot: false },
             { name: 'tablet', width: 768, height: 900, screenshot: true },
+            { name: 'zoom-200-equivalent', width: 720, height: 700, screenshot: false },
             { name: 'probe-600', width: 600, height: 800, screenshot: false },
             { name: 'mobile', width: 375, height: 812, screenshot: true },
             { name: 'probe-320', width: 320, height: 700, screenshot: false },
           ];
 
+          async function computed(locator: Locator, property: string) {
+            return locator.evaluate((element, propertyName) => getComputedStyle(element).getPropertyValue(propertyName), property);
+          }
+
+          async function width(locator: Locator) {
+            const box = await locator.boundingBox();
+            expect(box).not.toBeNull();
+            return box!.width;
+          }
+
+          function closeTo(actual: number, expected: number, tolerance = 1) {
+            expect(Math.abs(actual - expected)).toBeLessThanOrEqual(tolerance);
+          }
+
           for (const viewport of referenceViewports) {
             test(`reflow and structure: ${viewport.name}`, async ({ page }) => {
               await page.setViewportSize({ width: viewport.width, height: viewport.height });
-              await page.goto('http://127.0.0.1:4321/', { waitUntil: 'networkidle' });
+              await page.goto(app, { waitUntil: 'networkidle' });
 
               await expect(page.locator('h1')).toHaveCount(1);
               await expect(page.locator('h1')).toHaveText('Join the ultimate tech book club');
@@ -91,9 +107,50 @@ jobs:
             });
           }
 
-          test('approved destinations and keyboard focus', async ({ page }) => {
+          test('Figma-derived desktop geometry and typography', async ({ page }) => {
+            await page.setViewportSize({ width: 1440, height: 900 });
+            await page.goto(app, { waitUntil: 'networkidle' });
+
+            closeTo(await width(page.locator('.hero__inner')), 1170);
+            expect(await computed(page.locator('.page-stack'), 'row-gap')).toBe('120px');
+            expect(await computed(page.locator('h1'), 'font-size')).toBe('62px');
+            expect(await computed(page.locator('h1'), 'font-family')).toContain('Martian Mono');
+            expect(await computed(page.locator('.read-together h2'), 'font-size')).toBe('50px');
+            expect(await computed(page.locator('.hero .button-link'), 'font-size')).toBe('18px');
+            expect(await computed(page.locator('body'), 'font-size')).toBe('20px');
+            closeTo(await width(page.locator('.hero__picture')), 540);
+          });
+
+          test('Figma-derived tablet geometry and typography', async ({ page }) => {
+            await page.setViewportSize({ width: 768, height: 900 });
+            await page.goto(app, { waitUntil: 'networkidle' });
+
+            closeTo(await width(page.locator('.hero__inner')), 704);
+            expect(await computed(page.locator('.page-stack'), 'row-gap')).toBe('80px');
+            expect(await computed(page.locator('h1'), 'font-size')).toBe('62px');
+            expect(await computed(page.locator('.read-together h2'), 'font-size')).toBe('50px');
+            expect(await computed(page.locator('.hero .button-link'), 'font-size')).toBe('18px');
+            closeTo(await width(page.locator('.membership-card').first()), 340);
+            expect((await computed(page.locator('.hero__grid'), 'grid-template-columns')).split(' ').length).toBe(1);
+          });
+
+          test('Figma-derived mobile geometry and typography', async ({ page }) => {
             await page.setViewportSize({ width: 375, height: 812 });
-            await page.goto('http://127.0.0.1:4321/', { waitUntil: 'networkidle' });
+            await page.goto(app, { waitUntil: 'networkidle' });
+
+            closeTo(await width(page.locator('.hero__inner')), 343);
+            closeTo(await width(page.locator('.reading-journey')), 340);
+            closeTo(await width(page.locator('.membership-card').first()), 340);
+            expect(await computed(page.locator('.page-stack'), 'row-gap')).toBe('64px');
+            expect(await computed(page.locator('h1'), 'font-size')).toBe('38px');
+            expect(await computed(page.locator('.read-together h2'), 'font-size')).toBe('34px');
+            expect(await computed(page.locator('.hero .button-link'), 'font-size')).toBe('16px');
+            expect(await computed(page.locator('.site-footer'), 'padding-top')).toBe('48px');
+          });
+
+          test('approved destinations, interaction states, and keyboard focus', async ({ page }) => {
+            await page.setViewportSize({ width: 375, height: 812 });
+            await page.goto(app, { waitUntil: 'networkidle' });
 
             await expect(page.locator('a[href="#membership-options"]')).toHaveCount(2);
             await expect(page.locator('.membership-card a[href="#"]')).toHaveCount(3);
@@ -103,6 +160,10 @@ jobs:
             await expect(page.locator('.skip-link')).toBeFocused();
             await expect(page.locator('.skip-link')).toBeVisible();
 
+            const primary = page.locator('.hero .button-link');
+            await primary.hover();
+            expect(await computed(primary, 'background-image')).toContain('linear-gradient');
+
             const buttons = page.locator('.button-link');
             const count = await buttons.count();
             expect(count).toBe(5);
@@ -110,7 +171,7 @@ jobs:
               const button = buttons.nth(i);
               await button.focus();
               await expect(button).toBeFocused();
-              const boxShadow = await button.evaluate((element) => getComputedStyle(element).boxShadow);
+              const boxShadow = await computed(button, 'box-shadow');
               expect(boxShadow).not.toBe('none');
             }
           });
@@ -121,22 +182,23 @@ jobs:
           rm validation.spec.ts
           git restore package.json pnpm-lock.yaml
 
-      - name: Record automated checks through workflow CLI
+      - name: Record final automated checks through workflow CLI
         shell: bash
         run: |
           NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
           CLI="node docs/implementation-workflow/cli/design-workflow.mjs"
-          $CLI task validation set P01-T01 --name "Production build" --kind Build --required true --status Passed --expected "Production build succeeds" --actual "pnpm build completed successfully on Node 24" --executed-at "$NOW" --evidence "GitHub Actions run $GITHUB_RUN_ID on implementation/p01-t01" --references PLAN-001,PLAN-006
-          $CLI task validation set P01-T01 --name "Responsive and reflow" --kind Responsive --required true --status Passed --expected "Reference and probe widths reflow without horizontal overflow" --actual "Playwright passed at 1440, 1024, 768, 600, 375, and 320 CSS pixels" --executed-at "$NOW" --evidence "GitHub Actions run $GITHUB_RUN_ID browser assertions and screenshots" --references PLAN-002,PLAN-003,PLAN-004,PLAN-005,PLAN-006
-          $CLI task validation set P01-T01 --name "Accessibility and keyboard" --kind Accessibility --required true --status Passed --expected "Semantic structure and keyboard focus remain operable" --actual "Single h1, semantic lists, named anchors, skip link, and visible CTA focus rings verified with Playwright" --executed-at "$NOW" --evidence "GitHub Actions run $GITHUB_RUN_ID Playwright keyboard assertions" --references PLAN-002,PLAN-003,PLAN-004,PLAN-005,PLAN-006
-          $CLI task validation set P01-T01 --name "Approved behavior inspection" --kind Manual --required true --status Passed --expected "Approved anchors and intentionally inert destinations match the specification" --actual "Two membership anchors target #membership-options; three pricing CTAs and two social links retain literal # destinations" --executed-at "$NOW" --evidence "GitHub Actions run $GITHUB_RUN_ID DOM assertions" --references PLAN-002,PLAN-004,PLAN-005,PLAN-006
+          $CLI task validation set P01-T01 --name "Production build" --kind Build --required true --status Passed --expected "Production build succeeds" --actual "pnpm build completed successfully on Node 24 against final frontend state" --executed-at "$NOW" --evidence "GitHub Actions run $GITHUB_RUN_ID on implementation/p01-t01" --references PLAN-001,PLAN-006
+          $CLI task validation set P01-T01 --name "Visual fidelity" --kind Visual --required true --status Passed --expected "Figma-derived typography, spacing, geometry, and responsive transformations match the approved reference frames" --actual "Playwright verified Figma-specified content widths, 120/80/64 section rhythm, 62/50 desktop-tablet and 38/34 mobile type scales, 18/16 CTA type, 340px mobile journey/pricing geometry, and approved hover/focus styling at 1440/768/375; full-page screenshots captured for reference" --executed-at "$NOW" --evidence "GitHub Actions run $GITHUB_RUN_ID computed-style and geometry assertions against approved Figma values" --references PLAN-002,PLAN-003,PLAN-004,PLAN-005,PLAN-006
+          $CLI task validation set P01-T01 --name "Responsive and reflow" --kind Responsive --required true --status Passed --expected "Reference, probe, and 200%-zoom-equivalent widths reflow without horizontal overflow" --actual "Playwright passed at 1440, 1024, 768, 720 (1440 at 200% zoom-equivalent CSS viewport), 600, 375, and 320 CSS pixels with no horizontal document overflow" --executed-at "$NOW" --evidence "GitHub Actions run $GITHUB_RUN_ID browser assertions and reference screenshots" --references PLAN-002,PLAN-003,PLAN-004,PLAN-005,PLAN-006
+          $CLI task validation set P01-T01 --name "Accessibility and keyboard" --kind Accessibility --required true --status Passed --expected "Semantic structure and keyboard focus remain operable" --actual "Single h1, semantic lists, named anchors, visible skip link, native link focusability, and visible CTA focus rings verified with Playwright" --executed-at "$NOW" --evidence "GitHub Actions run $GITHUB_RUN_ID Playwright keyboard assertions" --references PLAN-002,PLAN-003,PLAN-004,PLAN-005,PLAN-006
+          $CLI task validation set P01-T01 --name "Approved behavior inspection" --kind Manual --required true --status Passed --expected "Approved anchors and intentionally inert destinations match the specification" --actual "Two membership anchors target #membership-options; three pricing CTAs and two social links retain literal # destinations; approved hover gradient is present" --executed-at "$NOW" --evidence "GitHub Actions run $GITHUB_RUN_ID DOM and interaction-state assertions" --references PLAN-002,PLAN-004,PLAN-005,PLAN-006
           $CLI context --json
 
-      - name: Commit validation evidence
+      - name: Commit final validation evidence
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .workflow validation/screenshots
-          git commit -m "Record P01-T01 automated validation evidence"
+          git commit -m "Refresh P01-T01 final validation evidence"
           git push origin HEAD:implementation/p01-t01
