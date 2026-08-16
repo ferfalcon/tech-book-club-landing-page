@@ -7,7 +7,7 @@
   },
   "state": {
     "stage": 4,
-    "status": "In progress",
+    "status": "Ready",
     "activeInputs": [
       "SRC-DS-001",
       "SRC-REPO-001"
@@ -217,6 +217,30 @@
       ],
       "evidence": "Stage 3 design intent is complete, reviewed, source-traceable, and explicitly approved by the project owner in ChatGPT on 2026-08-16.",
       "recordedAt": "2026-08-16T03:52:48.267Z",
+      "approvedBy": "Owner"
+    },
+    {
+      "id": "GATE-005",
+      "stage": 4,
+      "status": "Active",
+      "result": "Passed",
+      "baseline": [
+        "SRC-DS-001",
+        "SRC-REPO-001"
+      ],
+      "verifications": [
+        "VER-003",
+        "VER-002"
+      ],
+      "artifacts": [
+        "ART-SOURCE-BASELINE",
+        "ART-PROJECT-CONTEXT",
+        "ART-WORKFLOW-STATE",
+        "ART-DESIGN-AUDIT",
+        "ART-IMPLEMENTATION-BRIEF"
+      ],
+      "evidence": "Stage 4 specification is complete, testable, reviewed, source-traceable, and explicitly approved by the project owner in ChatGPT on 2026-08-16. Owner explicitly requested not to start Stage 5.",
+      "recordedAt": "2026-08-16T03:59:33.865Z",
       "approvedBy": "Owner"
     }
   ],
