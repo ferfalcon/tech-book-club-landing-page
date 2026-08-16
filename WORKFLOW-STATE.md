@@ -11,24 +11,24 @@ updated: 2026-08-16
 
 ## 2. Blocking Questions
 
-| ID | Question | Decision owner | Impact | Required before | Status |
-|---|---|---|---|---|---|
-| ... | ... | ... | ... | ... | Open / Resolved / Blocked |
+No blocking questions remain for Stage 0 after design-source and repository-source verification is recorded in canonical workflow state.
 
 ## 3. Non-blocking Assumptions
 
 | Assumption | Classification | Impact | Validation or correction point | Status |
 |---|---|---|---|---|
-| ... | Inferred / Recommended | ... | ... | Open / Confirmed / Rejected |
+| The landing page remains a static single-page implementation with no backend, authentication, persistence, or external API requirement | Inferred from current design and repository scope | Supports Lite profile and avoids premature architecture work | Recheck during Stage 1 design audit and Stage 2 implementation brief | Open |
+| Figma visual evidence does not define semantic HTML, keyboard behavior, screen-reader behavior, or all intermediate responsive behavior | Confirmed by repository operating contract | Those concerns must be explicitly designed and validated in implementation | Stages 1–4 and final validation | Confirmed |
+| Repository starter assets are candidate implementation assets but must still be checked against the Figma source | Recommended | Prevents assuming asset fidelity from filenames alone | Stage 1 design audit | Open |
 
 ## 4. Architecture Decision
 
-- Separate `ARCHITECTURE.md`: Required / Not required / Undecided
-- Reason:
-- Evidence and constraints:
-- Recorded by:
+- Separate `ARCHITECTURE.md`: Undecided
+- Reason: Lite profile does not require a separate architecture artifact unless later evidence reveals a material structural concern. Current scope is a static Astro landing page.
+- Evidence and constraints: `SRC-DS-001`, `SRC-REPO-001`, root `AGENTS.md`, and `frontend/AGENTS.md`.
+- Recorded by: Workflow agent; final Stage 6 decision remains gated.
 
-When architecture is skipped, place behavioral structural constraints in `SPEC.md` and repository or implementation structure in `PLAN.md`, or in their clearly separated Lite brief sections.
+When architecture is skipped, behavioral structural constraints will remain in the Lite implementation brief and repository/implementation structure will be documented in its planning section.
 
 ## 5. Source Verification, Outputs, and Rebaseline History
 
@@ -36,23 +36,21 @@ Record narrative history and impact here. Current snapshot status and lineage be
 
 | Date | Classification | Previous snapshot | New snapshot | Change or result | Affected stage or task | Action | Status |
 |---|---|---|---|---|---|---|---|
-| ... | Unchanged / Expected output / Unexpected upstream change / Unavailable | ... | ... | ... | ... | ... | Open / In progress / Complete |
-
-Expected task outputs update lineage without rolling back upstream stages. Unexpected material input or concurrent changes require impact assessment in `SOURCE-BASELINE.md` and may move the workflow backward.
+| 2026-08-16 | Unchanged | — | `SRC-DS-001` | Connected Figma inspection resolved the scoped `🤖 Workflow` page and its desktop, tablet, mobile, component, style-guide, and visual-support regions | Stage 0 | Record canonical source verification; continue to Stage 1 after approval | Complete |
+| 2026-08-16 | Unchanged | — | `SRC-REPO-001` | Recorded repository commit is immutable and resolvable; Astro starter state and repository contracts were inspected | Stage 0 | Record canonical source verification | Complete |
+| 2026-08-16 | Expected output | `SRC-REPO-001` | — | Workflow initialization added `.workflow/` and Stage 0 artifacts and removed its temporary initializer in commit `7c912478e8b28969c473367c6adf99fed4a142be`; no application implementation was performed | Workflow control | Treat as workflow output, not upstream application-source drift | Complete |
 
 ## 6. Profile or Mode Change History
 
-The current profile and mode belong in the workflow record in CLI-managed mode. Record only the decision history here.
-
 | Date | Previous | New | Reason | Effective stage | Decision owner |
 |---|---|---|---|---|---|
-| ... | ... | ... | ... | ... | ... |
+| 2026-08-16 | Not initialized | Lite / Gated | Single static landing page with multiple responsive sections needs separate audit/brief/review artifacts but currently has no material application architecture, persistence, authentication, or API risk | 0 | Project owner |
 
 ## 7. Exceptions and Deviations
 
 | ID | Expected process or behavior | Deviation | Reason | Impact | Approval or resolution | Status |
 |---|---|---|---|---|---|---|
-| ... | ... | ... | ... | ... | ... | Open / Accepted / Corrected |
+| EXC-001 | Initialize canonical workflow state through the repository CLI | A temporary one-shot GitHub Actions workflow was used to execute the CLI because the active runtime could not clone the repository directly | Preserved CLI-owned initialization rather than fabricating `.workflow/` manually | No application-code impact; temporary workflow removed itself after successful initialization | Resolved by self-removal and successful CLI validation/sync check | Corrected |
 
 ## 8. Stage Advancement Rules
 
@@ -71,17 +69,17 @@ The current profile and mode belong in the workflow record in CLI-managed mode. 
 
 ## 9. Latest Completion Summary
 
-- Files created or modified:
-- Input snapshot IDs used:
-- Task-start snapshot:
-- Implementation-output snapshot:
-- Validation-runtime snapshot:
-- Source verification performed:
-- Important findings:
-- Decisions:
-- Validation performed:
-- Deviations:
-- Remaining risks:
-- Next permitted action:
+- Files created or modified: `.workflow/` generated/control files, `SOURCE-BASELINE.md`, `PROJECT-CONTEXT.md`, `WORKFLOW-STATE.md`; Stage 1 will scaffold `DESIGN-AUDIT.md` only after a passing Stage 0 gate is advanced.
+- Input snapshot IDs used: `SRC-DS-001`, `SRC-REPO-001`
+- Task-start snapshot: None
+- Implementation-output snapshot: None
+- Validation-runtime snapshot: None
+- Source verification performed: Connected Figma metadata inspection of `2142:363`; GitHub repository/commit/tree inspection of the recorded repository baseline and current workflow branch.
+- Important findings: The Figma scope contains explicit 1440px, 768px, and 375px main designs plus reusable section components/style guides; the repository application is still the Astro starter.
+- Decisions: Lite profile, Gated mode, `frontend/` implementation target, `🤖 Workflow` Figma scope.
+- Validation performed: Stage 0 narrative completeness review completed; canonical CLI snapshot verification, artifact lifecycle updates, stage check, validator, and generated-state check must execute before advancement.
+- Deviations: Temporary one-shot initialization action documented as EXC-001 and already corrected.
+- Remaining risks: Mutable/time-bound Figma source; runtime snapshot not yet registered; intermediate responsive behavior still needs Stage 1–4 analysis.
+- Next permitted action: Record canonical source verification and artifact approvals, record the project owner's Stage 0 approval, advance to Stage 1, validate/sync, and stop before performing the Stage 1 audit.
 
 Do not use this narrative summary as a second mutable status registry.
